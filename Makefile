@@ -17,30 +17,30 @@ current_repo_commit := $(shell  if !(git log -1 --format="%h"); then echo 'unkno
 ######################################
 # target
 ######################################
-TARGET = argos-smd-at-kineis-firmware
+TARGET = op-tracker-firmware
 
 
 ######################################
 # building variables
 ######################################
 # debug build?
-DEBUG = 0
+DEBUG = 1
 VERBOSE = 1
 USE_BAREMETAL = 1
 
 # Select APPlication. Can be:
 # * STDLN: for the standalone application sending one message at startup
 # * GUI: for the application using the AT commands from UART link
-APP = GUI
+# * TRACKER: for the OP Tracker application (TRACKER mode use custom MAC_PRFL)
+APP = TRACKER
 
 # Select output port
 COMM = UART
 
-
 # Select Kineis stack MAC profile. Can be:
 # * BASIC: basic profile, sending message once immediately 
 # * BLIND: blind profile, sending message sevral times periodically 
-MAC_PRFL = BASIC
+MAC_PRFL = BLIND
 
 # LPM: depest low power mode supported can be:
 # NONE, SLEEP, STOP, STANDBY, SHUTDOWN
@@ -256,6 +256,21 @@ C_DEFS +=  \
 -DUSE_GUI_APP
 endif
 
+ifeq ($(APP),TRACKER)
+C_SOURCES += $(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_at_cmd_list_trackerapp.c 
+C_SOURCES += $(KINEIS_DIR)/App/Libs/TRACKER/Src/tracker_app.c 
+C_DEFS +=  \
+-DUSE_TRACKER_APP
+ifeq ($(MAC_PRFL), BASIC)
+C_DEFS +=  \
+-DUSE_MAC_PRFL_BASIC
+endif
+ifeq ($(MAC_PRFL), BLIND)
+C_DEFS +=  \
+-DUSE_MAC_PRFL_BLIND
+endif
+endif
+
 ifeq ($(COMM),UART)
 C_DEFS +=  \
 -DUSE_UART_DRIVER
@@ -302,6 +317,9 @@ endif
 ifeq ($(APP),STDLN)
 BUILD_VERSION := $(BUILD_VERSION)_stdln
 endif
+ifeq ($(APP),TRACKER)
+BUILD_VERSION := $(BUILD_VERSION)_tracker
+endif
 ifeq ($(MAC_PRFL), BASIC)
 BUILD_VERSION := $(BUILD_VERSION)_basic
 endif
@@ -347,6 +365,10 @@ C_INCLUDES =  \
 #-IApplication/User/KineisSpi/Inc
 
 C_INCLUDES += #$(libknsrf_wl_INCLUDES)
+
+ifeq ($(APP),TRACKER)
+C_INCLUDES += -I$(KINEIS_DIR)/App/Libs/TRACKER/Inc
+endif
 
 ifeq ($(COMM),UART)
 C_DEFS +=  \

@@ -19,7 +19,10 @@
 #include "mgr_at_cmd_list_mac.h"
 #include "mgr_at_cmd_list_certif.h"
 
-const char *atcmd_version = "v0.5";
+#ifdef USE_TRACKER_APP
+#include "mgr_at_cmd_list_trackerapp.h"
+#endif
+const char *atcmd_version = "v0.6";
 
 /** @attention update AT cmd version above if you add or remove commands in this list */
 const struct atcmd_desc_t cas_atcmd_list_array[ATCMD_MAX_COUNT] = {
@@ -51,6 +54,12 @@ const struct atcmd_desc_t cas_atcmd_list_array[ATCMD_MAX_COUNT] = {
 
 	/**< MAC commands (not functionnal, only to avoid GUI to crash) */
 	{ "AT+KMAC",          7, bMGR_AT_CMD_KMAC_cmd},
+	
+	/**< TRACKER commands forward tracker application variables */
+#ifdef USE_TRACKER_APP
+	{ "AT+TRACKER",       10, bMGR_AT_CMD_TRACKER_cmd},
+	{ "AT+RUN_TRACKER", 14, bMGR_AT_CMD_TRACKER_START_cmd},
+#endif
 };
 
 /**

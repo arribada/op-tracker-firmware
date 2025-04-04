@@ -52,6 +52,12 @@ enum  atcmd_idx_t {
 	// MAC commands
 	AT_KMAC,         /**< Index for change profile */
 
+	// Tracker commands
+#ifdef USE_TRACKER_APP
+	AT_TRACKER,      /**< Send tracker configuration */
+	AT_RUN_TRACKER,      /**< Send START tracker app*/
+#endif
+
 	ATCMD_MAX_COUNT,
 	ATCMD_UNKNOWN_COMMAND = ATCMD_MAX_COUNT
 };

@@ -16,6 +16,9 @@
 #include "kns_q.h"
 #include "kns_mac.h"
 #include "kns_cfg.h"
+#ifdef USE_TRACKER_APP
+#include "tracker_app.h"
+#endif
 #ifdef USE_UART_DRIVER
 #include "mgr_at_cmd.h"
 #endif
@@ -112,7 +115,13 @@ static void KNS_APP_stdln_startMacPrfl(void)
 {
 	enum KNS_status_t status;
 	struct KNS_MAC_appEvt_t appEvt;
-
+//	struct KNS_MAC_BLIND_usrCfg_t prflBlindUserCfg = {
+//		.retx_nb = 4,
+//		.retx_period_s = 60,	/** Repetition period per message
+//					 * @attention ensure retx_period_s =  60 * nb_parrallel_msg
+//					 */
+//		.nb_parrallel_msg = 1	/** User-Message FIFO size @attention do not exceed 4*/
+//	};
 	/** Initialize Kineis MAC profile */
 	MGR_LOG_DEBUG("[%s %d]\r\n", __func__, __LINE__);
 	appEvt.id =  KNS_MAC_INIT;
@@ -153,6 +162,36 @@ static void KNS_APP_stdln_stopMacPrfl(void)
 	}
 }
 
+#ifdef USE_TRACKER_APP
+/** @brief Start MAC profile for the standalone application
+ */
+static void KNS_APP_tracker_startMacPrfl(void)
+{
+	enum KNS_status_t status;
+	/** Initialize Kineis MAC profile */
+	MGR_LOG_DEBUG("[%s %d]\r\n", __func__, __LINE__);
+	tracker_app_vars_t app_vars;
+	TRACKER_get_conf(&app_vars);
+	struct KNS_MAC_appEvt_t appEvt = {
+		.id = KNS_MAC_INIT,
+		.init_prfl_ctxt = {
+			.id =  KNS_MAC_PRFL_BLIND,
+			.blindCfg = {
+					.retx_nb = 2,//app_vars.u8_msg_counter,
+					.nb_parrallel_msg = 1,
+					.retx_period_s = 60,//app_vars.u8_wait_msg_timer_s,
+			}
+		}
+	};
+
+	status = KNS_Q_push(KNS_Q_DL_APP2MAC, (void *)&appEvt);
+	if (status != KNS_STATUS_OK) {
+		MGR_LOG_DEBUG("[ERROR] Cannot initialize MAC protocol: Error code 0x%x\r\n", status);
+		MGR_LOG_DEBUG("[ERROR] Check protocol capabilities of the build and/or config.\r\n");
+		kns_assert(0);
+	}
+}
+#endif
 /* Public functions ----------------------------------------------------------*/
 
 void KNS_APP_stdln_loop(void)
@@ -400,6 +439,206 @@ void KNS_APP_gui_loop(void)
 	MGR_AT_CMD_macEvtProcess();
 #endif
 }
+
+
+#ifdef USE_TRACKER_APP
+void KNS_APP_tracker_loop(void)
+{
+	/** Static variables for state machine.
+	 * @note The implementation as a state machine is mainly usefull with kineis baremetal OS.
+	 * The standalone application should be much more simple with a real OS
+	 */
+	static
+	__attribute__((__section__(".retentionRamData")))
+	uint8_t state;
+
+	/** Static variable used with rand_r() function to generate random USER DATA in messages
+	 * sent to Kineis stack.
+	 * This will work also with STANDBY LPM as the seed tis mapped in SRAM2 memory here
+	 * @note using rand() instead of rand_r() may lead to generate several messages with the
+	 * same USER DATA payload
+	 */
+	static
+	__attribute__((__section__(".retentionRamData")))
+	uint32_t seed;
+
+	uint16_t idx;
+	struct KNS_MAC_appEvt_t appEvt;
+	uint8_t buffer_tx[KNS_MAC_USRDATA_MAXLEN];
+
+	//MGR_LOG_VERBOSE("[%s]:: state: %d\r\n", __func__, state);
+	switch (state) {
+	case 0: { /** Init MAC profile */
+		KNS_APP_tracker_startMacPrfl();
+		state++;
+		return;
+	}
+	case 1: { /** Wait for Kineis stack replying:
+		   *  * OK to Init
+		   */
+		enum KNS_status_t status = KNS_STATUS_OK;
+		struct KNS_MAC_srvcEvt_t srvcEvt;
+
+		for (status = KNS_Q_pop(KNS_Q_UL_MAC2APP, (void *)&srvcEvt);
+		     status != KNS_STATUS_QEMPTY;
+		     status = KNS_Q_pop(KNS_Q_UL_MAC2APP, (void *)&srvcEvt)) {
+			if (status == KNS_STATUS_OK) {
+				switch (srvcEvt.id) {
+				case (KNS_MAC_OK):
+					MGR_LOG_DEBUG("[%s] MAC profile init OK\r\n", __func__);
+					state++;
+					break;
+				case (KNS_MAC_ERROR):
+					MGR_LOG_DEBUG("[%s] MAC profile error\r\n", __func__);
+					TEST_FAIL();
+					break;
+				default:
+					TEST_FAIL();
+					break;
+				}
+			}
+		}
+		return;
+	}
+	case 2: { /** Send data event */
+		struct KNS_CFG_radio_t device_radio_cfg;
+
+		/** Initialize buffer with random data */
+		for (idx = 0; idx < sizeof(buffer_tx); idx++)
+			buffer_tx[idx] = rand_r(((unsigned int *)&seed));
+
+		/** ---- OPTIONAL BLOCK ---- START -- needed if radio conf not hardcoded -----   */
+		kns_assert(KNS_CFG_getRadioInfo(&device_radio_cfg) == KNS_STATUS_OK);
+
+		appEvt.id =  KNS_MAC_SEND_DATA;
+		for (idx = 0; idx < sizeof(buffer_tx); idx++)
+			appEvt.data_ctxt.usrdata[idx] = buffer_tx[idx];
+		appEvt.data_ctxt.sf = KNS_SF_NO_SERVICE;
+
+		switch (device_radio_cfg.modulation) {
+		case (KNS_TX_MOD_LDA2):
+			/** max payload size in this  example, cf spec for smaller packets */
+			appEvt.data_ctxt.usrdata_bitlen = 192;
+			break;
+		case (KNS_TX_MOD_LDA2L):
+			appEvt.data_ctxt.usrdata_bitlen = 196;
+			break;
+		case (KNS_TX_MOD_VLDA4):
+			appEvt.data_ctxt.usrdata_bitlen = 24;
+			break;
+		case (KNS_TX_MOD_LDK):
+			appEvt.data_ctxt.usrdata_bitlen = 152;
+			break;
+		default:
+			kns_assert(0); // wrong modulation flashed into device
+			break;
+		}
+		/** ---- OPTIONAL BLOCK ---- END ---------------------------------------------   */
+
+		MGR_LOG_DEBUG("[%s] request to send 0x", __func__);
+		MGR_LOG_array(appEvt.data_ctxt.usrdata, (appEvt.data_ctxt.usrdata_bitlen+7)>>3);
+
+		TEST_ASSERT(KNS_Q_push(KNS_Q_DL_APP2MAC, (void *)&appEvt) == KNS_STATUS_OK);
+
+		state++; /* go to next state, and return to let higher task to process event */
+		return;
+	}
+	case 3: { /** Wait for Kineis stack replying:
+		   *  * OK to send frame
+		   *  * TX done for previous transmit
+		   */
+		enum KNS_status_t status = KNS_STATUS_OK;
+		struct KNS_MAC_srvcEvt_t srvcEvt;
+
+		for (status = KNS_Q_pop(KNS_Q_UL_MAC2APP, (void *)&srvcEvt);
+		     status != KNS_STATUS_QEMPTY;
+		     status = KNS_Q_pop(KNS_Q_UL_MAC2APP, (void *)&srvcEvt)) {
+			if (status == KNS_STATUS_OK) {
+				switch (srvcEvt.id) {
+				case (KNS_MAC_OK):
+					if (srvcEvt.app_evt == KNS_MAC_SEND_DATA) {
+						MGR_LOG_DEBUG("[%s] OK to send 0x", __func__);
+						MGR_LOG_array(srvcEvt.tx_ctxt.data,
+//							(srvcEvt.tx_ctxt.data_bitlen+7)>>3);
+							4); // limit to 4 bytes for real-time
+					}
+					break;
+				case (KNS_MAC_TX_DONE):
+					MGR_LOG_DEBUG("[%s] TX done for 0x", __func__);
+					MGR_LOG_array(srvcEvt.tx_ctxt.data,
+						(srvcEvt.tx_ctxt.data_bitlen+7)>>3);
+					TEST_PASS();
+					/** Exit MAC as test succedded. It should reply OK at next
+					 * step
+					 */
+					KNS_APP_stdln_stopMacPrfl();
+					state++;
+					break;
+				case (KNS_MAC_TX_TIMEOUT):
+					MGR_LOG_DEBUG("[%s] TX timeout for 0x", __func__);
+					MGR_LOG_array(srvcEvt.tx_ctxt.data,
+						(srvcEvt.tx_ctxt.data_bitlen+7)>>3);
+					TEST_FAIL();
+					state++;
+					break;
+				case (KNS_MAC_ERROR):
+					/** MAC ERROR can occure when FIFO is full, as expected per
+					 * this application
+					 */
+					if (srvcEvt.app_evt == KNS_MAC_SEND_DATA) {
+						MGR_LOG_DEBUG("[%s] cannot send 0x", __func__);
+						MGR_LOG_array(srvcEvt.tx_ctxt.data,
+//							(srvcEvt.tx_ctxt.data_bitlen+7)>>3);
+							4); // limit to 4 bytes for real-time
+					}
+					TEST_FAIL();
+					state++;
+					break;
+				default:
+					TEST_FAIL();
+					break;
+				}
+			}
+		}
+		return;
+	}
+	case 4: { /** Wait for Kineis stack replying:
+		   *  * OK to Init
+		   */
+		enum KNS_status_t status = KNS_STATUS_OK;
+		struct KNS_MAC_srvcEvt_t srvcEvt;
+
+		for (status = KNS_Q_pop(KNS_Q_UL_MAC2APP, (void *)&srvcEvt);
+		     status != KNS_STATUS_QEMPTY;
+		     status = KNS_Q_pop(KNS_Q_UL_MAC2APP, (void *)&srvcEvt)) {
+			if (status == KNS_STATUS_OK) {
+				switch (srvcEvt.id) {
+				case (KNS_MAC_OK):
+					MGR_LOG_DEBUG("[%s] OK from MAC\r\n", __func__);
+					state++;
+					break;
+				case (KNS_MAC_ERROR):
+					MGR_LOG_DEBUG("[%s] MAC ERROR\r\n", __func__);
+					TEST_FAIL();
+					state++;
+					break;
+				default:
+					TEST_FAIL();
+					break;
+				}
+			}
+		}
+		return;
+	}
+	case 5: { /** Wait for Kineis stack replying:*/
+		break;
+	}
+	default:
+		kns_assert(0);
+		break;
+	}
+}
+#endif
 
 /**
  * @}

@@ -272,6 +272,12 @@ void MCU_AT_CONSOLE_send_dataBuf(uint8_t *pu8_inDataBuff, uint16_t u16_dataLenBi
 	/* else no additional bits */
 }
 
+void MCU_UART_DeInit() {
+	if (huart_handle != NULL) {
+		HAL_UART_MspDeInit(huart_handle);
+		huart_handle = NULL;
+	}
+}
 /**
   * @brief  UART error callback. Can raise in case of UART OVERFLOW, DMA RX ERROR, ...
  *

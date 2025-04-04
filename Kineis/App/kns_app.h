@@ -86,6 +86,9 @@ void KNS_APP_gui_init(void *context);
  */
 void KNS_APP_gui_loop(void);
 
+#ifdef USE_TRACKER_APP
+void KNS_APP_tracker_loop(void);
+#endif
 #endif // end KNS_APP_H
 
 /**

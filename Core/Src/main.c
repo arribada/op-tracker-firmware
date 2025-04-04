@@ -48,6 +48,7 @@
 #include "subghz.h"
 #include "tim.h"
 #include "gpio.h"
+#include "mcu_flash.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -56,13 +57,20 @@
  * GUI APP is about AT commands support sent to device from GUI or SERIAL hyperterminal).
  * @note both flags are exclusive as standalone app will send periodic frame indefinitively
  */
-#if !defined(USE_STDALONE_APP) && !defined(USE_GUI_APP)
-//#define USE_STDALONE_APP
+#if !defined(USE_STDALONE_APP) && !defined(USE_GUI_APP) && !defined(USE_TRACKER_APP)
 #define USE_GUI_APP
 #endif
 
 #if defined(USE_STDALONE_APP) && defined(USE_GUI_APP)
 #error "USE_STDALONE_APP/USE_GUI_APP: Cannot build FW with both APPs, select only one."
+#endif
+
+#if defined(USE_STDALONE_APP) && defined(USE_TRACKER_APP)
+#error "USE_STDALONE_APP/USE_TRACKER_APP: Cannot build FW with both APPs, select only one."
+#endif
+
+#if defined(USE_GUI_APP) && defined(USE_TRACKER_APP)
+#error "USE_GUI_APP/USE_TRACKER_APP: Cannot build FW with both APPs, select only one."
 #endif
 
 #include "stm32wlxx_it.h"
@@ -72,22 +80,29 @@
 #include "mcu_tim.h"
 #include "kns_mac.h"
 #include "kns_app.h"
-#ifdef USE_GUI_APP
-#ifdef USE_BAREMETAL
-#include "mgr_at_cmd.h" /* Needed for MGR_AT_CMD_isPendingAt()) in case of BAREMETAL OS to check no
-                         * there is no pending AT cmd before entring low power mode
-                         */
+
+#if defined(USE_GUI_APP) || defined(USE_TRACKER_APP)
+  #ifdef USE_BAREMETAL
+  #include "mgr_at_cmd.h" /* Needed for MGR_AT_CMD_isPendingAt()) in case of BAREMETAL OS to check no
+                          * there is no pending AT cmd before entring low power mode
+                          */
+  #endif
+  #ifdef USE_UART_DRIVER
+    #include "mcu_at_console.h"
+  #endif
 #endif
-#ifdef USE_UART_DRIVER
-#include "mcu_at_console.h"
+
+#if defined(USE_TRACKER_APP)
+#include "tracker_app.h"
 #endif
-#endif
+
 #include "lpm.h"
 #include "mgr_log.h"
 
 /** Assembly function used to initialize SRAM2 .bss and .data sections. It is based on the same
  * model as the Reset_Handler (cf startup_*.s file) regarding the whole RAM memory
  *
+ * #else
  * This function is called only when waking up from SHUTDOWN, RESET, POWER OFF mode. In any other
  * low power mode, the SRAM2 remains active with current FW.
  *
@@ -202,6 +217,7 @@ static void IDLE_task(void)
   /* ---- KINEIS GUI APP ------------------------------------------------------------------------ */
   assertMspOverflow();
 
+  //Manage IDLE_TASK for GUI application
 #ifdef USE_GUI_APP
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -253,7 +269,37 @@ static void IDLE_task(void)
 
   /* ---- KINEIS STDLN APP ---------------------------------------------------------------------- */
 
+  //Manage IDLE_TASK for STDLN application
 #ifdef USE_STDALONE_APP
+#ifdef USE_BAREMETAL
+  uint32_t prim;
+
+  prim = __get_PRIMASK();
+  __disable_irq();
+  __disable_fault_irq();
+  if (KNS_Q_isEvtInSomeQ()) {
+    if (!prim){
+      __enable_fault_irq();
+      __enable_irq();
+    }
+    return;
+  }
+  /** Enter low power mode has there is no event preempting */
+  LPM_enter();
+  if (!prim){
+    __enable_fault_irq();
+    __enable_irq();
+  }
+#else // end of USE_BAREMETAL
+  /** Enter low power mode has there is no event preempting */
+  LPM_enter();
+#endif
+#endif
+
+  /* ---- KINEIS TRACKER APP -------------------------------------------------------------------- */
+
+  //Manage IDLE_TASK for TRACKER application
+#ifdef USE_TRACKER_APP
 #ifdef USE_BAREMETAL
   uint32_t prim;
 
@@ -356,12 +402,23 @@ int main(void)
   MX_SUBGHZ_Init();
   MX_TIM16_Init();
   MX_RTC_Init();
+#ifdef USE_SPI_DRIVER
   MX_SPI1_Init();
+#endif
   /* USER CODE BEGIN 2 */
 
 #ifdef DEBUG
   /** When core enters debug mode (core halted), freeze RTC */
   __HAL_DBGMCU_FREEZE_RTC();
+#endif
+
+#ifdef USE_TRACKER_APP
+
+  if (bIsWakeUpFromReset) {
+
+    /** Initialize retention RAM2 as not done by default in the Reset_Handler */
+    //MCU_FLASH_reset_counter();
+  }
 #endif
 
   /** As we just woke up, most of GPIOs are useless so far. Limit their current drain */
@@ -420,7 +477,7 @@ int main(void)
       MGR_LOG_DEBUG("==== WAKEUP from RESET ====\r\n");
     else
       MGR_LOG_DEBUG("==== WAKEUP from POWER OFF ====\r\n");
-    MGR_LOG_DEBUG("Running build, versions:\r\n");
+    MGR_LOG_VERBOSE("Running build, versions:\r\n");
     MGR_LOG_DEBUG("- FW            %s\r\n", uc_fw_vers_commit_id);
     MGR_LOG_DEBUG("- libkineis.a   %s\r\n", libkineis_info);
     MGR_LOG_DEBUG("- libknsrf_wl.a %s\r\n", libknsrf_wl_info);
@@ -462,7 +519,27 @@ int main(void)
 #endif
 
   assert_param(KNS_OS_registerTask(KNS_OS_TASK_APP, KNS_APP_gui_loop) == KNS_STATUS_OK);
+#elif defined (USE_TRACKER_APP)
+// Retrieve flash memory state
+  uint64_t startup_counter = 0;
+  MCU_FLASH_get_latest_counter(&startup_counter);
+  TRACKER_init();
+
+  MGR_LOG_DEBUG("%s::Tracker start count: %d \r\n", startup_counter);
+  if (startup_counter == 0)
+  {
+	  // Init GUI mode
+	  KNS_APP_gui_init(&hlpuart1);
+	  assert_param(KNS_OS_registerTask(KNS_OS_TASK_APP, KNS_APP_gui_loop) == KNS_STATUS_OK);
+  } else {
+    assert_param(KNS_OS_registerTask(KNS_OS_TASK_APP, KNS_APP_tracker_loop) == KNS_STATUS_OK);
+  }
+
 #endif
+
+
+
+
   assert_param(KNS_OS_registerTask(KNS_OS_TASK_IDLE, IDLE_task) == KNS_STATUS_OK);
 
   /** As all tasks, queues and OS are ready to start, last LPM-wakeup-specific init sequence */
@@ -591,7 +668,9 @@ void Error_Handler(void)
   while (1)
   {
   }
-#else // end of DEBUG
+#elif USE_TRACKER_APP // end of DEBUG
+  MCU_AT_CONSOLE_send("+ASSERT=\r\n");
+#else
 #ifdef USE_GUI_APP
 #ifdef USE_UART_DRIVER
   MCU_AT_CONSOLE_send("+RST=\r\n");
@@ -599,6 +678,8 @@ void Error_Handler(void)
   MGR_LOG_DEBUG("+RST=\r\n");
 #endif
   HAL_Delay(500);
+#elif USE_TRACKER_APP
+  MCU_AT_CONSOLE_send("+RST=\r\n");
 #endif
   __disable_irq();
   /* reset uC */
