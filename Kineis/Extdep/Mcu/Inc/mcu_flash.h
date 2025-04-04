@@ -35,11 +35,11 @@
 
 // Variables to manage ID, ADDR and RADIO conf used by KINEIS stack
 #define FLASH_ID_OFFSET  0
-#define FLASH_ID_SIZE  1 //64 bits
-#define FLASH_ID_BYTE_SIZE  4 //64 bits
+#define FLASH_ID_SIZE  1 //64 bits size
+#define FLASH_ID_BYTE_SIZE  4
 #define FLASH_ADDR_OFFSET (FLASH_ID_OFFSET + FLASH_ID_BYTE_SIZE)
 #define FLASH_ADDR_SIZE 1
-#define FLASH_ADDR_BYTE_SIZE  4 //64 bits
+#define FLASH_ADDR_BYTE_SIZE  4
 #define FLASH_SECKEY_OFFSET (FLASH_ADDR_OFFSET + FLASH_ADDR_BYTE_SIZE)
 #define FLASH_SECKEY_SIZE 2
 #define FLASH_SECKEY_BYTE_SIZE 16

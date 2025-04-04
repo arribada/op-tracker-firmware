@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "kns_types.h"
 #include "aes.h"
@@ -39,8 +40,8 @@ static aes_context ctx;
  *
  * @attention Once credentials are delivered by Kineis, it becomes your responsability.
  */
-// static const uint8_t device_secret_key[16] = { 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
-// 					0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF };
+static const uint8_t test_device_secret_key[16] = { 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
+ 					0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF };
 
 /* Functions -------------------------------------------------------------*/
 
@@ -89,8 +90,24 @@ enum KNS_status_t MCU_AES_set_device_sec_key(const uint8_t *key) {
 enum KNS_status_t MCU_AES_get_device_sec_key(uint8_t *key) {
     if (!key) return KNS_STATUS_ERROR;
 
-    return MCU_FLASH_read(FLASH_USER_DATA_ADDR + FLASH_SECKEY_OFFSET, key, FLASH_SECKEY_BYTE_SIZE);
+    enum KNS_status_t status = MCU_FLASH_read(FLASH_USER_DATA_ADDR + FLASH_SECKEY_OFFSET, key, FLASH_SECKEY_BYTE_SIZE);
+    if (status != KNS_STATUS_OK) return status;
+
+    bool flash_empty = true;
+    for (int i = 0; i < FLASH_SECKEY_BYTE_SIZE; i++) {
+        if (key[i] != 0xFF) {
+            flash_empty = false;
+            break;
+        }
+    }
+
+    if (flash_empty) {
+        memcpy(key, test_device_secret_key, FLASH_SECKEY_BYTE_SIZE);
+    }
+
+    return KNS_STATUS_OK;
 }
+
 /**
  * @}
  */

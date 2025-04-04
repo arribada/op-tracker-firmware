@@ -43,19 +43,12 @@
 __attribute__((__section__(".msgCntSectionData")))
 static uint16_t message_counter;
 
-__attribute__((__section__(".radioConfFlag")))
-static bool radioConfZoneSavedFlag;
-
-static
-__attribute__((__section__(".radioConfSection")))
-uint32_t radioConfZoneSaved[16];
-
 /** The device identifier may be stored in a secured way (encryption, etc.) */
-//uint32_t device_id; Stored in flash memory
+const uint32_t test_device_id = 123456; // stored in flash
 
 
 /** The device address may be stored in a secured way (encryption, etc.) */
-//uint8_t device_addr[4] = { 0x22, 0x67, 0x5C, 0x70 }; // stored in flash
+const uint8_t test_device_addr[4] = { 0x11, 0x22, 0x33, 0x44 };
 
 /** Radio configuration : Ensure radio configuration is valid when Kineis stack is called.
  
@@ -89,21 +82,23 @@ static uint8_t radioConfZone[16] = {
 //	0x40, 0x28, 0xc3, 0xf6, 0x7f, 0x9d, 0x18, 0x94,
 
 #else
-	/** ---- 401625000,401635000,27,LDA2 ---- */
-	0x44, 0xcd, 0x3a, 0x29, 0x90, 0x68, 0x29, 0x2a,
-	0x74, 0xd2, 0x12, 0x6f, 0x34, 0x02, 0x61, 0x0d
+	/** ---- 401620000,401680000,27,LDA2  ---- */
+	0x3d, 0x67, 0x8a, 0xf1, 0x6b, 0x5a, 0x57, 0x20,
+	0x78, 0xf3, 0xdb, 0xc9, 0x5a, 0x11, 0x04, 0xe7
 
 	/** ---- 401625000,401635000,27,LDA2L ---- */
 //	0xbd, 0x17, 0x65, 0x35, 0xb3, 0x94, 0xa6, 0x65,
 //	0xbd, 0x86, 0xf3, 0x54, 0xc5, 0xf4, 0x24, 0xfb
 
-	/** ---- 401625000,401635000,27,VLDA4 ---- */
-//	0x82, 0xd0, 0x7f, 0x9d, 0x9c, 0xe0, 0x81, 0xee,
-//	0x44, 0x92, 0x98, 0x36, 0x72, 0xd7, 0x54, 0x93
+	/** ---- 402890000,402990000,22,VLDA4 ---- */
+//	0x55, 0x0b, 0x4b, 0xec, 0x21, 0x00, 0x9c, 0x7a,
+//	0x7b, 0x5b, 0xeb, 0xaa, 0x93, 0x7c, 0xdb, 0x41
 
-	/** ---- 401625000,401635000,27,LDK ---- */
-//	0x41, 0xbc, 0x11, 0xb8, 0x98, 0x0d, 0xf0, 0x1b,
-//	0xa8, 0xb4, 0xb8, 0xf4, 0x10, 0x99, 0x62, 0x0b
+
+
+	/** ---- 402890000,402990000,27,LDK ---- */
+//	0x03, 0x92, 0x1f, 0xb1, 0x04, 0xb9, 0x28, 0x59,
+//	0x20, 0x9b, 0x18, 0xab, 0xd0, 0x09, 0xde, 0x96
 #endif
 
 };
@@ -126,57 +121,71 @@ enum KNS_status_t MCU_NVM_setMC(uint16_t mcTmp)
 	return KNS_STATUS_OK;
 
 }
-
 enum KNS_status_t MCU_NVM_getRadioConfZonePtr(void **ConfZonePtr)
 {
-	if (radioConfZoneSavedFlag)
-	{
-		// Set ConfZonePtr to point to the appropriate memory location
-		unsigned int i;
-		for(i = 0; i < sizeof(radioConfZoneSaved)/ sizeof(uint32_t) ; i++)
-		{
-			radioConfZone[i] = (uint8_t)(radioConfZoneSaved[i]);
+	if (ConfZonePtr == NULL) {
+		return KNS_STATUS_ERROR;
+	}
+
+	uint8_t flash_radio_conf[FLASH_RADIOCONF_BYTE_SIZE];
+	enum KNS_status_t status = MCU_FLASH_read(FLASH_USER_DATA_ADDR + FLASH_RADIOCONF_OFFSET, flash_radio_conf, FLASH_RADIOCONF_BYTE_SIZE);
+
+	if (status != KNS_STATUS_OK) {
+		return status;
+	}
+
+	bool flash_empty = true;
+	for (int i = 0; i < FLASH_RADIOCONF_BYTE_SIZE; i++) {
+		if (flash_radio_conf[i] != 0xFF) {
+			flash_empty = false;
+			break;
 		}
 	}
 
+	if (!flash_empty) {
+		memcpy(radioConfZone, flash_radio_conf, FLASH_RADIOCONF_BYTE_SIZE);
+	}
 
-		*ConfZonePtr = radioConfZone;
-
+	*ConfZonePtr = radioConfZone;
 	return KNS_STATUS_OK;
 }
 
 enum KNS_status_t MCU_NVM_setRadioConfZone(void *ConfZonePtr, uint16_t ConfZoneSize)
 {
-	int i;
-
-	if (sizeof(radioConfZone) > ConfZoneSize)
+	if (ConfZonePtr == NULL || ConfZoneSize != FLASH_RADIOCONF_BYTE_SIZE) {
 		return KNS_STATUS_ERROR;
-
-	for (i = 0 ; i < ConfZoneSize ; i++)
-	{
-		radioConfZone[i] = ((uint8_t*)ConfZonePtr)[i];
-		radioConfZoneSaved[i] = (uint32_t)((uint8_t*)ConfZonePtr)[i];
 	}
 
+	// Write to flash
+	enum KNS_status_t status = MCU_FLASH_write(FLASH_USER_DATA_ADDR + FLASH_RADIOCONF_OFFSET, ConfZonePtr, FLASH_RADIOCONF_BYTE_SIZE);
+
+	if (status != KNS_STATUS_OK) {
+		return status;
+	}
 
 	return KNS_STATUS_OK;
 }
 
 enum KNS_status_t MCU_NVM_saveRadioConfZone(void)
 {
-
-	radioConfZoneSavedFlag = true;
-
 	return KNS_STATUS_OK;
 }
+
 
 enum KNS_status_t MCU_NVM_getID(uint32_t *id)
 {
     if (id == NULL) {
         return KNS_STATUS_ERROR;
     }
+    enum KNS_status_t status = KNS_STATUS_OK;
 
-    return (MCU_FLASH_read(FLASH_USER_DATA_ADDR + FLASH_ID_OFFSET, id, FLASH_ID_BYTE_SIZE));
+    status = MCU_FLASH_read(FLASH_USER_DATA_ADDR + FLASH_ID_OFFSET, id, FLASH_ID_BYTE_SIZE);
+
+    if (*id == 0xFFFFFFFF) {
+		*id = test_device_id;
+	}
+
+    return (status);
 }
 
 enum KNS_status_t MCU_NVM_setID(uint32_t *id)
@@ -201,7 +210,14 @@ enum KNS_status_t MCU_NVM_getAddr(uint8_t addr[])
 {
     if (!addr) return KNS_STATUS_ERROR; // Vérification des pointeurs
 
-    return MCU_FLASH_read(FLASH_USER_DATA_ADDR + FLASH_ADDR_OFFSET, addr, FLASH_ADDR_BYTE_SIZE);
+    enum KNS_status_t status = KNS_STATUS_OK;
+    status = MCU_FLASH_read(FLASH_USER_DATA_ADDR + FLASH_ADDR_OFFSET, addr, FLASH_ADDR_BYTE_SIZE);
+
+    if (addr[0] == 0xFF && addr[1] == 0xFF && addr[2] == 0xFF && addr[3] == 0xFF) {
+		memcpy(addr, test_device_addr, 4);
+	}
+
+	return status;
 }
 
 enum KNS_status_t MCU_NVM_setAddr(uint8_t addr[])
