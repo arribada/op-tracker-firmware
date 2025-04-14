@@ -1,0 +1,20 @@
+digraph "Kineis/Appconf/kns_app_conf.h"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="Kineis/Appconf/kns\l_app_conf.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Kineis Application configurations depending on platform used."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_list_certif.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d04/mgr__at__cmd__list__certif_8c.html",tooltip="subset of AT commands concerning specifics for certification"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Kineis/App/Mcu/Src\l/mcu_at_console_stm.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d3c/mcu__at__console__stm_8c.html",tooltip=" "];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="Kineis/App/Mcu/Src\l/mcu_at_console.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/ddf/mcu__at__console_8c.html",tooltip="MCU wrapper for AT CMD console."];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="Kineis/Extdep/Mcu/Src\l/mcu_tim.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d3f/mcu__tim_8c.html",tooltip="MCU wrappers for timer or non-blocking delays used by Kineis stack."];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="Kineis/Extdep/MGR_LOG\l/Src/mgr_log_rtc.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d4f/mgr__log__rtc_8c.html",tooltip="This file contains log routine concerning RTC. There is a dependency on HAL RTC."];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="Kineis/Lpm/Src/mgr\l_lpm.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d8d/mgr__lpm_8c.html",tooltip="low power mode manager is in charge to collect all low power needs from 'clients' and setup the corre..."];
+}

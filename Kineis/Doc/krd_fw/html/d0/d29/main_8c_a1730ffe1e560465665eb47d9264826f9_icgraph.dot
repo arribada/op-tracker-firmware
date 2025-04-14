@@ -1,0 +1,22 @@
+digraph "Error_Handler"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="Error_Handler",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="This function is executed in case of error occurrence."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="kns_assert_failed",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#ga530a6753c266d92335600fbc8c47da6d",tooltip="Handle assert reported by Kineis stack,."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="LPM_SystemClock_Config\l_RestoreFromStop",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#gab502b89f35dcc87b365658836f69736e",tooltip="System Clock Configuration when exit from stop mode."];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="LPM_stop_exit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga2dfaa58a8d7f90840153f1f06542fd13",tooltip="System callback invoked by MGR_LPM at STOP mode exit."];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="__attribute__",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga5e3c04e1820c16433ff591dde81e7449",tooltip=" "];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d29/main_8c.html#a840291bc02cba5474a4cb46a9b9566fe",tooltip="The application entry point."];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="SystemClock_Config",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d29/main_8c.html#a70af21c671abfcc773614a9a4f63d920",tooltip="System Clock Configuration."];
+  Node7 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

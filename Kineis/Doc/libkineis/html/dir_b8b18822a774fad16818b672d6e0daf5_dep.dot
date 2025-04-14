@@ -1,0 +1,11 @@
+digraph "Kineis/Extdep/Conf" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_e4bcde167f88f305238965282a0ab06e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Extdep" fontname="Helvetica", fontsize="10", URL="dir_e4bcde167f88f305238965282a0ab06e.html"]
+  dir_b8b18822a774fad16818b672d6e0daf5 [shape=box, label="Conf", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_b8b18822a774fad16818b672d6e0daf5.html"];
+  }
+  dir_8bac7462668d86a984d2ee5977e3cf6a [shape=box label="Lib" URL="dir_8bac7462668d86a984d2ee5977e3cf6a.html"];
+  dir_b8b18822a774fad16818b672d6e0daf5->dir_8bac7462668d86a984d2ee5977e3cf6a [headlabel="3", labeldistance=1.5 headhref="dir_000006_000011.html"];
+}

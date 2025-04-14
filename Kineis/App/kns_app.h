@@ -8,11 +8,11 @@
 /**
  * @page kns_app_page APP task
  *
- * This page is presenting Two APPlication task example which exercices the Kineis stack SW
+ * This page is presenting two APPlication task example which exercices the Kineis stack SW
  * (\ref KNS_APP) in a way to send user data to the Kineis network..
  *
  * Two applications tasks are available:
- * * A standalone app (\ref KNS_APP_stdln_loop) is sending one user message (4 retransmit each 60s)
+ * * A standalone app (\ref KNS_APP_stdln_loop) is sending one user message (once or 4 retransmit each 60s)
  * * A GUI app (\ref KNS_APP_gui_loop) is dedicated to communicate with the Kinéis Device Interface
  * (KDI) through AT commands (\ref mgr_at_cmd_page) over an UART link (9600 bauds, 8, N, 1).
  *
@@ -48,6 +48,7 @@
 #define KNS_APP_H
 
 /* Functions prototypes ------------------------------------------------------*/
+
 /** @brief This fct is a very basic standalone application
  *
  * This application is posting some send-data event to MAC layer of Kineis software stack in loop as

@@ -1,0 +1,15 @@
+digraph "Kineis/Extdep/Mcu" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_e4bcde167f88f305238965282a0ab06e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Extdep" fontname="Helvetica", fontsize="10", URL="dir_e4bcde167f88f305238965282a0ab06e.html"]
+  subgraph clusterdir_aca22906c4dbdf8e38c05a61c7a67a25 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_aca22906c4dbdf8e38c05a61c7a67a25.html"];
+    dir_aca22906c4dbdf8e38c05a61c7a67a25 [shape=plaintext label="Mcu"];
+  dir_496cf9278821991a8caa0ed467f49753 [shape=box label="Inc" fillcolor="white" style="filled" URL="dir_496cf9278821991a8caa0ed467f49753.html"];
+  }
+  }
+  dir_8bac7462668d86a984d2ee5977e3cf6a [shape=box label="Lib" URL="dir_8bac7462668d86a984d2ee5977e3cf6a.html"];
+  dir_496cf9278821991a8caa0ed467f49753->dir_8bac7462668d86a984d2ee5977e3cf6a [headlabel="2", labeldistance=1.5 headhref="dir_000003_000004.html"];
+}

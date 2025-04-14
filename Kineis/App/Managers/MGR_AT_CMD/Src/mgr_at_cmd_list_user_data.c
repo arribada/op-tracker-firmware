@@ -62,46 +62,6 @@ static void MGR_LOG_array(__attribute__((unused)) uint8_t *data, uint16_t len)
 	MGR_LOG_DEBUG_RAW("\r\n");
 }
 
-/** @brief This function converts kineis stack status into AT cmd error code
- *
- * param[in] knsStatus: KNS libraries status
- *
- * @retval ERROR_RETURN_T: KIM error code
- */
-static enum ERROR_RETURN_T convKnsStatusToAtErr(enum KNS_status_t knsStatus)
-{
-	switch (knsStatus) {
-	case KNS_STATUS_OK:
-		return ERROR_NO;
-	break;
-	case KNS_STATUS_ERROR:
-	case KNS_STATUS_NVM_ACCESS_ERR: /** @todo create specific Error code for this */
-		return ERROR_UNKNOWN;
-	break;
-	case KNS_STATUS_DISABLED:
-	case KNS_STATUS_BUSY:
-	case KNS_STATUS_TIMEOUT:
-	case KNS_STATUS_TR_ERR:
-		return ERROR_TRCVR;
-	break;
-	case KNS_STATUS_BAD_SETTING:
-		return ERROR_INCOMPATIBLE_VALUE;
-	break;
-	case KNS_STATUS_BAD_LEN:
-		return ERROR_INVALID_USER_DATA_LENGTH;
-	break;
-	case KNS_STATUS_QFULL:
-		return ERROR_DATA_QUEUE_FULL;
-	break;
-	case KNS_STATUS_QEMPTY:
-		return ERROR_DATA_QUEUE_EMPTY;
-	break;
-	default:
-		return ERROR_UNKNOWN;
-	break;
-	}
-}
-
 /** @brief Handle new TX data, this is the core function of AT+TX cmd
  *
  * @attention This fct assumes user data set by user is multiple of 8 bits.
@@ -190,17 +150,9 @@ static bool bMGR_AT_CMD_handleNewTxData(uint8_t *pu8_cmdParamString, const char 
 				/** @note appEvt.send_ctxt already filled-up at declaration */
 				appEvt.id = KNS_MAC_SEND_DATA;
 				status = KNS_Q_push(KNS_Q_DL_APP2MAC, (void *)&appEvt);
-				switch (status) {
-				case KNS_STATUS_QFULL:
-					return bMGR_AT_CMD_logFailedMsg(ERROR_DATA_QUEUE_FULL);
-				break;
-				default:
-					return bMGR_AT_CMD_logFailedMsg(ERROR_UNKNOWN);
-				break;
-				case KNS_STATUS_OK:
-					return true;
-				break;
-				}
+				if (status != KNS_STATUS_OK)
+					return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T)status);
+				return true;
 			}
 			MGR_LOG_VERBOSE("[ERROR] User data is badly formatted (check length)\r\n");
 			return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_USER_DATA_LENGTH);
@@ -331,34 +283,18 @@ bool bMGR_AT_CMD_RX_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_t e_exec_mo
 			MGR_LOG_VERBOSE("stop RX\r\n");
 			appEvt.id = KNS_MAC_RX_STOP;
 			status = KNS_Q_push(KNS_Q_DL_APP2MAC, (void *)&appEvt);
-			switch (status) {
-			case KNS_STATUS_QFULL:
-				return bMGR_AT_CMD_logFailedMsg(ERROR_DATA_QUEUE_FULL);
-			break;
-			default:
-				return bMGR_AT_CMD_logFailedMsg(ERROR_UNKNOWN);
-			break;
-			case KNS_STATUS_OK:
-				return true;
-			break;
-			}
+			if (status != KNS_STATUS_OK)
+				return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T)status);
+			return true;
 		break;
 		case 1:
 		{
 			MGR_LOG_VERBOSE("start RX\r\n");
 			appEvt.id = KNS_MAC_RX_START;
 			status = KNS_Q_push(KNS_Q_DL_APP2MAC, (void *)&appEvt);
-			switch (status) {
-			case KNS_STATUS_QFULL:
-				return bMGR_AT_CMD_logFailedMsg(ERROR_DATA_QUEUE_FULL);
-			break;
-			default:
-				return bMGR_AT_CMD_logFailedMsg(ERROR_UNKNOWN);
-			break;
-			case KNS_STATUS_OK:
-				return true;
-			break;
-			}
+			if (status != KNS_STATUS_OK)
+				return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T)status);
+			return true;
 		}
 		break;
 		default:
@@ -473,7 +409,7 @@ enum KNS_status_t MGR_AT_CMD_macEvtProcess(void)
 		 * * notify host with AT cmd response then
 		 * * free element from user data buffer.
 		 */
-		bMGR_AT_CMD_sendResponse(ATCMD_RSP_TXNOTOK, (void *)spUserDataMsg);
+		bMGR_AT_CMD_sendResponse(ATCMD_RSP_TXTIMEOUT, (void *)spUserDataMsg);
 		USERDATA_txFifoRemoveElt(spUserDataMsg);/* Free as host notified */
 		Set_TX_LED(0);
 		cbStatus = KNS_STATUS_TIMEOUT;
@@ -503,10 +439,10 @@ enum KNS_status_t MGR_AT_CMD_macEvtProcess(void)
 			 * * notify host with AT cmd response then
 			 * * free element from user data buffer.
 			 */
-			bMGR_AT_CMD_sendResponse(ATCMD_RSP_TXNOTOK, (void *)spUserDataMsg);
+			bMGR_AT_CMD_sendResponse(ATCMD_RSP_RXERROR, (void *)spUserDataMsg);
 			USERDATA_txFifoRemoveElt(spUserDataMsg);/* Free as host notified */
 			Set_TX_LED(0);
-			cbStatus = KNS_STATUS_TR_ERR;
+			cbStatus = KNS_STATUS_RF_ERR;
 		} else {
 			MGR_LOG_DEBUG("MGR_AT_CMD RX callback reached\r\n");
 			MGR_LOG_DEBUG("RX ERROR  unexpected event received.\r\n");
@@ -598,7 +534,7 @@ enum KNS_status_t MGR_AT_CMD_macEvtProcess(void)
 	break;
 	case (KNS_MAC_ERROR):
 //		MGR_LOG_DEBUG("MGR_AT_CMD MAC reported ERROR to previous command.\r\n");
-		bMGR_AT_CMD_logFailedMsg(convKnsStatusToAtErr(srvcEvt.status));
+		bMGR_AT_CMD_logFailedMsg((enum KNS_status_t)srvcEvt.status);
 		if (srvcEvt.app_evt == KNS_MAC_SEND_DATA)
 			USERDATA_txFifoRemoveElt(spUserDataMsg);/* Free as host notified */
 		cbStatus = KNS_STATUS_ERROR;

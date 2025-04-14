@@ -1,0 +1,44 @@
+digraph "Kineis/App/Kineis_os/KNS_Q/Src/kns_q.c"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="Kineis/App/Kineis_os\l/KNS_Q/Src/kns_q.c",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Configuration of queues used in kineis_swr."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="kns_q_baremetal.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d08/kns__q__baremetal_8c.html",tooltip="Configuration of queues used in kineis_swr."];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="kns_cs.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d62/kns__cs_8h.html",tooltip="critical section handling for kineis stack."];
+  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="kns_q_conf.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/dd1/kns__q__conf_8h.html",tooltip="Configuration of queues used in kineis_sw."];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="stdbool.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node4 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="stdint.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node4 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="kns_mac_evt.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d64/kns__mac__evt_8h.html",tooltip=" "];
+  Node7 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="kns_types.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d85/kns__types_8h.html",tooltip="Kineis types definition."];
+  Node8 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="kns_mac_prfl_cfg.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d4a/kns__mac__prfl__cfg_8h.html",tooltip="Header file describing the ser settings required to configure a MAC protocol."];
+  Node9 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="kns_srvc_common.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d8a/kns__srvc__common_8h.html",tooltip="Common part of Kinéis service layer."];
+  Node10 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="kns_q.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d84/kns__q_8h.html",tooltip="Configuration of queues used in kineis_swr."];
+  Node11 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="mgr_log.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d2e/mgr__log_8h.html",tooltip="logger main header file"];
+  Node12 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="mgr_log_rtc.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d70/mgr__log__rtc_8h.html",tooltip=": Header for mgr_log_rtc.c file. This file contains log routine concerning RTC. Thus there is a depen..."];
+}

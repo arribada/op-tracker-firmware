@@ -10,6 +10,7 @@
  *
  * The AT cmd manager is in charge of parsing an incoming data stream and extract AT commands. Then
  * call the corresponding handler.
+ * This version of code is support AT command set v0.6.
  *
  * * mgr_at_cmd_list.c   contains the **list of handlers for each AT cmd** (cf array
  *                       \ref cas_atcmd_list_array)

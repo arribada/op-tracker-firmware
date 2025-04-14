@@ -24,7 +24,7 @@ TARGET = argos-smd-at-kineis-firmware
 # building variables
 ######################################
 # debug build?
-DEBUG = 0
+DEBUG = 1
 VERBOSE = 1
 USE_BAREMETAL = 1
 
@@ -53,7 +53,7 @@ KRD_BOARD = KRD_FW_MP
 ifeq ($(DEBUG), 1)
 OPT = -Og
 else
-OPT =
+OPT = -O1
 endif
 
 #######################################
@@ -100,7 +100,6 @@ Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_rcc_ex.c \
 Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_flash.c \
 Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_flash_ex.c \
 Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_gpio.c \
-Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_spi.c \
 Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_dma.c \
 Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_dma_ex.c \
 Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_pwr.c \
@@ -115,7 +114,6 @@ Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_uart.c \
 Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_uart_ex.c \
 Core/Src/system_stm32wlxx.c \
 Core/Src/gpio.c \
-Core/Src/spi.c \
 Core/Src/syscalls.c \
 Core/Src/usart.c \
 Core/Src/subghz.c \
@@ -137,15 +135,6 @@ $(KINEIS_DIR)/Extdep/Mcu/Src/aes.c \
 $(KINEIS_DIR)/Extdep/Mcu/Src/mcu_nvm.c \
 $(KINEIS_DIR)/Extdep/Mcu/Src/mcu_tim.c \
 $(KINEIS_DIR)/App/Mcu/Src/mcu_at_console.c \
-$(KINEIS_DIR)/App/Mcu/Src/mcu_spi_driver.c \
-$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd.c \
-$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_common.c \
-$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_list.c \
-$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_list_user_data.c \
-$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_list_general.c \
-$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_list_mac.c \
-$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_list_certif.c \
-$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_list_previpass.c \
 $(KINEIS_DIR)/App/Managers/MGR_AT_CMD/Src/mgr_at_cmd.c \
 $(KINEIS_DIR)/App/Managers/MGR_AT_CMD/Src/mgr_at_cmd_common.c \
 $(KINEIS_DIR)/App/Managers/MGR_AT_CMD/Src/mgr_at_cmd_list.c \
@@ -263,6 +252,18 @@ endif
 ifeq ($(COMM),SPI)
 C_DEFS +=  \
 -DUSE_SPI_DRIVER
+
+C_SOURCES += Drivers/STM32WLxx_HAL_Driver/Src/stm32wlxx_hal_spi.c \
+			Core/Src/spi.c \
+			$(KINEIS_DIR)/App/Mcu/Src/mcu_spi_driver.c \
+			$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd.c \
+			$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_common.c \
+			$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_list.c \
+			$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_list_user_data.c \
+			$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_list_general.c \
+			$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_list_mac.c \
+			$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_list_certif.c \
+			$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_spi_cmd_list_previpass.c 
 endif
 
 
@@ -343,8 +344,7 @@ C_INCLUDES =  \
 -I$(KINEIS_DIR)/App/Mcu/Inc \
 -I$(KINEIS_DIR)/App/Libs/STRUTIL/Inc \
 -I$(KINEIS_DIR)/App/Libs/USERDATA/Inc \
--I$(KINEIS_DIR)/Lpm/Inc \
-#-IApplication/User/KineisSpi/Inc
+-I$(KINEIS_DIR)/Lpm/Inc 
 
 C_INCLUDES += #$(libknsrf_wl_INCLUDES)
 
@@ -359,9 +359,9 @@ C_DEFS +=  \
 endif
 
 # compile gcc flags
-ASFLAGS += $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -Wextra -Wno-unused-parameter -Wimplicit-fallthrough=1 -Werror -Wtype-limits -fdata-sections -Wwrite-strings -ffunction-sections -fstack-usage
+ASFLAGS += $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -Wextra -Werror -Wno-unused-but-set-variable -Wno-enum-conversion -Wno-unused-parameter -Wimplicit-fallthrough=1 -Wtype-limits -fdata-sections -Wwrite-strings -ffunction-sections -fstack-usage
 
-CFLAGS += $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Wextra -Wno-unused-parameter -Wimplicit-fallthrough=1 -Werror -Wtype-limits -fdata-sections -Wwrite-strings -ffunction-sections -fstack-usage
+CFLAGS += $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Wextra -Werror -Wno-unused-but-set-variable -Wno-enum-conversion -Wno-unused-parameter -Wimplicit-fallthrough=1 -Wtype-limits -fdata-sections -Wwrite-strings -ffunction-sections -fstack-usage
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2

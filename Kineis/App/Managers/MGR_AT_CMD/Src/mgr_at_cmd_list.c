@@ -19,7 +19,7 @@
 #include "mgr_at_cmd_list_mac.h"
 #include "mgr_at_cmd_list_certif.h"
 
-const char *atcmd_version = "v0.5";
+const char *atcmd_version = "v0.6";
 
 /** @attention update AT cmd version above if you add or remove commands in this list */
 const struct atcmd_desc_t cas_atcmd_list_array[ATCMD_MAX_COUNT] = {
@@ -34,6 +34,7 @@ const struct atcmd_desc_t cas_atcmd_list_array[ATCMD_MAX_COUNT] = {
 	{ "AT+RCONF",         8, bMGR_AT_CMD_RCONF_cmd},
 	{ "AT+SAVE_RCONF",   13, bMGR_AT_CMD_SAVE_RCONF_cmd},
 	{ "AT+LPM",           6, bMGR_AT_CMD_LPM_cmd},
+	{ "AT+MC",            5, bMGR_AT_CMD_MC_cmd},
 	{ "AT+TCXO_WU",      10, bMGR_AT_CMD_TCXO_cmd},
 
 	/**< User data commands */
@@ -45,8 +46,7 @@ const struct atcmd_desc_t cas_atcmd_list_array[ATCMD_MAX_COUNT] = {
 	/**< Certif commands */
 	{ "AT+CW",            5, bMGR_AT_CMD_CW_cmd},
 
-	/**< Satellite pass predictions commands (not functionnal, only to avoid GUI to crash) */
-	{ "AT+PREPASS_EN",   13, bMGR_AT_CMD_PREPASS_EN_cmd},
+	/**< to set the date in modem */
 	{ "AT+UDATE",         8, bMGR_AT_CMD_UDATE_cmd},
 
 	/**< MAC commands (not functionnal, only to avoid GUI to crash) */

@@ -1,0 +1,10 @@
+digraph "Kineis/Extdep/Mcu/Inc/mcu_nvm.h"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="Kineis/Extdep/Mcu/Inc\l/mcu_nvm.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="MCU wrappers for Non volatile memory management."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Kineis/Extdep/Mcu/Src\l/mcu_nvm.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d6/d2f/mcu__nvm_8c.html",tooltip="MCU wrapper for any access to the non volatile memory accesses."];
+}

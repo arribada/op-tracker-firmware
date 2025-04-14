@@ -1,0 +1,19 @@
+digraph "IDLE_task"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="IDLE_task",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="assertMspOverflow",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d29/main_8c.html#a2436cad8369aeaa42df04ee4024042f2",tooltip="Check stack limit, in a way to track overflows (0xAAAAAAAA)"];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="KNS_Q_isEvtInSomeQ",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/ddb/group___k_n_s___q.html#gae3b6f82f0cfe829173632dde48cd0d28",tooltip="This function is used to check some queue contains some elements."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="LPM_enter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga349cbb2c24fd0bd7f2c24bd063734660",tooltip="Try to enter low power mode depending on clients capabilities."];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="MGR_LPM_enter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga7bf128e76e6a14840b3c8d74946c37f1",tooltip="This is the main Entry point to the low power mode manager."];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="MGR_AT_CMD_isPendingAt",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d0f/group___m_g_r___a_t___c_m_d.html#ga93e0ba86dd0dff06dc8b957213e34b58",tooltip="API used to check there is some AT command in internal fifo."];
+}

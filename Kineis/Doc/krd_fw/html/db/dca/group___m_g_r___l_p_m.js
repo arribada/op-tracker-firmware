@@ -2,17 +2,17 @@ var group___m_g_r___l_p_m =
 [
     [ "\u202AMgrLpm_EnvConfig_t", "dc/d36/struct_mgr_lpm___env_config__t.html", [
       [ "\u202AallowedLPMbitmap", "dc/d36/struct_mgr_lpm___env_config__t.html#adcd7857d13d0316d002115dc8337de3b", null ],
-      [ "\u202Afp_shutdown_enter", "dc/d36/struct_mgr_lpm___env_config__t.html#a734dad68aaac82ef5850a3d7808bcf3e", null ],
-      [ "\u202Afp_sleep_enter", "dc/d36/struct_mgr_lpm___env_config__t.html#aee5da39c6d440d837cb3bc5c6d10e54b", null ],
-      [ "\u202Afp_sleep_exit", "dc/d36/struct_mgr_lpm___env_config__t.html#a1993a727e49def4c0efebe070f2f380a", null ],
-      [ "\u202Afp_standby_enter", "dc/d36/struct_mgr_lpm___env_config__t.html#a1f3c29bd4a37954dacdf27c1a7b950cd", null ],
-      [ "\u202Afp_stop_enter", "dc/d36/struct_mgr_lpm___env_config__t.html#a5a402a1bb504afd7548856deb3193eb8", null ],
-      [ "\u202Afp_stop_exit", "dc/d36/struct_mgr_lpm___env_config__t.html#a83e3caa1625e1ea4450180615e65158a", null ]
+      [ "\u202Afp_shutdown_enter", "dc/d36/struct_mgr_lpm___env_config__t.html#a18fc041c41bf1fa6f3dd2b682f70276f", null ],
+      [ "\u202Afp_sleep_enter", "dc/d36/struct_mgr_lpm___env_config__t.html#aeb0737e6ebddffda9f642d7ed1ff17ba", null ],
+      [ "\u202Afp_sleep_exit", "dc/d36/struct_mgr_lpm___env_config__t.html#ab3143fc0ab7d7f4c6cd7e98502c59a50", null ],
+      [ "\u202Afp_standby_enter", "dc/d36/struct_mgr_lpm___env_config__t.html#a5a908af01869f01d2453ad488afd6165", null ],
+      [ "\u202Afp_stop_enter", "dc/d36/struct_mgr_lpm___env_config__t.html#adcdae08ee5dd47965f65714b899d20c7", null ],
+      [ "\u202Afp_stop_exit", "dc/d36/struct_mgr_lpm___env_config__t.html#a6a8468dd96dec4f1cf0aebe0f2ee238a", null ]
     ] ],
     [ "\u202AMgrLpmClientCb_t", "d9/dd4/struct_mgr_lpm_client_cb__t.html", [
-      [ "\u202AfpMGR_LPM_LpmNotifEnterCb", "d9/dd4/struct_mgr_lpm_client_cb__t.html#a460bdb223e17ccebeee73f642f3636c5", null ],
-      [ "\u202AfpMGR_LPM_LpmNotifExitCb", "d9/dd4/struct_mgr_lpm_client_cb__t.html#a0c41d908a210014c32fe064d4bf9ae7c", null ],
-      [ "\u202AfpMGR_LPM_LpmReqCb", "d9/dd4/struct_mgr_lpm_client_cb__t.html#aa343028760d1d01387b860241aea994a", null ]
+      [ "\u202AfpMGR_LPM_LpmNotifEnterCb", "d9/dd4/struct_mgr_lpm_client_cb__t.html#ae7bdb56e156880215e1bb1ac6ab0b725", null ],
+      [ "\u202AfpMGR_LPM_LpmNotifExitCb", "d9/dd4/struct_mgr_lpm_client_cb__t.html#ab7df34be4b1e89b6c452aaee9c746ac6", null ],
+      [ "\u202AfpMGR_LPM_LpmReqCb", "d9/dd4/struct_mgr_lpm_client_cb__t.html#a3b1f6a0650164a654d208139131e0293", null ]
     ] ],
     [ "\u202AMgrLpm_ctxt_t", "df/d72/struct_mgr_lpm__ctxt__t.html", [
       [ "\u202Alow_power_mode", "df/d72/struct_mgr_lpm__ctxt__t.html#a32536c2967384551e41fd49f561cf6fb", null ],

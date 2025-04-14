@@ -1,0 +1,18 @@
+digraph "Kineis/Extdep/Conf" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_e4bcde167f88f305238965282a0ab06e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Extdep" fontname="Helvetica", fontsize="10", URL="dir_e4bcde167f88f305238965282a0ab06e.html"]
+  dir_603c3abc85dcd5ce81fff229f71c4fb7 [shape=box label="MGR_LOG" fillcolor="white" style="filled" color="red" URL="dir_603c3abc85dcd5ce81fff229f71c4fb7.html"];
+  dir_b8b18822a774fad16818b672d6e0daf5 [shape=box, label="Conf", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_b8b18822a774fad16818b672d6e0daf5.html"];
+  }
+  dir_283ee20ab5eb9693b75f98890f2aae44 [shape=box label="App" fillcolor="white" style="filled" color="red" URL="dir_283ee20ab5eb9693b75f98890f2aae44.html"];
+  dir_8bac7462668d86a984d2ee5977e3cf6a [shape=box label="Lib" URL="dir_8bac7462668d86a984d2ee5977e3cf6a.html"];
+  dir_283ee20ab5eb9693b75f98890f2aae44->dir_603c3abc85dcd5ce81fff229f71c4fb7 [headlabel="10", labeldistance=1.5 headhref="dir_000004_000032.html"];
+  dir_283ee20ab5eb9693b75f98890f2aae44->dir_8bac7462668d86a984d2ee5977e3cf6a [headlabel="15", labeldistance=1.5 headhref="dir_000004_000035.html"];
+  dir_283ee20ab5eb9693b75f98890f2aae44->dir_b8b18822a774fad16818b672d6e0daf5 [headlabel="14", labeldistance=1.5 headhref="dir_000004_000028.html"];
+  dir_b8b18822a774fad16818b672d6e0daf5->dir_283ee20ab5eb9693b75f98890f2aae44 [headlabel="1", labeldistance=1.5 headhref="dir_000028_000004.html"];
+  dir_b8b18822a774fad16818b672d6e0daf5->dir_603c3abc85dcd5ce81fff229f71c4fb7 [headlabel="1", labeldistance=1.5 headhref="dir_000028_000032.html"];
+  dir_b8b18822a774fad16818b672d6e0daf5->dir_8bac7462668d86a984d2ee5977e3cf6a [headlabel="3", labeldistance=1.5 headhref="dir_000028_000035.html"];
+}

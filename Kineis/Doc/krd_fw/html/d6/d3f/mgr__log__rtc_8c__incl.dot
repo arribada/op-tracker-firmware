@@ -1,0 +1,17 @@
+digraph "Kineis/Extdep/MGR_LOG/Src/mgr_log_rtc.c"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="Kineis/Extdep/MGR_LOG\l/Src/mgr_log_rtc.c",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="This file contains log routine concerning RTC. There is a dependency on HAL RTC."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="stdio.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="mgr_log.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d2e/mgr__log_8h.html",tooltip="logger main header file"];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="mgr_log_rtc.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d70/mgr__log__rtc_8h.html",tooltip=": Header for mgr_log_rtc.c file. This file contains log routine concerning RTC. Thus there is a depen..."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="kns_app_conf.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d04/kns__app__conf_8h.html",tooltip="Kineis Application configurations depending on platform used."];
+}

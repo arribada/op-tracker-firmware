@@ -228,11 +228,8 @@ SECTIONS
     *(.msgCntSectionData)
     *(.rtc_bkpr)           /* .rtc_bkpr sections */
     *(.rtc_bkpr*)          /* .rtc_bkpr* sections */
-    *(.radioConfFlag)      /* .radioConfSection section */
+
     . = ALIGN(4);
-    . = ALIGN(1);
-   	*(.radioConfSection)   /* Include the .radioConfSection data */
-    . = ALIGN(1);
     _ertc_bkpr = .;        /* define a global symbol at rtc_bkpr end */
   } >RTC_BKPR
 

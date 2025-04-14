@@ -1,0 +1,14 @@
+digraph "Kineis/App/Mcu/Src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6bb50a2f0076c8f8a35f09a1613f8275 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Mcu" fontname="Helvetica", fontsize="10", URL="dir_6bb50a2f0076c8f8a35f09a1613f8275.html"]
+  dir_2746af6fd9215695ee62a3ce52ea8276 [shape=box, label="Src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_2746af6fd9215695ee62a3ce52ea8276.html"];
+  }
+  dir_68ffa5ca8ccfa6448bd0595e797999e4 [shape=box label="Appconf" URL="dir_68ffa5ca8ccfa6448bd0595e797999e4.html"];
+  dir_e4bcde167f88f305238965282a0ab06e [shape=box label="Extdep" fillcolor="white" style="filled" color="red" URL="dir_e4bcde167f88f305238965282a0ab06e.html"];
+  dir_2746af6fd9215695ee62a3ce52ea8276->dir_68ffa5ca8ccfa6448bd0595e797999e4 [headlabel="1", labeldistance=1.5 headhref="dir_000025_000026.html"];
+  dir_2746af6fd9215695ee62a3ce52ea8276->dir_e4bcde167f88f305238965282a0ab06e [headlabel="1", labeldistance=1.5 headhref="dir_000025_000027.html"];
+  dir_e4bcde167f88f305238965282a0ab06e->dir_68ffa5ca8ccfa6448bd0595e797999e4 [headlabel="3", labeldistance=1.5 headhref="dir_000027_000026.html"];
+}

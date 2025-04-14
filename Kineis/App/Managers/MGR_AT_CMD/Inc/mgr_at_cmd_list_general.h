@@ -176,6 +176,24 @@ bool bMGR_AT_CMD_SAVE_RCONF_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_t e
  */
 bool bMGR_AT_CMD_LPM_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_t e_exec_mode);
 
+/** @brief Process AT command "AT+MC" get the address of module
+ *
+ * 1) "AT+MC=<message counter>"
+ * N/A Response format: "+ERROR=<error_code>". (See \ref ERROR_RETURN_T)
+ *
+ * 2) "AT+MC=?" returns the address of module
+ * Response format: "+MC=<MC :Message counter used for next frame building>" or "+MC=<error_code>". (See \ref ERROR_RETURN_T)
+ * \<MC\> is haxadecimal value on 3 digits corresponding to a 9-bit value. It
+ * represents the device message counter used for antireplay and authentication of the radio frame.
+ *
+ * @param[in] pu8_cmdParamString: string containing AT command
+ * @param[in] e_exec_mode: type of the command (status command or action command)
+ *
+ * @return true if command is correctly received and processed, false if error
+ */
+bool bMGR_AT_CMD_MC_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_t e_exec_mode);
+
+
 /** @brief Set/Get TCXO warmup time in ms
  *
  * 1) "AT+TCXO_WU=<Time in MS> will configure the expected Warmup time for the TCXO.

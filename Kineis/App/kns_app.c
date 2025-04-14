@@ -201,7 +201,7 @@ void KNS_APP_stdln_loop(void)
 					state++;
 					break;
 				case (KNS_MAC_ERROR):
-					MGR_LOG_DEBUG("[%s] MAC profile error\r\n", __func__);
+					MGR_LOG_DEBUG("[%s] MAC profile error: %d\r\n", __func__, srvcEvt.status);
 					TEST_FAIL();
 					break;
 				default:
@@ -218,7 +218,7 @@ void KNS_APP_stdln_loop(void)
 		/** Initialize buffer with random data */
 		for (idx = 0; idx < sizeof(buffer_tx); idx++)
 			buffer_tx[idx] = rand_r(((unsigned int *)&seed));
-
+		
 		/** ---- OPTIONAL BLOCK ---- START -- needed if radio conf not hardcoded -----   */
 		kns_assert(KNS_CFG_getRadioInfo(&device_radio_cfg) == KNS_STATUS_OK);
 
@@ -239,7 +239,7 @@ void KNS_APP_stdln_loop(void)
 			appEvt.data_ctxt.usrdata_bitlen = 24;
 			break;
 		case (KNS_TX_MOD_LDK):
-			appEvt.data_ctxt.usrdata_bitlen = 152;
+			appEvt.data_ctxt.usrdata_bitlen = 128;
 			break;
 		default:
 			kns_assert(0); // wrong modulation flashed into device
@@ -298,10 +298,12 @@ void KNS_APP_stdln_loop(void)
 					 * this application
 					 */
 					if (srvcEvt.app_evt == KNS_MAC_SEND_DATA) {
-						MGR_LOG_DEBUG("[%s] cannot send 0x", __func__);
+						MGR_LOG_DEBUG("[%s] error %d, cannot send 0x", __func__, srvcEvt.status);
 						MGR_LOG_array(srvcEvt.tx_ctxt.data,
 //							(srvcEvt.tx_ctxt.data_bitlen+7)>>3);
 							4); // limit to 4 bytes for real-time
+					} else {
+						MGR_LOG_DEBUG("[%s] MAC error: %d\r\n", __func__, srvcEvt.status);
 					}
 					TEST_FAIL();
 					state++;
@@ -330,7 +332,7 @@ void KNS_APP_stdln_loop(void)
 					state++;
 					break;
 				case (KNS_MAC_ERROR):
-					MGR_LOG_DEBUG("[%s] MAC ERROR\r\n", __func__);
+					MGR_LOG_DEBUG("[%s] MAC ERROR: %d\r\n", __func__, srvcEvt.status);
 					TEST_FAIL();
 					state++;
 					break;
@@ -358,7 +360,7 @@ void KNS_APP_gui_init(void *context)
 	kns_assert(context != NULL); // context should contain pointer to UART handle
 
 	/** Initialize AT command manager */
-//#if defined(USE_UART_DRIVER)
+
 #if defined(USE_SPI_DRIVER)
 	MGR_SPI_CMD_start(context);
 #else

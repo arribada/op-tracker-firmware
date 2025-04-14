@@ -20,15 +20,9 @@ CDefines=CORE_CM4;USE_HAL_DRIVER;STM32WL55xx;USE_HAL_DRIVER;USE_HAL_DRIVER;
 AdvancedFolderStructure=true
 HeaderFileListSize=9
 HeaderFiles#0=..\Core\Inc\gpio.h
-<<<<<<< HEAD
 HeaderFiles#1=..\Core\Inc\spi.h
 HeaderFiles#2=..\Core\Inc\usart.h
 HeaderFiles#3=..\Core\Inc\rtc.h
-=======
-HeaderFiles#1=..\Core\Inc\usart.h
-HeaderFiles#2=..\Core\Inc\rtc.h
-HeaderFiles#3=..\Core\Inc\spi.h
->>>>>>> ea16c5076fbe5692e71b9dba0780bce3021ba8fb
 HeaderFiles#4=..\Core\Inc\subghz.h
 HeaderFiles#5=..\Core\Inc\tim.h
 HeaderFiles#6=..\Core\Inc\stm32wlxx_it.h
@@ -39,15 +33,9 @@ HeaderPath#0=..\Core\Inc
 HeaderFiles=;
 SourceFileListSize=9
 SourceFiles#0=..\Core\Src\gpio.c
-<<<<<<< HEAD
 SourceFiles#1=..\Core\Src\spi.c
 SourceFiles#2=..\Core\Src\usart.c
 SourceFiles#3=..\Core\Src\rtc.c
-=======
-SourceFiles#1=..\Core\Src\usart.c
-SourceFiles#2=..\Core\Src\rtc.c
-SourceFiles#3=..\Core\Src\spi.c
->>>>>>> ea16c5076fbe5692e71b9dba0780bce3021ba8fb
 SourceFiles#4=..\Core\Src\subghz.c
 SourceFiles#5=..\Core\Src\tim.c
 SourceFiles#6=..\Core\Src\stm32wlxx_it.c

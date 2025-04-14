@@ -96,7 +96,7 @@ enum KNS_status_t MCU_NVM_saveRadioConfZone(void);
  *
  * This is a read-only operation.
  *
- * @param[out] id : Kineis identifier
+ * @param[out] dev_id : Kineis identifier
  *
  * @return Status @ref KNS_status_t
  */

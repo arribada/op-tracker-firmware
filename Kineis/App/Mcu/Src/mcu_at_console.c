@@ -15,7 +15,8 @@
 
 #ifdef AXM0
 #if (defined(STM32WLE5xx) && (STM32WLE5xx == 1U)) || \
-(defined(STM32WL55xx) && (STM32WL55xx == 1U))
+    (defined(STM32WL55xx) && (STM32WL55xx == 1U)) || \
+	(defined(STM32L442xx) && (STM32L442xx == 1U))
 #error choose one uC for MCU AT console wrapper
 #endif
 #include "mcu_at_console_axm0.c"

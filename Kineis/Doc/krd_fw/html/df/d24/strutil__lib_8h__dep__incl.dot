@@ -1,0 +1,43 @@
+digraph "Kineis/App/Libs/STRUTIL/Inc/strutil_lib.h"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="Kineis/App/Libs/STRUTIL\l/Inc/strutil_lib.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="small utilities to manipulate strings"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Kineis/App/Libs/STRUTIL\l/Src/strutil_lib.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d43/strutil__lib_8c.html",tooltip="Application general purpose routines for data conversion / generation."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Kineis/App/Managers\l/MGR_AT_CMD/Inc/mgr\l_at_cmd_common.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d58/mgr__at__cmd__common_8h.html",tooltip="header file for common part of the AT cmd manager"];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="Kineis/App/Managers\l/MGR_AT_CMD/Inc/mgr\l_at_cmd_list_general.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/ddf/mgr__at__cmd__list__general_8h.html",tooltip="subset of AT commands concerning general purpose (get ID, FW version, ...)"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_list.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/df9/mgr__at__cmd__list_8c.html",tooltip="AT commands list main file."];
+  Node4 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_list_general.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/dfd/mgr__at__cmd__list__general_8c.html",tooltip="subset of AT commands concerning general purpose (get ID, FW version, ...)"];
+  Node3 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="Kineis/App/Managers\l/MGR_AT_CMD/Inc/mgr\l_at_cmd_list_mac.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/dc9/mgr__at__cmd__list__mac_8h.html",tooltip="subset of AT commands concerning Kinéis Medium Acces Channel (MAC)."];
+  Node7 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_list_mac.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/de0/mgr__at__cmd__list__mac_8c.html",tooltip="subset of AT commands concerning Kinéis Medium Acces Channel (MAC)."];
+  Node3 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="Kineis/App/Managers\l/MGR_AT_CMD/Inc/mgr\l_at_cmd_list_previpass.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/da4/mgr__at__cmd__list__previpass_8h.html",tooltip="subset of AT commands concerning satellite PASS predictions, usefull for Medium Acces"];
+  Node9 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_list_previpass.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d4a/mgr__at__cmd__list__previpass_8c.html",tooltip="subset of AT commands concerning satellite PASS predictions, usefull for Medium Acces"];
+  Node3 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="Kineis/App/Managers\l/MGR_AT_CMD/Inc/mgr\l_at_cmd_list_user_data.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$de/de6/mgr__at__cmd__list__user__data_8h.html",tooltip="subset of AT commands concerning user data manipulation such as TX"];
+  Node11 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_list_user_data.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d11/mgr__at__cmd__list__user__data_8c.html",tooltip="subset of AT commands concerning user data manipulation such as TX"];
+  Node3 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d77/mgr__at__cmd_8c.html",tooltip="APIs Implementation used to parse the UART ASCII data stream and extract AT commands."];
+  Node3 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_common.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/dd7/mgr__at__cmd__common_8c.html",tooltip="common part of the AT cmd manager (logging, AT cmd response api)"];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_list_certif.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d04/mgr__at__cmd__list__certif_8c.html",tooltip="subset of AT commands concerning specifics for certification"];
+  Node3 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

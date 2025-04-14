@@ -35,9 +35,9 @@ var group___m_g_r___a_t___c_m_d =
       [ "\u202AAT_RCONF", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gga2bb84f2b5291e6b0019cc5248e8c638eabc1a43914795227bccdeaa4962a53cc8", null ],
       [ "\u202AAT_SAVE_RCONF", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gga2bb84f2b5291e6b0019cc5248e8c638ea381a20ecb7bb55ff8b14012336914eef", null ],
       [ "\u202AAT_LPM", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gga2bb84f2b5291e6b0019cc5248e8c638ea2e6efb4a352d9e19f60ba192ad13f2f7", null ],
+      [ "\u202AAT_MC", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gga2bb84f2b5291e6b0019cc5248e8c638ea2b07ba0e5e606270d68e8537f8197bd9", null ],
       [ "\u202AAT_TX", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gga2bb84f2b5291e6b0019cc5248e8c638eab16e618e61a35614180a52fd293fb8e9", null ],
       [ "\u202AAT_CW", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gga2bb84f2b5291e6b0019cc5248e8c638ea030e1e70ed5c7deceaaa55da056e248e", null ],
-      [ "\u202AAT_PREPASS_EN", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gga2bb84f2b5291e6b0019cc5248e8c638eabbc4efb97e264b5e2e8df8303ad4be9e", null ],
       [ "\u202AAT_UDATE", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gga2bb84f2b5291e6b0019cc5248e8c638eaa5595e7b3409315150027366849f3b58", null ],
       [ "\u202AAT_KMAC", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gga2bb84f2b5291e6b0019cc5248e8c638ea38c0e7c4f511bb0e63e848b6ed344850", null ],
       [ "\u202AATCMD_MAX_COUNT", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gga2bb84f2b5291e6b0019cc5248e8c638eaf6cd7f2c23912c5c72efc15b0d2676c1", null ],
@@ -45,7 +45,6 @@ var group___m_g_r___a_t___c_m_d =
     ] ],
     [ "\u202Aatcmd_rsp_type_t", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gada632936e06a8dfc948b2b509484dce1", [
       [ "\u202AATCMD_RSP_TXOK", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggada632936e06a8dfc948b2b509484dce1a847fb79887b983dfe61590a85135c694", null ],
-      [ "\u202AATCMD_RSP_TXNOTOK", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggada632936e06a8dfc948b2b509484dce1a42713f1331976a1ff4cb222ec42645a1", null ],
       [ "\u202AATCMD_RSP_TXACKOK", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggada632936e06a8dfc948b2b509484dce1a5545efb5ea52a85cf9639dc65aefc5cc", null ],
       [ "\u202AATCMD_RSP_TXACKNOTOK", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggada632936e06a8dfc948b2b509484dce1a3f6abc393f8661d0d21892c4ef9ca313", null ],
       [ "\u202AATCMD_RSP_SATDET", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggada632936e06a8dfc948b2b509484dce1a212a2a976045da99bad08344c1439439", null ],
@@ -53,7 +52,9 @@ var group___m_g_r___a_t___c_m_d =
       [ "\u202AATCMD_RSP_SATDETTO", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggada632936e06a8dfc948b2b509484dce1a487ef88d5f415aec72280052ec97c9bd", null ],
       [ "\u202AATCMD_RSP_RXOK", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggada632936e06a8dfc948b2b509484dce1ae4e9f0abba4a83c27499aa5d016266b0", null ],
       [ "\u202AATCMD_RSP_DLOK", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggada632936e06a8dfc948b2b509484dce1a216d95542cc61228718c0b6eb2be707f", null ],
-      [ "\u202AATCMD_RSP_RXTIMEOUT", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggada632936e06a8dfc948b2b509484dce1aa87e61b2861d132de555fdb02c162ac4", null ]
+      [ "\u202AATCMD_RSP_RXTIMEOUT", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggada632936e06a8dfc948b2b509484dce1aa87e61b2861d132de555fdb02c162ac4", null ],
+      [ "\u202AATCMD_RSP_TXTIMEOUT", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggada632936e06a8dfc948b2b509484dce1aa227475a6187c1f71797afe6a0e9c93a", null ],
+      [ "\u202AATCMD_RSP_RXERROR", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggada632936e06a8dfc948b2b509484dce1a25ad601c25a42455f405c030908bbbde", null ]
     ] ],
     [ "\u202Aatcmd_type_t", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gab89e1f0a2ffb77ebf4f9bb354ecebc67", [
       [ "\u202AATCMD_ACTION_MODE", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ggab89e1f0a2ffb77ebf4f9bb354ecebc67a5f6c5764c4aec511a5c1194201445952", null ],
@@ -75,6 +76,8 @@ var group___m_g_r___a_t___c_m_d =
     [ "\u202AbMGR_AT_CMD_logSucceedMsg", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gabef580da46cf82ca74ba3e5217cf3ffa", null ],
     [ "\u202AbMGR_AT_CMD_LPM_cmd", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gaed4723249aba7dbe8e17c74eed648f4b", null ],
     [ "\u202AbMGR_AT_CMD_LPM_cmd", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gaed54481dc013fb7e0aa7e0e4cac69fe8", null ],
+    [ "\u202AbMGR_AT_CMD_MC_cmd", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ga5b87e37fb8cb422341f3ed3f0947d09c", null ],
+    [ "\u202AbMGR_AT_CMD_MC_cmd", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gae0c846deff295bbe853ef10c58ce3291", null ],
     [ "\u202AbMGR_AT_CMD_PING_cmd", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gad504c930c0c0222576334c21940e245e", null ],
     [ "\u202AbMGR_AT_CMD_PING_cmd", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gab1114ad88a3a8ef9482d6b08fd55c0ab", null ],
     [ "\u202AbMGR_AT_CMD_PREPASS_EN_cmd", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gafa3e80f7aedfa74c8d16d0202a3f4f07", null ],
@@ -90,7 +93,6 @@ var group___m_g_r___a_t___c_m_d =
     [ "\u202AbMGR_AT_CMD_UDATE_cmd", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gac26c4703ebc4154a3d44c9fb01c366da", null ],
     [ "\u202AbMGR_AT_CMD_VERSION_cmd", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gafa261eed6f61302c724f74b963bae320", null ],
     [ "\u202AbMGR_AT_CMD_VERSION_cmd", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gafd0e415f3fba36bb24b1ba2c9a681ac7", null ],
-    [ "\u202AconvKnsStatusToAtErr", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ga3cafca118878601afaac95a1b3dc75af", null ],
     [ "\u202AeoAtMW_isr_cb", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gafccb1dfaf28ab371bebd814a3abaa57c", null ],
     [ "\u202AMGR_AT_CMD_decodeAt", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ga9cef55cf869d8f8c3eaf6a49ca61b5d2", null ],
     [ "\u202AMGR_AT_CMD_getAtType", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ga00f586ef524b455b8324900358922b2b", null ],

@@ -1,0 +1,15 @@
+digraph "Kineis/App/Libs/STRUTIL" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_70beccd1d8997d0174d02d630d77a447 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Libs" fontname="Helvetica", fontsize="10", URL="dir_70beccd1d8997d0174d02d630d77a447.html"]
+  subgraph clusterdir_30e769e08e4be49e86a463d17d73ec0a {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_30e769e08e4be49e86a463d17d73ec0a.html"];
+    dir_30e769e08e4be49e86a463d17d73ec0a [shape=plaintext label="STRUTIL"];
+  dir_a8daca38a0da2eb9df4c599707276f1e [shape=box label="Inc" fillcolor="white" style="filled" URL="dir_a8daca38a0da2eb9df4c599707276f1e.html"];
+  dir_343c30fe7fb2b65fdf46df5c32bc66c4 [shape=box label="Src" fillcolor="white" style="filled" URL="dir_343c30fe7fb2b65fdf46df5c32bc66c4.html"];
+  }
+  }
+  dir_343c30fe7fb2b65fdf46df5c32bc66c4->dir_a8daca38a0da2eb9df4c599707276f1e [headlabel="1", labeldistance=1.5 headhref="dir_000015_000014.html"];
+}

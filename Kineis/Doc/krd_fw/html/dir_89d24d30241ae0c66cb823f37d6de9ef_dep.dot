@@ -1,0 +1,11 @@
+digraph "Kineis/App/Kineis_os/KNS_OS/Src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_3992098c38770792185064af681390b8 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="KNS_OS" fontname="Helvetica", fontsize="10", URL="dir_3992098c38770792185064af681390b8.html"]
+  dir_f189585f2359976d1a69e018c8fd6030 [shape=box label="Inc" URL="dir_f189585f2359976d1a69e018c8fd6030.html"];
+  dir_89d24d30241ae0c66cb823f37d6de9ef [shape=box, label="Src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_89d24d30241ae0c66cb823f37d6de9ef.html"];
+  }
+  dir_89d24d30241ae0c66cb823f37d6de9ef->dir_f189585f2359976d1a69e018c8fd6030 [headlabel="1", labeldistance=1.5 headhref="dir_000008_000007.html"];
+}

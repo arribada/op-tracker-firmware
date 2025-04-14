@@ -1,0 +1,17 @@
+digraph "Kineis/Extdep/MGR_LOG" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_e4bcde167f88f305238965282a0ab06e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Extdep" fontname="Helvetica", fontsize="10", URL="dir_e4bcde167f88f305238965282a0ab06e.html"]
+  subgraph clusterdir_603c3abc85dcd5ce81fff229f71c4fb7 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_603c3abc85dcd5ce81fff229f71c4fb7.html"];
+    dir_603c3abc85dcd5ce81fff229f71c4fb7 [shape=plaintext label="MGR_LOG"];
+  dir_a674acbb93d18f32f9e6583072a572b8 [shape=box label="Inc" fillcolor="white" style="filled" URL="dir_a674acbb93d18f32f9e6583072a572b8.html"];
+  dir_b6260dc7bec6ab88b90e637459a986f2 [shape=box label="Src" fillcolor="white" style="filled" URL="dir_b6260dc7bec6ab88b90e637459a986f2.html"];
+  }
+  }
+  dir_68ffa5ca8ccfa6448bd0595e797999e4 [shape=box label="Appconf" URL="dir_68ffa5ca8ccfa6448bd0595e797999e4.html"];
+  dir_b6260dc7bec6ab88b90e637459a986f2->dir_68ffa5ca8ccfa6448bd0595e797999e4 [headlabel="2", labeldistance=1.5 headhref="dir_000034_000026.html"];
+  dir_b6260dc7bec6ab88b90e637459a986f2->dir_a674acbb93d18f32f9e6583072a572b8 [headlabel="3", labeldistance=1.5 headhref="dir_000034_000033.html"];
+}

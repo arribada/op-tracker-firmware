@@ -22,7 +22,7 @@
 #include "kineis_sw_conf.h"
 #include KINEIS_SW_ASSERT_H
 #include "mgr_log.h"
-#include "subghz.h"
+
 /* Defines --------------------------------------------------------------------------------------*/
 
 /** Define AT commands FIFO length. As long as sending AT+TX one by one, it is not that usefull to

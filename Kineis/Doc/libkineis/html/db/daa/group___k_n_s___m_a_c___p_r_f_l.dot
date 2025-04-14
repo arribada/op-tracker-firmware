@@ -1,0 +1,9 @@
+digraph "KNS_MAC_PRFL"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=box];
+  rankdir=LR;
+  Node1 [label="KNS_MAC_PRFL",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="MAC Protocol configuration."];
+  Node2 [label="KNS_MAC",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/dbc/group___k_n_s___m_a_c.html",tooltip=" "];
+  Node1->Node2 [shape=plaintext, label="KNS_MAC_send_data_ctxt_t", color="orange", dir="none", style="dashed"];
+}

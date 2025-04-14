@@ -1,0 +1,39 @@
+digraph "__attribute__"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="__attribute__",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="LPM_shutdown_enter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga8828ea85b626943b9d30c4dfabb0666a",tooltip="System callback invoked by MGR_LPM at STANDBY mode entering."];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="GPIO_DisableAllToAnalogInput",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga2a7197f71c2bd57494778d45b8e3dab2",tooltip="Disable all GPIO as not used for the moment."];
+  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="LPM_configWakeUpPins",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga2f442d07b917d5aaa9c7b1ca07b0c24b",tooltip="Function used to configure the external wakeup pins to exit low power mode (standby and shutdown only..."];
+  Node2 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="LPM_configWakeUpRtc",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga3d23fbf0f20054b5bddbbf112200367a",tooltip="Function used to configure the internal wakeup line to exit low power mode."];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="LPM_sleep_enter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga417819706e6583b0e268368befe4cdbb",tooltip="System callback invoked by MGR_LPM at SLEEP mode entering."];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="LPM_sleep_exit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#gafd6b27155bf6c556515edc46ea62ac96",tooltip="System callback invoked by MGR_LPM at SLEEP mode exit."];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="LPM_standby_enter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#gaa6d6e5889194fc0b5a37640ed3d53ef3",tooltip="System callback invoked by MGR_LPM at STANDBY mode entering."];
+  Node8 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="LPM_stop_enter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#gab196a8032ee24a710126fc16eec09ed8",tooltip="System callback invoked by MGR_LPM at STOP mode entering."];
+  Node9 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="LPM_configWakeUpUart",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga3e50a711eb2eb868233364c9c0f1a577",tooltip=" "];
+  Node1 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="LPM_stop_exit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga2dfaa58a8d7f90840153f1f06542fd13",tooltip="System callback invoked by MGR_LPM at STOP mode exit."];
+  Node11 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="LPM_SystemClock_Config\l_RestoreFromStop",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#gab502b89f35dcc87b365658836f69736e",tooltip="System Clock Configuration when exit from stop mode."];
+  Node12 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="Error_Handler",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d29/main_8c.html#a1730ffe1e560465665eb47d9264826f9",tooltip="This function is executed in case of error occurrence."];
+  Node13 -> Node14 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="MCU_AT_CONSOLE_send",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d62/group___m_c_u___a_p_p___w_r_a_p_p_e_r_s.html#gae14ee3e1d2a9b459c0d89c451a4bc470",tooltip="Send AT CMD response to console."];
+}

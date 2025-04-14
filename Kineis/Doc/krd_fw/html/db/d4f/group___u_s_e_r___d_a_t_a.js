@@ -15,9 +15,9 @@ var group___u_s_e_r___d_a_t_a =
       [ "\u202Au8DataBuf", "d8/d33/structs_user_data_tx_fifo_elt__t.html#aa3fe6d01b019ce67e6af978ee0a85876", null ]
     ] ],
     [ "\u202AsUserDataClientCb_t", "d5/d7f/structs_user_data_client_cb__t.html", [
-      [ "\u202AUSERDATA_txFifoAddEltCb", "d5/d7f/structs_user_data_client_cb__t.html#a54ce93bb22300a99d33df8ada66756f1", null ],
-      [ "\u202AUSERDATA_txFifoFlushCb", "d5/d7f/structs_user_data_client_cb__t.html#a175ce3fb1c01bdfc0858d76b3a8548e0", null ],
-      [ "\u202AUSERDATA_txFifoTxCompleteCb", "d5/d7f/structs_user_data_client_cb__t.html#a7125a47bc501a825cdeac26cbd2b5f30", null ]
+      [ "\u202AUSERDATA_txFifoAddEltCb", "d5/d7f/structs_user_data_client_cb__t.html#a368ce3b601658b13c6e42c148d65d790", null ],
+      [ "\u202AUSERDATA_txFifoFlushCb", "d5/d7f/structs_user_data_client_cb__t.html#aafa24095f608720fcc63b83a668807ce", null ],
+      [ "\u202AUSERDATA_txFifoTxCompleteCb", "d5/d7f/structs_user_data_client_cb__t.html#a5b81a8d570fc2478b778322a0a8478f3", null ]
     ] ],
     [ "\u202AsUserDataTxFifo_t", "d9/dc5/structs_user_data_tx_fifo__t.html", [
       [ "\u202AspFirst", "d9/dc5/structs_user_data_tx_fifo__t.html#aa20cadfadf6e03975bf075c0d53a343f", null ]

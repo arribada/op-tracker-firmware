@@ -1,10 +1,10 @@
 #include "libkineis_info.h"
 
 /* Compiler version: 
-arm-none-eabi-gcc (GNU Tools for STM32 11.3.rel1.20230912-1600) 11.3.1 20220712
-Copyright (C) 2021 Free Software Foundation, Inc.
+arm-none-eabi-gcc (Arm GNU Toolchain 12.3.Rel1 (Build arm-12.35)) 12.3.1 20230626
+Copyright (C) 2022 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 */
-const char libkineis_info[] = "v9.1.2_32dd1ca6_0x6Tx";
+const char libkineis_info[] = "v10.0.0_c707759_0x6Tx";

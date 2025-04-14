@@ -1,0 +1,16 @@
+digraph "Kineis/App/Libs" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_283ee20ab5eb9693b75f98890f2aae44 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="App" fontname="Helvetica", fontsize="10", URL="dir_283ee20ab5eb9693b75f98890f2aae44.html"]
+  subgraph clusterdir_70beccd1d8997d0174d02d630d77a447 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_70beccd1d8997d0174d02d630d77a447.html"];
+    dir_70beccd1d8997d0174d02d630d77a447 [shape=plaintext label="Libs"];
+  dir_30e769e08e4be49e86a463d17d73ec0a [shape=box label="STRUTIL" fillcolor="white" style="filled" color="red" URL="dir_30e769e08e4be49e86a463d17d73ec0a.html"];
+  dir_46c6aded582cb38bf172fc7c5a980c8d [shape=box label="USERDATA" fillcolor="white" style="filled" color="red" URL="dir_46c6aded582cb38bf172fc7c5a980c8d.html"];
+  }
+  }
+  dir_e4bcde167f88f305238965282a0ab06e [shape=box label="Extdep" fillcolor="white" style="filled" color="red" URL="dir_e4bcde167f88f305238965282a0ab06e.html"];
+  dir_46c6aded582cb38bf172fc7c5a980c8d->dir_e4bcde167f88f305238965282a0ab06e [headlabel="3", labeldistance=1.5 headhref="dir_000016_000027.html"];
+}

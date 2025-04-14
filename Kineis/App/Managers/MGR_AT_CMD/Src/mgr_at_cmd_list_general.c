@@ -51,7 +51,7 @@ bool bMGR_AT_CMD_VERSION_cmd(uint8_t *pu8_cmdParamString __attribute__((unused))
 	}
 	MCU_AT_CONSOLE_send("\r\n");
 
-	return true;
+	return bMGR_AT_CMD_logSucceedMsg();
 }
 
 bool bMGR_AT_CMD_PING_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
@@ -74,7 +74,7 @@ bool bMGR_AT_CMD_FW_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 
 	MCU_AT_CONSOLE_send("+FW=%s\r\n", uc_fw_vers_commit_id);
 
-	return true;
+	return bMGR_AT_CMD_logSucceedMsg();
 }
 
 bool bMGR_AT_CMD_SECKEY_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
@@ -86,7 +86,7 @@ bool bMGR_AT_CMD_SECKEY_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 	if (e_exec_mode == ATCMD_STATUS_MODE) {
 		if (MCU_AES_get_device_sec_key(sec_key) != KNS_STATUS_OK)
 			/* TODO: add a new error code ? */
-			return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+			return bMGR_AT_CMD_logFailedMsg(ERROR_PARAMETER_FORMAT);
 		char sec_key_str[33];
 		for (int i = 0; i < 16; i++) {
 			sprintf(&sec_key_str[i * 2], "%02x", sec_key[i]);
@@ -107,12 +107,12 @@ bool bMGR_AT_CMD_SECKEY_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 			if (nbBits != DSK_BYTE_LENGTH*8)
 			{
 				MGR_LOG_DEBUG("%s::nbBits error %u should be %u\r\n", __func__, nbBits, DSK_BYTE_LENGTH*8);
-				return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+				return bMGR_AT_CMD_logFailedMsg(ERROR_PARAMETER_FORMAT);
 			}
 			
 			if (MCU_AES_set_device_sec_key(pu8_cmdParamString + 10) != KNS_STATUS_OK)
 			{
-				return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+				return bMGR_AT_CMD_logFailedMsg(ERROR_PARAMETER_FORMAT);
 			}
 			return bMGR_AT_CMD_logSucceedMsg();	
 	} else {
@@ -123,17 +123,18 @@ bool bMGR_AT_CMD_SECKEY_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 bool bMGR_AT_CMD_ADDR_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 	enum atcmd_type_t e_exec_mode)
 {
+	enum KNS_status_t status;
 	uint8_t dev_addr[DEVICE_ADDR_LENGTH];
 	uint16_t nbBits;
 
 	if (e_exec_mode == ATCMD_STATUS_MODE) {
-		if (KNS_CFG_getAddr(dev_addr) != KNS_STATUS_OK)
-			/* TODO: add a new error code ? */
-			return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+		status = KNS_CFG_getAddr(dev_addr);
+		if (status != KNS_STATUS_OK)
+			return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T) status);
 		MCU_AT_CONSOLE_send("+ADDR=%02x%02x%02x%02x\r\n", dev_addr[0], dev_addr[1],
 								  dev_addr[2], dev_addr[3]);
 
-		return true;
+		return bMGR_AT_CMD_logSucceedMsg();
 	} else if (e_exec_mode == ATCMD_ACTION_MODE) {
 		while(pu8_cmdParamString[strlen((char*)pu8_cmdParamString) - 1] == '\r' ||
 				pu8_cmdParamString[strlen((char*)pu8_cmdParamString) - 1] == '\n')
@@ -146,12 +147,12 @@ bool bMGR_AT_CMD_ADDR_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 			if (nbBits != 32)
 			{
 				MGR_LOG_DEBUG("%s::nbBits error %u\r\n", __func__, nbBits);
-				return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+				return bMGR_AT_CMD_logFailedMsg(ERROR_PARAMETER_FORMAT);
 			}
 			
 			if (MCU_NVM_setAddr(pu8_cmdParamString + 8) != KNS_STATUS_OK)
 			{
-				return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+				return bMGR_AT_CMD_logFailedMsg(ERROR_PARAMETER_FORMAT);
 			}
 			return bMGR_AT_CMD_logSucceedMsg();	
 	} else {
@@ -161,18 +162,20 @@ bool bMGR_AT_CMD_ADDR_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 bool bMGR_AT_CMD_ID_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 	enum atcmd_type_t e_exec_mode)
 {
+	enum KNS_status_t status;
 	uint32_t dev_id;
 	uint16_t nbBits;
 	uint16_t nbChar;
 	if (e_exec_mode == ATCMD_STATUS_MODE) {
-		if (KNS_CFG_getId(&dev_id) != KNS_STATUS_OK)
-			return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+		status = KNS_CFG_getId(&dev_id);
+		if (status != KNS_STATUS_OK)
+			return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T) status);
 		/* ID is printed as a number, with decimal representation.
 		 * ID is stored in memory in little endian format.
 		 */
 		MCU_AT_CONSOLE_send("+ID=%d\r\n", dev_id);
 
-		return true;
+		return bMGR_AT_CMD_logSucceedMsg();
 	} else if (e_exec_mode == ATCMD_ACTION_MODE) {
 		while(pu8_cmdParamString[strlen((char*)pu8_cmdParamString) - 1] == '\r' ||
 				pu8_cmdParamString[strlen((char*)pu8_cmdParamString) - 1] == '\n')
@@ -185,7 +188,7 @@ bool bMGR_AT_CMD_ID_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 			if (nbChar > 7)
 			{
 				MGR_LOG_DEBUG("[ERROR] Invalid ID length\r\n");	
-				return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+				return bMGR_AT_CMD_logFailedMsg(ERROR_PARAMETER_FORMAT);
 			}
 			
 			nbBits = u16MGR_AT_CMD_convertAsciiToInt32(pu8_cmdParamString + 6, &dev_id);
@@ -193,14 +196,14 @@ bool bMGR_AT_CMD_ID_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 			if ((nbBits > 32) && (nbBits < 1))
 			{
 				MGR_LOG_DEBUG("[ERROR] Invalid ID length conversion\r\n");
-				return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+				return bMGR_AT_CMD_logFailedMsg(ERROR_PARAMETER_FORMAT);
 			}
 
 			
 			if (MCU_NVM_setID(&dev_id) != KNS_STATUS_OK)
 			{
 				MGR_LOG_DEBUG("[ERROR] failed to set ID\r\n");
-				return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+				return bMGR_AT_CMD_logFailedMsg(ERROR_PARAMETER_FORMAT);
 			}
 			return bMGR_AT_CMD_logSucceedMsg();	
 	} else {
@@ -211,16 +214,17 @@ bool bMGR_AT_CMD_ID_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 bool bMGR_AT_CMD_SN_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 	enum atcmd_type_t e_exec_mode)
 {
+	enum KNS_status_t status;
 	uint8_t dev_sn[DEVICE_SN_LENGTH + 1];
 
 	if (e_exec_mode == ATCMD_STATUS_MODE) {
-		if (KNS_CFG_getSN(dev_sn) != KNS_STATUS_OK)
-			/* TODO: add a new error code ? */
-			return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+		status = KNS_CFG_getSN(dev_sn);
+		if (status != KNS_STATUS_OK)
+			return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T) status);
 		dev_sn[DEVICE_SN_LENGTH] = '\0';
 		MCU_AT_CONSOLE_send("+SN=%s\r\n", dev_sn);
 
-		return true;
+		return bMGR_AT_CMD_logSucceedMsg();
 	}
 	return bMGR_AT_CMD_logFailedMsg(ERROR_UNKNOWN_AT_CMD);
 }
@@ -228,6 +232,7 @@ bool bMGR_AT_CMD_SN_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 bool bMGR_AT_CMD_RCONF_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 	enum atcmd_type_t e_exec_mode)
 {
+	enum KNS_status_t status;
 	struct KNS_CFG_radio_t radio_cfg;
 	uint8_t modulation[8];
 	uint16_t nbBits;
@@ -236,9 +241,9 @@ bool bMGR_AT_CMD_RCONF_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 #endif
 
 	if (e_exec_mode == ATCMD_STATUS_MODE) {
-		if (KNS_CFG_getRadioInfo(&radio_cfg) != KNS_STATUS_OK)
-			/* TODO: add a new error code ? */
-			return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+		status = KNS_CFG_getRadioInfo(&radio_cfg);
+		if (status != KNS_STATUS_OK)
+			return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T) status);
 		if (radio_cfg.modulation == KNS_TX_MOD_LDA2)
 			strcpy((char*)modulation, "LDA2");
 		else if (radio_cfg.modulation == KNS_TX_MOD_LDA2L)
@@ -271,12 +276,11 @@ bool bMGR_AT_CMD_RCONF_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 			strlen((char*)(pu8_cmdParamString + 9)));
 
 		if (nbBits != 128)
-			/* TODO: add a new error code ? */
-			return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+			return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T) KNS_STATUS_RADIO_CONF_BAD);
 
-		if (KNS_CFG_setRadioInfo(pu8_cmdParamString + 9) != KNS_STATUS_OK)
-			/* TODO: add a new error code ? */
-			return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+		status = KNS_CFG_setRadioInfo(pu8_cmdParamString + 9);
+		if (status != KNS_STATUS_OK)
+			return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T) status);
 		return bMGR_AT_CMD_logSucceedMsg();
 	}
 	return bMGR_AT_CMD_logFailedMsg(ERROR_UNKNOWN_AT_CMD);
@@ -285,10 +289,11 @@ bool bMGR_AT_CMD_RCONF_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 bool bMGR_AT_CMD_SAVE_RCONF_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 	enum atcmd_type_t e_exec_mode)
 {
+	enum KNS_status_t status;
 	if (e_exec_mode == ATCMD_ACTION_MODE) {
-		if (KNS_CFG_saveRadioInfo() != KNS_STATUS_OK)
-			/* TODO: add a new error code ? */
-			return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+		status = KNS_CFG_saveRadioInfo();
+		if (status != KNS_STATUS_OK)
+			return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T) status);
 		return bMGR_AT_CMD_logSucceedMsg();
 	}
 	return bMGR_AT_CMD_logFailedMsg(ERROR_UNKNOWN_AT_CMD);
@@ -304,7 +309,7 @@ bool bMGR_AT_CMD_LPM_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 
 	if (e_exec_mode == ATCMD_STATUS_MODE) {
 		MCU_AT_CONSOLE_send("+LPM=0x%X\r\n", lpm_config.allowedLPMbitmap);
-		return true;
+		return bMGR_AT_CMD_logSucceedMsg();
 	}
 	if (e_exec_mode == ATCMD_ACTION_MODE) {
 
@@ -323,6 +328,24 @@ bool bMGR_AT_CMD_LPM_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 	return false;
 }
 
+bool bMGR_AT_CMD_MC_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
+	enum atcmd_type_t e_exec_mode)
+{
+	enum KNS_status_t status;
+	uint16_t mc;
+
+	if (e_exec_mode == ATCMD_STATUS_MODE) {
+		status = KNS_CFG_getMC(&mc);
+		if (status != KNS_STATUS_OK)
+			return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T) status);
+		
+		MCU_AT_CONSOLE_send("+MC=%d\r\n", mc);
+
+		return bMGR_AT_CMD_logSucceedMsg();
+	}
+	return bMGR_AT_CMD_logFailedMsg(ERROR_UNKNOWN_AT_CMD);
+}
+
 bool bMGR_AT_CMD_TCXO_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 	enum atcmd_type_t e_exec_mode)
 {
@@ -330,7 +353,7 @@ bool bMGR_AT_CMD_TCXO_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 	if (e_exec_mode == ATCMD_STATUS_MODE) {
 		MCU_MISC_TCXO_get_warmup(&tcxo_ms);
 		MCU_AT_CONSOLE_send("+TCXO=%d\r\n", tcxo_ms);
-		return true;
+		return bMGR_AT_CMD_logSucceedMsg();
 	} else if (e_exec_mode == ATCMD_ACTION_MODE) {
 		uint16_t nbChar;
 		while(pu8_cmdParamString[strlen((char*)pu8_cmdParamString) - 1] == '\r' ||

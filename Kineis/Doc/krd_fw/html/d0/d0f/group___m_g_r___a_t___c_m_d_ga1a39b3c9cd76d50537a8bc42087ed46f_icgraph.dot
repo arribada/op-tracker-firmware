@@ -1,0 +1,13 @@
+digraph "MGR_AT_CMD_macEvtProcess"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="MGR_AT_CMD_macEvtProcess",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Fct used to retreive and process event coming from kineis stack as answers to AT commands."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="KNS_APP_gui_loop",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d41/group___k_n_s___a_p_p.html#ga06543de003a98e82570c572ce5e1240c",tooltip="This fct is the application expected to run in front of the GUI."];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d29/main_8c.html#a840291bc02cba5474a4cb46a9b9566fe",tooltip="The application entry point."];
+}

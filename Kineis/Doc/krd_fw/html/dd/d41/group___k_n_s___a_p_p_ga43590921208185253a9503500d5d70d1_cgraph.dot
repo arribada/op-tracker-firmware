@@ -1,0 +1,11 @@
+digraph "KNS_APP_stdln_startMacPrfl"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="KNS_APP_stdln_startMacPrfl",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Start MAC profile for the standalone application."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="KNS_Q_push",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/ddb/group___k_n_s___q.html#gac9a2be7939be73c32fd7eefb0d3ab3b3",tooltip="This function is used to push an element into a queue."];
+}
