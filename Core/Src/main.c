@@ -460,6 +460,7 @@ int main(void)
 #elif defined (USE_GUI_APP)
 
 #if defined(USE_SPI_DRIVER)
+  MGR_LOG_DEBUG("Running SPI version");
   KNS_APP_gui_init(&hspi1);
 #else
   KNS_APP_gui_init(&hlpuart1);

@@ -34,7 +34,7 @@ USE_BAREMETAL = 1
 APP = GUI
 
 # Select output port
-COMM = UART
+COMM = SPI
 
 
 # Select Kineis stack MAC profile. Can be:

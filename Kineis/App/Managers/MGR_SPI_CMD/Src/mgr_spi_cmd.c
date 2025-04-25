@@ -198,11 +198,6 @@ enum KNS_status_t MGR_SPI_CMD_macEvtProcess(void)
 
 	cbStatus = KNS_Q_pop(KNS_Q_UL_MAC2APP, (void *)&srvcEvt);
 
-	if (cbStatus != KNS_STATUS_QEMPTY)
-	{
-		MGR_LOG_DEBUG("KNS STATUS not QUEMPTYU \r\n");
-	}
-
 	if (cbStatus != KNS_STATUS_OK)
 		return cbStatus;
 
@@ -268,9 +263,14 @@ enum KNS_status_t MGR_SPI_CMD_macEvtProcess(void)
 		 * Send +TX= instead of +TACK=, meaning this is the real end of TX data
 		 * transmission
 		 */
+
+		if (spUserDataMsg->u8Attr.sf == ATTR_MAIL_REQUEST)
+			macStatus = MAC_TX_DONE;
+		else
+			macStatus = MAC_TXACK_DONE;
 		MCU_MISC_TCXO_Force_State(false);
+
 		USERDATA_txFifoRemoveElt(spUserDataMsg);/* Free as host notified */
-		macStatus = MAC_TXACK_DONE;
 		cbStatus = KNS_STATUS_OK;
 		break;
 	case (KNS_MAC_TX_TIMEOUT):
@@ -308,7 +308,7 @@ enum KNS_status_t MGR_SPI_CMD_macEvtProcess(void)
 			 */
 			USERDATA_txFifoRemoveElt(spUserDataMsg);/* Free as host notified */
 			macStatus = MAC_RX_ERROR;
-			cbStatus = KNS_STATUS_TR_ERR;
+			cbStatus = KNS_STATUS_RF_ERR;
 		} else {
 			MGR_LOG_DEBUG("MGR_SPI_CMD RX callback reached\r\n");
 			MGR_LOG_DEBUG("RX ERROR  unexpected event received.\r\n");
