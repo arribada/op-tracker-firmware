@@ -1,0 +1,18 @@
+digraph "Kineis/App/Kineis_os/KNS_Q" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_2597320cd5a766e2ddfc672ddb4c534b {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Kineis_os" fontname="Helvetica", fontsize="10", URL="dir_2597320cd5a766e2ddfc672ddb4c534b.html"]
+  subgraph clusterdir_565abc7797190263a19144fc71b59106 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_565abc7797190263a19144fc71b59106.html"];
+    dir_565abc7797190263a19144fc71b59106 [shape=plaintext label="KNS_Q"];
+  dir_1c062482ac091c7c78d0a1651ce2de7a [shape=box label="Inc" fillcolor="white" style="filled" URL="dir_1c062482ac091c7c78d0a1651ce2de7a.html"];
+  }
+  }
+  dir_8bac7462668d86a984d2ee5977e3cf6a [shape=box label="Lib" URL="dir_8bac7462668d86a984d2ee5977e3cf6a.html"];
+  dir_e4bcde167f88f305238965282a0ab06e [shape=box label="Extdep" fillcolor="white" style="filled" color="red" URL="dir_e4bcde167f88f305238965282a0ab06e.html"];
+  dir_1c062482ac091c7c78d0a1651ce2de7a->dir_8bac7462668d86a984d2ee5977e3cf6a [headlabel="1", labeldistance=1.5 headhref="dir_000004_000011.html"];
+  dir_1c062482ac091c7c78d0a1651ce2de7a->dir_e4bcde167f88f305238965282a0ab06e [headlabel="1", labeldistance=1.5 headhref="dir_000004_000005.html"];
+  dir_e4bcde167f88f305238965282a0ab06e->dir_8bac7462668d86a984d2ee5977e3cf6a [headlabel="5", labeldistance=1.5 headhref="dir_000005_000011.html"];
+}

@@ -165,46 +165,6 @@ static enum KNS_status_t eoAtMW_isr_cb(struct KNS_RF_evt_t *evt)
 }
 #endif
 
-/** @brief This function converts kineis stack status into AT cmd error code
- *
- * param[in] knsStatus: KNS libraries status
- *
- * @retval ERROR_RETURN_T: KIM error code
- */
-static enum ERROR_RETURN_T convKnsStatusToAtErr(enum KNS_status_t knsStatus)
-{
-	switch (knsStatus) {
-	case KNS_STATUS_OK:
-		return ERROR_NO;
-	break;
-	case KNS_STATUS_ERROR:
-	case KNS_STATUS_NVM_ACCESS_ERR: /** @todo create specific Error code for this */
-		return ERROR_UNKNOWN;
-	break;
-	case KNS_STATUS_DISABLED:
-	case KNS_STATUS_BUSY:
-	case KNS_STATUS_TIMEOUT:
-	case KNS_STATUS_TR_ERR:
-		return ERROR_TRCVR;
-	break;
-	case KNS_STATUS_BAD_SETTING:
-		return ERROR_INCOMPATIBLE_VALUE;
-	break;
-	case KNS_STATUS_BAD_LEN:
-		return ERROR_INVALID_USER_DATA_LENGTH;
-	break;
-	case KNS_STATUS_QFULL:
-		return ERROR_DATA_QUEUE_FULL;
-	break;
-	case KNS_STATUS_QEMPTY:
-		return ERROR_DATA_QUEUE_EMPTY;
-	break;
-	default:
-		return ERROR_UNKNOWN;
-	break;
-	}
-}
-
 static bool MGR_AT_CMD_sendRandomTxData(struct KNS_tx_rf_cfg_t *rf_cfg)
 {
 	struct KNS_tx_rf_cfg_t rf_cfg_local;
@@ -228,10 +188,10 @@ static bool MGR_AT_CMD_sendRandomTxData(struct KNS_tx_rf_cfg_t *rf_cfg)
 		isToBeTransmit = false;
 		status = KNS_RFTX_abortRf(NULL);
 		if (status != KNS_STATUS_OK)
-			return bMGR_AT_CMD_logFailedMsg(convKnsStatusToAtErr(status));
+			return bMGR_AT_CMD_logFailedMsg((enum KNS_status_t)status);
 		status = KNS_RFTX_powerOff(NULL);
 		if (status != KNS_STATUS_OK)
-			return bMGR_AT_CMD_logFailedMsg(convKnsStatusToAtErr(status));
+			return bMGR_AT_CMD_logFailedMsg((enum KNS_status_t)status);
 	}
 
 	/** Fill-up data bitstream with new random data */
@@ -303,14 +263,14 @@ static bool MGR_AT_CMD_sendRandomTxData(struct KNS_tx_rf_cfg_t *rf_cfg)
 	/** ---- Send frame ---- */
 	status = KNS_RFTX_powerOn(NULL);
 	if (status != KNS_STATUS_OK)
-		return bMGR_AT_CMD_logFailedMsg(convKnsStatusToAtErr(status));
+		return bMGR_AT_CMD_logFailedMsg((enum KNS_status_t)status);
 
 	status = KNS_RFTX_setCfg(&rf_cfg_local);
 	if (status != KNS_STATUS_OK) {
 		isToBeTransmit = false;
 		KNS_RFTX_abortRf(NULL);
 		KNS_RFTX_powerOff(NULL);
-		return bMGR_AT_CMD_logFailedMsg(convKnsStatusToAtErr(status));
+		return bMGR_AT_CMD_logFailedMsg((enum KNS_status_t)status);
 	}
 
 	/** Keep pushing a bitstream, even with NULL length for CW */
@@ -320,7 +280,7 @@ static bool MGR_AT_CMD_sendRandomTxData(struct KNS_tx_rf_cfg_t *rf_cfg)
 		isToBeTransmit = false;
 		KNS_RFTX_abortRf(NULL);
 		KNS_RFTX_powerOff(NULL);
-		return bMGR_AT_CMD_logFailedMsg(convKnsStatusToAtErr(status));
+		return bMGR_AT_CMD_logFailedMsg((enum KNS_status_t)status);
 	}
 
 	/** Do the TCXO wramp for first transmission. No need to do it for next burst as
@@ -332,7 +292,7 @@ static bool MGR_AT_CMD_sendRandomTxData(struct KNS_tx_rf_cfg_t *rf_cfg)
 		isToBeTransmit = false;
 		KNS_RFTX_abortRf(NULL);
 		KNS_RFTX_powerOff(NULL);
-		return bMGR_AT_CMD_logFailedMsg(convKnsStatusToAtErr(status));
+		return bMGR_AT_CMD_logFailedMsg((enum KNS_status_t)status);
 	}
 
 	MGR_LOG_DEBUG("[%s] TX bitstream: 0x", __func__);
@@ -350,7 +310,7 @@ static bool MGR_AT_CMD_sendRandomTxData(struct KNS_tx_rf_cfg_t *rf_cfg)
 	isToBeTransmit = false;
 	KNS_RFTX_abortRf(NULL);
 	KNS_RFTX_powerOff(NULL);
-	return bMGR_AT_CMD_logFailedMsg(ERROR_TRCVR);
+	return bMGR_AT_CMD_logFailedMsg((enum KNS_status_t) KNS_STATUS_RF_ERR);
 
 	// should never reach this point
 	kns_assert(0);
@@ -493,10 +453,10 @@ bool bMGR_AT_CMD_CW_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_t e_exec_mo
 			isToBeTransmit = false;
 			status = KNS_RFTX_abortRf(NULL);
 			if (status != KNS_STATUS_OK)
-				return bMGR_AT_CMD_logFailedMsg(convKnsStatusToAtErr(status));
+				return bMGR_AT_CMD_logFailedMsg((enum KNS_status_t)status);
 			status = KNS_RFTX_powerOff(NULL);
 			if (status != KNS_STATUS_OK)
-				return bMGR_AT_CMD_logFailedMsg(convKnsStatusToAtErr(status));
+				return bMGR_AT_CMD_logFailedMsg((enum KNS_status_t)status);
 			else
 				return bMGR_AT_CMD_logSucceedMsg();
 			break;

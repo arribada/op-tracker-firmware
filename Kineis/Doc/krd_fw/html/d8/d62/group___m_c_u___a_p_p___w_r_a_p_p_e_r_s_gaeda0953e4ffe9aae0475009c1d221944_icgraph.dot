@@ -1,0 +1,19 @@
+digraph "KINEIS_RxISR_8BIT"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="KINEIS_RxISR_8BIT",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="RX interrupt handler for 7 or 8 bits data word length ."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="KINEIS_UART_StartRx_IT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d62/group___m_c_u___a_p_p___w_r_a_p_p_e_r_s.html#ga2fbcd5790071dab1b10a9196607692b8",tooltip="Enable and start RX interrupt from UART."];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="MCU_AT_CONSOLE_register",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d62/group___m_c_u___a_p_p___w_r_a_p_p_e_r_s.html#ga74be300679e0b76678c55d7c8b609e6a",tooltip="Start AT CMD console for AT cmd reception."];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="MGR_AT_CMD_start",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d0f/group___m_g_r___a_t___c_m_d.html#ga8edd80aa91125cf8b5f711cd822df02a",tooltip="main API used to start AT command Manager"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="KNS_APP_gui_init",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d41/group___k_n_s___a_p_p.html#ga255c1dfa836e65189f22594678e9f616",tooltip="Init function needed for the application SW running in front of the GUI."];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d29/main_8c.html#a840291bc02cba5474a4cb46a9b9566fe",tooltip="The application entry point."];
+}

@@ -34,6 +34,7 @@ enum  atcmd_idx_t {
 	AT_RCONF,        /**< Get/Set radio configuration command */
 	AT_SAVE_RCONF,   /**< Save radio configuration into Flash command */
 	AT_LPM,          /**< Get/Set low power mode command */
+	AT_MC,           /**< Get the message counter that will be used for next frame TX request */
 	AT_TCXO_WU,      /**< Get/Set TCXO Warm up in ms */
 
 	// User data commands
@@ -45,8 +46,7 @@ enum  atcmd_idx_t {
 	// Certif commands
 	AT_CW,           /**< Index for CW/MW commands */
 
-	// Satellite pass predictions commands
-	AT_PREPASS_EN,   /**< Index for get/set PREVIPASS algo */
+	// date commands
 	AT_UDATE,        /**< Index for UTC date/time update */
 
 	// MAC commands

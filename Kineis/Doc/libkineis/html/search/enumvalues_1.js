@@ -1,22 +1,12 @@
 var searchData=
 [
-  ['error_5fdata_5fqueue_5fempty_503',['ERROR_DATA_QUEUE_EMPTY',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea240bfd73603f5ef869af0da86058cc22',1,'kineis_sw_conf.h']]],
-  ['error_5fdata_5fqueue_5ffull_504',['ERROR_DATA_QUEUE_FULL',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60eaa7dfcd472adca8edd89427cddb8f9b16',1,'kineis_sw_conf.h']]],
-  ['error_5fincompatible_5fvalue_505',['ERROR_INCOMPATIBLE_VALUE',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea92ff3e0a0b4fd24b631ede1261043887',1,'kineis_sw_conf.h']]],
-  ['error_5finvalid_5fid_506',['ERROR_INVALID_ID',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea2002eacf04caee94e5b1f4092dacdc8e',1,'kineis_sw_conf.h']]],
-  ['error_5finvalid_5fuser_5fdata_5flength_507',['ERROR_INVALID_USER_DATA_LENGTH',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea5b1acba221b70a0cff193aaf17ddd56a',1,'kineis_sw_conf.h']]],
-  ['error_5fmissing_5fparameters_508',['ERROR_MISSING_PARAMETERS',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea87aac27a8cfae28c8db6d420fb727367',1,'kineis_sw_conf.h']]],
-  ['error_5fno_509',['ERROR_NO',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea18bbd975653ed24f2333c30c9f7f7386',1,'kineis_sw_conf.h']]],
+  ['error_5fdata_5fqueue_5fempty_505',['ERROR_DATA_QUEUE_EMPTY',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea240bfd73603f5ef869af0da86058cc22',1,'kineis_sw_conf.h']]],
+  ['error_5fdata_5fqueue_5ffull_506',['ERROR_DATA_QUEUE_FULL',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60eaa7dfcd472adca8edd89427cddb8f9b16',1,'kineis_sw_conf.h']]],
+  ['error_5fincompatible_5fvalue_507',['ERROR_INCOMPATIBLE_VALUE',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea92ff3e0a0b4fd24b631ede1261043887',1,'kineis_sw_conf.h']]],
+  ['error_5finvalid_5fuser_5fdata_5flength_508',['ERROR_INVALID_USER_DATA_LENGTH',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea5b1acba221b70a0cff193aaf17ddd56a',1,'kineis_sw_conf.h']]],
+  ['error_5fmissing_5fparameters_509',['ERROR_MISSING_PARAMETERS',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea87aac27a8cfae28c8db6d420fb727367',1,'kineis_sw_conf.h']]],
   ['error_5fparameter_5fformat_510',['ERROR_PARAMETER_FORMAT',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea8ddf3e7ed8f61423bcb5ab7f78901b6d',1,'kineis_sw_conf.h']]],
-  ['error_5fprot_5finvalid_5ftxfreq_5ftxmod_511',['ERROR_PROT_INVALID_TXFREQ_TXMOD',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60eab71542ef45debb914f25ec32edc3fbec',1,'kineis_sw_conf.h']]],
-  ['error_5frx_5ftimeout_512',['ERROR_RX_TIMEOUT',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea51364f7888154c0eb6d0e1ff9f2236f2',1,'kineis_sw_conf.h']]],
-  ['error_5ftoo_5fmany_5fparameters_513',['ERROR_TOO_MANY_PARAMETERS',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea3e86e2972fdf27cce7e2d369ff4ee2e3',1,'kineis_sw_conf.h']]],
-  ['error_5ftrcvr_514',['ERROR_TRCVR',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60eac140c19b32692aff510c51fa5daf2b6d',1,'kineis_sw_conf.h']]],
-  ['error_5ftrcvr_5fauto_5franging_515',['ERROR_TRCVR_AUTO_RANGING',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60eab7e6e2e3153cf68269f520884da236d5',1,'kineis_sw_conf.h']]],
-  ['error_5ftrcvr_5fpll_5ferror_516',['ERROR_TRCVR_PLL_ERROR',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60eae3618a33d3924d9bcc11cae632b601a1',1,'kineis_sw_conf.h']]],
-  ['error_5ftrcvr_5freset_517',['ERROR_TRCVR_RESET',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ead1a1832b11189bd12175976ba1669821',1,'kineis_sw_conf.h']]],
-  ['error_5ftrcvr_5fxtal_5ftimeout_518',['ERROR_TRCVR_XTAL_TIMEOUT',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea9648c899f84c5c6002bc69cf5af09c0e',1,'kineis_sw_conf.h']]],
-  ['error_5funknown_519',['ERROR_UNKNOWN',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea2c8108ceb9a85cecbbe3af50dbc1cf8c',1,'kineis_sw_conf.h']]],
-  ['error_5funknown_5fat_5fcmd_520',['ERROR_UNKNOWN_AT_CMD',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea90970d7bfbc4ecc97b121dae6701b5a5',1,'kineis_sw_conf.h']]],
-  ['error_5funknown_5fid_521',['ERROR_UNKNOWN_ID',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea55c02a7a8c8af521bf031e0a55104bd7',1,'kineis_sw_conf.h']]]
+  ['error_5ftoo_5fmany_5fparameters_511',['ERROR_TOO_MANY_PARAMETERS',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea3e86e2972fdf27cce7e2d369ff4ee2e3',1,'kineis_sw_conf.h']]],
+  ['error_5funknown_512',['ERROR_UNKNOWN',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea2c8108ceb9a85cecbbe3af50dbc1cf8c',1,'kineis_sw_conf.h']]],
+  ['error_5funknown_5fat_5fcmd_513',['ERROR_UNKNOWN_AT_CMD',['../d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#gga6ec2d413abf2c80e1b9ccf121d2be60ea90970d7bfbc4ecc97b121dae6701b5a5',1,'kineis_sw_conf.h']]]
 ];

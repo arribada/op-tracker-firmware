@@ -35,7 +35,6 @@ enum atcmd_type_t {
 /** enum of command response */
 enum atcmd_rsp_type_t {
 	ATCMD_RSP_TXOK,		    /**< At command delayed response for TX done */
-	ATCMD_RSP_TXNOTOK,	    /**< At command delayed response for TX timeout */
 	ATCMD_RSP_TXACKOK,	    /**< At command delayed response for TX done */
 	ATCMD_RSP_TXACKNOTOK,	/**< At command delayed response for TX timeout */
 	ATCMD_RSP_SATDET,	    /**< At command delayed response for SAT detection */
@@ -43,7 +42,9 @@ enum atcmd_rsp_type_t {
 	ATCMD_RSP_SATDETTO,	    /**< At command delayed response for SAT detection timeout */
 	ATCMD_RSP_RXOK,		    /**< At command delayed response for RX frame reception */
 	ATCMD_RSP_DLOK,		    /**< At command delayed response for RX frame reception */
-	ATCMD_RSP_RXTIMEOUT	    /**< At command delayed response for RX timeout */
+	ATCMD_RSP_RXTIMEOUT,    /**< At command delayed response for RX timeout */
+	ATCMD_RSP_TXTIMEOUT,    /**< At command delayed response for TX timeout */
+	ATCMD_RSP_RXERROR  	    /**< At command delayed response for RX error */
 };
 
 

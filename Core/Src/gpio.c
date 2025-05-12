@@ -56,12 +56,31 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
 
+  HAL_GPIO_WritePin(PA_PSU_EN_GPIO_Port, PA_PSU_EN_Pin, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(PA_PSU_SEL_GPIO_Port, PA_PSU_SEL_Pin, GPIO_PIN_SET);
-  /*Configure GPIOA pins : All pin analog execpt SWCLK (13) and SWDIO (14), UART 2 and 3 */
-  GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 |
-                        GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | 
-                        GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | 
-                        GPIO_PIN_12 | GPIO_PIN_15;
+  /*Configure GPIO pins : PA12 PA11 PA0 PA6
+                           PA7 PA4 PA5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_11|GPIO_PIN_0
+                          |GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_4
+                          |GPIO_PIN_5|GPIO_PIN_8|GPIO_PIN_10|GPIO_PIN_9;
+
+  /* Configure GPIOA pins to analog except :
+   * PA1 = SPI_SCK
+   * PA2 = UART_TX
+   * PA3 = UART_RX
+   * PA13 = SWDIO
+   * PA14 = SWCLK
+   * PA15 = SPI NSS => turn power BMA400 (not used)
+   *
+   * Options available with Argos SMD
+   * PA9 / PA10  set to analog but can be used with I2C
+   * PA11 = Set to analog but can be used to DBG_RF-NRST
+   * PA12 = Set to analog but can be used to DBG_RF-BUSY
+   */
+#if defined(USE_SPI_DRIVER)
+  GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 |
+		  	  	  	  	  GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 |
+                        GPIO_PIN_12;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 
 #elif defined(USE_UART_DRIVER)
@@ -74,37 +93,59 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PB15 PB7 PB9 PB14
-                           PB8 PB13 PB2 PB6
-                           PB12 PB1 PB11 PB10 */
-  // GPIO_InitStruct.Pin = GPIO_PIN_15|GPIO_PIN_7|GPIO_PIN_9
-  //                         |GPIO_PIN_14|GPIO_PIN_8|GPIO_PIN_3
-  //                         |GPIO_PIN_2|GPIO_PIN_6|GPIO_PIN_12|GPIO_PIN_1
-  //                         |GPIO_PIN_11|GPIO_PIN_10;
-  /*Configure GPIOB pins : All pin analog execpt VBAT_SENSE (13), MCU_DONE (9)*/
-  GPIO_InitStruct.Pin =  GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | 
-                        GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | 
-                        GPIO_PIN_8 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | 
+  /*Configure GPIOB pins to analog except :
+   * PB4 = SPI MISO
+   * PB5 = SPI MOSI
+   * Options available with Argos SMD
+   * PB3 = DBG_SWO
+   * PB6 = UART = used as IMU INT (IMU not mounted on first version)
+   * PB7 = UART= used as IMU INT (IMU not mounted on first version)*
+   * PB9 = GPIO use by MCU done
+   * PB13 = GPIO
+  */
+
+#if defined(USE_SPI_DRIVER)
+  GPIO_InitStruct.Pin = GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 |
+                        GPIO_PIN_6 | GPIO_PIN_7 |
+                        GPIO_PIN_8 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 |
                         GPIO_PIN_14 | GPIO_PIN_15;
+#elif defined(USE_UART_DRIVER)
+  GPIO_InitStruct.Pin = GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 |
+                        GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 |
+                        GPIO_PIN_8 |  GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 |
+                        GPIO_PIN_14 | GPIO_PIN_15;
+#endif
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIOC pins : All pin analog execpt PSU_SEL (0) high*/
-  GPIO_InitStruct.Pin = GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | 
+  /*Configure GPIOC pins to analog except :
+   * PC0 = VPA_SEL
+   * PC1 = VPA_EN MOSI
+   *
+  */
+
+  GPIO_InitStruct.Pin = GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 |
                         GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 |
-                        GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | 
+                        GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 |
                         GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  GPIO_InitStruct.Pin = PA_PSU_SEL_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(PA_PSU_SEL_GPIO_Port, &GPIO_InitStruct);
-  HAL_GPIO_WritePin(PA_PSU_SEL_GPIO_Port, PA_PSU_SEL_Pin, GPIO_PIN_SET);
+// Configured inside mcu_misc.c file.
+//  /*Configure GPIO pin : PtPin */
+//  GPIO_InitStruct.Pin = PA_PSU_EN_Pin;
+//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//  GPIO_InitStruct.Pull = GPIO_NOPULL;
+//  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//  HAL_GPIO_Init(PA_PSU_EN_GPIO_Port, &GPIO_InitStruct);
+//  /*Configure GPIO pin : PtPin */
+//  GPIO_InitStruct.Pin = PA_PSU_SEL_Pin;
+//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//  GPIO_InitStruct.Pull = GPIO_NOPULL;
+//  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//  HAL_GPIO_Init(PA_PSU_SEL_GPIO_Port, &GPIO_InitStruct);
 
 
   /*Configure GPIO pin : PH3 */

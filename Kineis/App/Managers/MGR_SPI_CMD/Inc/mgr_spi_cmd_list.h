@@ -36,7 +36,7 @@
 #define CMD_WRITETCXO_WAIT_LEN    5      /**< 4 bytes for uint32 size + 1 byte for command. */
 #define CMD_WRITEADDRESS_WAIT_LEN (DEVICE_ADDR_LENGTH + 1) /**< Device address length + 1 byte for command. */
 #define CMD_WRITESECKEY_WAIT_LEN  (DSK_BYTE_LENGTH + 1)      /**< Secret key length + 1 byte for command. */
-#define CMD_WRITERCONF_WAIT_LEN   33     /**< 32 bytes for configuration size + 1 byte for command. */
+#define CMD_WRITERCONF_WAIT_LEN   17     /**< 32 bytes for configuration size + 1 byte for command. */
 #define CMD_WRITELPM_WAIT_LEN     2      /**< 1 byte for low power mode + 1 byte for command. */
 #define CMD_WRITEKMAC_WAIT_LEN    2      /**< 1 byte for write-only ID (for now) + 1 byte for command. */
 #define CMD_WRITETX_WAIT_LEN      3      /**< 1 byte for write-only ID + 2 bytes for data size (uint16). */

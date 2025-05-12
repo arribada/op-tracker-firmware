@@ -51,17 +51,20 @@ bool bMGR_AT_CMD_sendResponse(enum atcmd_rsp_type_t atcmd_response_type, void *a
 	}
 	break;
 	case ATCMD_RSP_RXTIMEOUT:
-	case ATCMD_RSP_TXNOTOK:
+	case ATCMD_RSP_TXTIMEOUT:
+	case ATCMD_RSP_RXERROR:
 	{
 		if (atcmd_rsp_data != NULL) {
 			struct sUserDataTxFifoElt_t *spUserDataMsg =
 						(struct sUserDataTxFifoElt_t *)atcmd_rsp_data;
 			uint8_t *pu8UserDataPtr = spUserDataMsg->u8DataBuf;
 			uint16_t u16UserDataBitlen = spUserDataMsg->u16DataBitLen;
-			enum ERROR_RETURN_T error_id = ERROR_UNKNOWN;
+			enum ERROR_RETURN_T error_id;
 
-			if (atcmd_response_type == ATCMD_RSP_RXTIMEOUT)
-				error_id = ERROR_RX_TIMEOUT;
+			if (atcmd_response_type == ATCMD_RSP_RXERROR)
+				error_id = (enum ERROR_RETURN_T) KNS_STATUS_RF_ERR;
+			else
+				error_id = (enum ERROR_RETURN_T) KNS_STATUS_TIMEOUT;
 
 			MCU_AT_CONSOLE_send("+TX=%d,", error_id);
 			MCU_AT_CONSOLE_send_dataBuf(pu8UserDataPtr, u16UserDataBitlen);
@@ -78,7 +81,7 @@ bool bMGR_AT_CMD_sendResponse(enum atcmd_rsp_type_t atcmd_response_type, void *a
 	break;
 	case ATCMD_RSP_TXACKNOTOK:
 	{
-		enum ERROR_RETURN_T error_id = ERROR_UNKNOWN;
+		enum ERROR_RETURN_T error_id = (enum ERROR_RETURN_T) KNS_STATUS_TIMEOUT;
 
 		MCU_AT_CONSOLE_send("+TXACK=%d\r\n", error_id);
 		return true;

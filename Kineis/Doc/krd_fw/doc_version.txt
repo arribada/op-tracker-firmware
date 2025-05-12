@@ -1,0 +1,12 @@
+commit f07f1e75fb4ea69cfe8444612a6258aebe1e5517
+Merge: dadca01 fab32e1
+Author: William Begoc <wbegoc@kineis.com>
+Date:   Thu Apr 10 14:55:56 2025 +0000
+
+    Merge branch 'PRODEV-215' into 'master'
+    
+    Resolve PRODEV-215
+    
+    Closes PRODEV-215
+    
+    See merge request segment-utilisateur/project_group/fw/krd_fw!84

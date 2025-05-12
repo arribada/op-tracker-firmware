@@ -1,0 +1,13 @@
+digraph "Kineis/Extdep/Mcu/Inc/mcu_tim.h"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="Kineis/Extdep/Mcu/Inc\l/mcu_tim.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="MCU wrappers for timer or non-blocking delays used by Kineis stack."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="stdint.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="kns_types.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d85/kns__types_8h.html",tooltip="Kineis types definition."];
+  Node3 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -1,0 +1,15 @@
+digraph "KNS_Q_isEvtInSomeQ"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="KNS_Q_isEvtInSomeQ",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="This function is used to check some queue contains some elements."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="IDLE_task",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d29/main_8c.html#ab5e4675bc5ccd4c2aeeae31f8df4b4fb",tooltip=" "];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d29/main_8c.html#a840291bc02cba5474a4cb46a9b9566fe",tooltip="The application entry point."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="vMGR_LPM_enterStop",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga394c596cc344e87c088527daba299c8d",tooltip="This is the function to enter in stop mode."];
+}

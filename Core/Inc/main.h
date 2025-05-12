@@ -66,6 +66,9 @@ void SystemClock_Config(void);
 #define PA_PSU_SEL_Pin GPIO_PIN_0
 #define PA_PSU_SEL_GPIO_Port GPIOC
 
+#define PA_PSU_EN_Pin GPIO_PIN_1 // Different on OP TRACKER
+#define PA_PSU_EN_GPIO_Port GPIOC
+
 //Tracker App pin definition
 #define VBAT_SENSE_Pin GPIO_PIN_13
 #define VBAT_SENSE_GPIO_Port GPIOB
@@ -75,10 +78,10 @@ void SystemClock_Config(void);
 #else
 #define EXT_WKUP_BUTTON_Pin GPIO_PIN_13
 #define EXT_WKUP_BUTTON_GPIO_Port GPIOB
-#define PA_PSU_EN_Pin GPIO_PIN_1
+#define PA_PSU_EN_Pin GPIO_PIN_0 // Different on OP TRACKER
 #define PA_PSU_EN_GPIO_Port GPIOC
 
-#define PA_PSU_SEL_Pin GPIO_PIN_0
+#define PA_PSU_SEL_Pin GPIO_PIN_1 // PSEL => High = 3V3 / Low = 1.8V
 #define PA_PSU_SEL_GPIO_Port GPIOC
 
 #endif

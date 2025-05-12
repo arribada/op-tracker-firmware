@@ -1,0 +1,12 @@
+digraph "Kineis" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_e477e9e432f6cdbbe234eeb906f13059 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_e477e9e432f6cdbbe234eeb906f13059.html"];
+    dir_e477e9e432f6cdbbe234eeb906f13059 [shape=plaintext label="Kineis"];
+  dir_e4bcde167f88f305238965282a0ab06e [shape=box label="Extdep" fillcolor="white" style="filled" color="red" URL="dir_e4bcde167f88f305238965282a0ab06e.html"];
+  dir_8bac7462668d86a984d2ee5977e3cf6a [shape=box label="Lib" fillcolor="white" style="filled" URL="dir_8bac7462668d86a984d2ee5977e3cf6a.html"];
+  }
+  dir_e4bcde167f88f305238965282a0ab06e->dir_8bac7462668d86a984d2ee5977e3cf6a [headlabel="2", labeldistance=1.5 headhref="dir_000001_000004.html"];
+}

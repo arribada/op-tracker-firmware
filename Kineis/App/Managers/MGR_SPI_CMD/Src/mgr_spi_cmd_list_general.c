@@ -139,11 +139,12 @@ bool bMGR_SPI_CMD_READFIRMWARE_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 bool bMGR_SPI_CMD_READADDRESS_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 {
 	HAL_StatusTypeDef ret = HAL_OK;
-
+	enum KNS_status_t status;
 	uint8_t dev_addr[DEVICE_ADDR_LENGTH];
-	if (KNS_CFG_getAddr(dev_addr) != KNS_STATUS_OK)
+	status = KNS_CFG_getAddr(dev_addr);
+	if (status != KNS_STATUS_OK)
 	{
-		return bMGR_SPI_CMD_logFailedMsg(ERROR_INVALID_ID, tx);
+		return bMGR_SPI_CMD_logFailedMsg((enum ERROR_RETURN_T) status, tx);
 	}
 	memcpy(&tx->data[0], dev_addr, DEVICE_ADDR_LENGTH);
 	tx->next_req = DEVICE_ADDR_LENGTH;
@@ -285,11 +286,13 @@ bool bMGR_SPI_CMD_READSPIMACSTATE_cmd(SPI_Buffer *rx, SPI_Buffer *tx){
 bool bMGR_SPI_CMD_READID_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 {
 	HAL_StatusTypeDef ret = HAL_OK;
+	enum KNS_status_t status;
 
 	uint32_t dev_id;
-	if (KNS_CFG_getId(&dev_id) != KNS_STATUS_OK)
+	status = KNS_CFG_getId(&dev_id);
+	if (status != KNS_STATUS_OK)
 	{
-		return bMGR_SPI_CMD_logFailedMsg(ERROR_INVALID_ID, tx);
+		return bMGR_SPI_CMD_logFailedMsg((enum ERROR_RETURN_T) status, tx);
 			/* ID is printed as a number, with decimal representation.
 			 * ID is stored in memory in little endian format.
 			 */
@@ -356,12 +359,14 @@ bool bMGR_SPI_CMD_WRITEID_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 bool bMGR_SPI_CMD_READSN_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 {
 	HAL_StatusTypeDef ret = HAL_OK;
+	enum KNS_status_t status;
 
 	uint8_t dev_sn[DEVICE_SN_LENGTH +1];
 
-	if (KNS_CFG_getSN(dev_sn) != KNS_STATUS_OK)
+	status = KNS_CFG_getSN(dev_sn);
+	if (status != KNS_STATUS_OK)
 		/* TODO: add a new error code ? */
-		return bMGR_SPI_CMD_logFailedMsg(ERROR_INVALID_ID, tx);
+		return bMGR_SPI_CMD_logFailedMsg((enum ERROR_RETURN_T) status, tx);
 	dev_sn[DEVICE_SN_LENGTH] = '\0';
 	memcpy(&tx->data[0], dev_sn, sizeof(dev_sn));  // Copy the entire fixed-length string
 	tx->next_req = sizeof(dev_sn);  // Total bytes to send
@@ -382,9 +387,10 @@ bool bMGR_SPI_CMD_READRCONF_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 
 	struct KNS_CFG_radio_t radio_cfg;
 
-	if (KNS_CFG_getRadioInfo(&radio_cfg) != KNS_STATUS_OK)
-		/* TODO: add a new error code ? */
-		return bMGR_SPI_CMD_logFailedMsg(ERROR_INVALID_ID, tx);
+	enum KNS_status_t status;
+	status = KNS_CFG_getRadioInfo(&radio_cfg);
+	if (status != KNS_STATUS_OK)
+		return bMGR_SPI_CMD_logFailedMsg((enum ERROR_RETURN_T) status, tx);
 
 	memcpy(&tx->data[0], &radio_cfg, sizeof(radio_cfg));  // Copy the entire fixed-length string
 	tx->next_req = sizeof(radio_cfg);  // Total bytes to send
@@ -398,6 +404,7 @@ bool bMGR_SPI_CMD_READRCONF_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 		return false;
 	}
 }
+
 
 bool bMGR_SPI_CMD_WRITERCONFREQ_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 {
@@ -418,15 +425,20 @@ bool bMGR_SPI_CMD_WRITERCONFREQ_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 bool bMGR_SPI_CMD_WRITERCONF_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 {
 	HAL_StatusTypeDef ret = HAL_OK;
-	uint16_t nbBits = u16MGR_AT_CMD_convertAsciiBinary(&(rx->data[1]), CMD_WRITERCONF_WAIT_LEN - 1); // -1 to remove cmd len
+	enum KNS_status_t status;
+	char rconf_str[33];
+	for (int i = 0; i < 16; i++) {
+		sprintf(&rconf_str[i * 2], "%02x", rx->data[i+1]);
+	}
+	rconf_str[32] = '\0';
 
-	if (nbBits != 128)
-		/* TODO: add a new error code ? */
-		return bMGR_SPI_CMD_logFailedMsg(ERROR_INVALID_ID, tx);
-
-	if (KNS_CFG_setRadioInfo(&(rx->data[1])) != KNS_STATUS_OK)
-		/* TODO: add a new error code ? */
-		return bMGR_AT_CMD_logFailedMsg(ERROR_INVALID_ID);
+	status = KNS_CFG_setRadioInfo(&(rx->data[1]));
+	if (status != KNS_STATUS_OK) {
+		MGR_LOG_DEBUG("Failed to write RCONF=%s\r\n",rconf_str);
+		return bMGR_SPI_CMD_logFailedMsg((enum ERROR_RETURN_T) status, tx);
+	} else {
+		MGR_LOG_DEBUG("Set new RCONF=%s\r\n", rconf_str);
+	}
 
 	rx->next_req = 1;
 	ret = bMGR_SPI_DRIVER_read();
@@ -443,10 +455,11 @@ bool bMGR_SPI_CMD_WRITERCONF_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 bool bMGR_SPI_CMD_SAVERCONF_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 {
 	HAL_StatusTypeDef ret = HAL_OK;
+	enum KNS_status_t status;
 
-	if (KNS_CFG_saveRadioInfo() != KNS_STATUS_OK)
-		/* TODO: add a new error code ? */
-		return bMGR_SPI_CMD_logFailedMsg(ERROR_INVALID_ID, tx);
+	status = KNS_CFG_saveRadioInfo();
+	if (status != KNS_STATUS_OK)
+		return bMGR_SPI_CMD_logFailedMsg((enum ERROR_RETURN_T) status, tx);
 	tx->data[0] = 1;
 	tx->next_req = 1;
 	ret = bMGR_SPI_DRIVER_writeread();

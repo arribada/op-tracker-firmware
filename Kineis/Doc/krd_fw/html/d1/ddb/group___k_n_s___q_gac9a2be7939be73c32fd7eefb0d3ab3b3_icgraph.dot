@@ -1,0 +1,25 @@
+digraph "KNS_Q_push"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="KNS_Q_push",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="This function is used to push an element into a queue."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="bMGR_AT_CMD_handleNewTxData",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d0f/group___m_g_r___a_t___c_m_d.html#gaaa9bdf10c9ac69ef778eea22f8225343",tooltip="Handle new TX data, this is the core function of AT+TX cmd."];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="bMGR_AT_CMD_TX_cmd",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d0f/group___m_g_r___a_t___c_m_d.html#ga0a4332fc4f8bad99c421588fe542a2bd",tooltip="Process AT command \"AT+TX\" send user data."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="bMGR_AT_CMD_KMAC_cmd",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d0f/group___m_g_r___a_t___c_m_d.html#gacc6b6479b50b0c5aed24b2e62448bde0",tooltip="Process AT command \"AT+KMAC\" get/set the Kineis MAC profile."];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="KNS_APP_stdln_loop",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d41/group___k_n_s___a_p_p.html#ga7dcd894e8e120e17325f7801d136d938",tooltip="This fct is a very basic standalone application."];
+  Node5 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="main",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d29/main_8c.html#a840291bc02cba5474a4cb46a9b9566fe",tooltip="The application entry point."];
+  Node1 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="KNS_APP_stdln_startMacPrfl",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d41/group___k_n_s___a_p_p.html#ga43590921208185253a9503500d5d70d1",tooltip="Start MAC profile for the standalone application."];
+  Node7 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="KNS_APP_stdln_stopMacPrfl",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d41/group___k_n_s___a_p_p.html#ga4bb02cc43d1bdbd739a38f4ddea0e82b",tooltip="Stop MAC profile for the standalone application."];
+  Node8 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

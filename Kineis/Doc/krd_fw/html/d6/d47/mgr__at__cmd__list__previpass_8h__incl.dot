@@ -1,0 +1,25 @@
+digraph "Kineis/App/Managers/MGR_AT_CMD/Inc/mgr_at_cmd_list_previpass.h"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="Kineis/App/Managers\l/MGR_AT_CMD/Inc/mgr\l_at_cmd_list_previpass.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="subset of AT commands concerning satellite PASS predictions, usefull for Medium Acces"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="mgr_at_cmd_common.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d58/mgr__at__cmd__common_8h.html",tooltip="header file for common part of the AT cmd manager"];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="stdint.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node2 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="stdbool.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node2 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="strutil_lib.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/d36/strutil__lib_8h.html",tooltip="small utilities to manipulate strings"];
+  Node5 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="stdlib.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node2 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="kineis_sw_conf.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/dc4/kineis__sw__conf_8h.html",tooltip="Kineis stack SW configurations depending on platform used."];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="kns_types.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d85/kns__types_8h.html",tooltip="Kineis types definition."];
+  Node8 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

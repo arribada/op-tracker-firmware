@@ -48,6 +48,7 @@
 #define KNS_APP_H
 
 /* Functions prototypes ------------------------------------------------------*/
+
 /** @brief This fct is a very basic standalone application
  *
  * This application is posting some send-data event to MAC layer of Kineis software stack in loop as

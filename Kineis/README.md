@@ -2,19 +2,29 @@ This is package is releasing the Kinéis Stack SW library with two demo-applicat
 
 
 
-Refer to the \ref kns_app_page for details about the applications. One demo app can be compiled at the same time. You can choose it by commenting/uncommenting one of the compilation flags below in main.c:
-
+One demo app can be compiled at the same time. You can choose it by changing the Makefile's APP variable to GUI or STDLN.
 ```c
-#define USE_STDALONE_APP
-#define USE_GUI_APP
+# Select APPlication. Can be:
+# * STDLN: for the standalone application sending one message at startup
+# * GUI: for the application using the AT commands from UART link
+APP = STDLN
 ```
 
-By default,  this package compiles the standalone APP, starting to send one user message immediately with the MAC BLIND profile. This will lead to:
+By default,  this package compiles the standalone APP, starting to send one user message immediately with the MAC BASIC profile. This will lead to:
+* start kineis stack MAC profile BASIC
+* transmit A message once immediately
+* close the kineis stack MAC profile
+* The device goes into LPM shutdown then
 
+By changing the Makefile's MAC_PRFL variable to BLIND, the standalone application will re-transmit
+the message several times as per profile's configuration in a way to reach some expected QoS.
+* start kineis stack MAC profile BLIND
 * 4 retransmissions of this messages each 60s
 * The device goes into LPM standby between each retx
+* close the kineis stack MAC profile
 * Once all retransmissions are completed, the device goes to LPM shutdown
 
+Refer also to the \ref kns_app_page for extra details about the applications.
 
 
 The kineis stack is meant to be integrated in an OS-like environment supporting LPM. In this package, you will find:
@@ -80,11 +90,15 @@ So far, it may be possible to choose between two different protocols:
 
 * BLIND: The user message will be re-transmitted several times periodically in a way to guarantee some QoS
 
-You can choose the protocol by commenting/uncommenting one of the compilation flags below in kns_app.c:
+\attention Please contact Kinéis to get configuration for your profile when you will deploy your devices.
+
+so far, you can choose the protocol by changing Makefile variable MAC_PRFL:
 
 ```c
-#define USE_MAC_PRFL_BASIC
-#define USE_MAC_PRFL_BLIND
+# Select Kineis stack MAC profile. Can be:
+# * BASIC: basic profile, sending message once immediately 
+# * BLIND: blind profile, sending message sevral times periodically 
+MAC_PRFL = BASIC
 ```
 
 Then, once the protocol is chosen, some specific configuration may be tuned. Regarding BLIND protocol, refer to \ref KNS_MAC_BLIND_usrCfg_t in kns_app.c:
@@ -108,6 +122,8 @@ The OS embedded in this package is the "Kineis baremetal OS" which has very mini
 The purpose here, is to show the "KNS_OS..." and "KNS_Q..." abstraction APIs internally used by the Kineis stack.
 An integrator can use its own OS, by adapting the "KNS_OS..." and "KNS_Q..." source code to it.
 
+\attention Take care the Kineis task is actually polling 3 queues in loop. Ensure your implementation of KNS_Q push/pop is not waiting indefinitively on a a single queue.
+
 \ref kns_os_page
 
 # Package content
@@ -129,11 +145,11 @@ below.
 │   │   └── KNS_Q
 │   │       ├── Inc
 │   │       │   └── kns_q.h
-│   │       ├── Src
-│   │       │   ├── kns_q_baremetal.c
-│   │       │   ├── kns_q.c
-│   │       │   ├── kns_q_cmsis_os2.c
-│   │       │   └── kns_q_freertos.c
+│   │       └── Src
+│   │           ├── kns_q_baremetal.c
+│   │           ├── kns_q.c
+│   │           ├── kns_q_cmsis_os2.c
+│   │           └── kns_q_freertos.c
 │   ├── kns_app.c
 │   ├── kns_app.h
 │   ├── Libs
@@ -152,6 +168,7 @@ below.
 │   │       ├── Inc
 │   │       │   ├── mgr_at_cmd_common.h
 │   │       │   ├── mgr_at_cmd.h
+│   │       │   ├── mgr_at_cmd_list_certif.h
 │   │       │   ├── mgr_at_cmd_list_general.h
 │   │       │   ├── mgr_at_cmd_list.h
 │   │       │   ├── mgr_at_cmd_list_mac.h
@@ -161,23 +178,34 @@ below.
 │   │           ├── mgr_at_cmd.c
 │   │           ├── mgr_at_cmd_common.c
 │   │           ├── mgr_at_cmd_list.c
+│   │           ├── mgr_at_cmd_list_certif.c
 │   │           ├── mgr_at_cmd_list_general.c
 │   │           ├── mgr_at_cmd_list_mac.c
 │   │           ├── mgr_at_cmd_list_previpass.c
 │   │           └── mgr_at_cmd_list_user_data.c
-│   ├── Mcu
-│   │   ├── Inc
-│   │   │   └── mcu_at_console.h
-│   │   └── Src
-│   │       └── mcu_at_console.c
-│   └── README.md
+│   └── Mcu
+│       ├── Inc
+│       │   └── mcu_at_console.h
+│       └── Src
+│           ├── mcu_at_console.c
+│           └── mcu_at_console_stm.c
 ├── Appconf
 │   ├── kns_app_conf.h
 │   ├── kns_os_conf.h
 │   └── mgr_log_conf.h
-├── doc
-│   └── html
-│       ├── index.html
+├── Doc
+│   ├── krd_fw
+│   │   ├── doc_version.txt
+│   │   └── html
+│   │       ├── index.html
+│   ├── libkineis
+│   │   ├── doc_version.txt
+│   │   └── html
+│   │       ├── index.html
+│   └── libknsrf_wl
+│       ├── doc_version.txt
+│       └── html
+│   │       ├── index.html
 ├── doxy_warn_log_file.txt
 ├── Extdep
 │   ├── Conf
@@ -210,6 +238,7 @@ below.
 │           └── mgr_log_rtc.c
 ├── Lib
 │   ├── kns_cfg.h
+│   ├── kns_glossary.h
 │   ├── kns_mac_evt.h
 │   ├── kns_mac.h
 │   ├── kns_mac_prfl_cfg.h
@@ -312,7 +341,7 @@ below.
 
 # How to build
 
-This project is basedon makefiles. It is possible to invoke it from IDE or from console then.
+This project is based on makefiles. It is possible to invoke it from IDE or from console then.
 
 ## From STM32CubeIDE
 
@@ -321,27 +350,8 @@ This project is basedon makefiles. It is possible to invoke it from IDE or from 
 Install STM32CubeIDE and open project present in the Kinéis package.
 Toolchain (GCC, GNU Make) should direcly come up with your installation.
 
-Present package was tested with following STM32CubeIDE on windows 10:
-```
-STM32CubeIDE
-Version: 1.10.1
-Build: 12716_20220707_0928 (UTC)
-OS: Windows 10, v.10.0, x86_64 / win32
-Java vendor: Eclipse Adoptium
-Java runtime version: 11.0.14.1+1
-Java version: 11.0.14.1
-```
-
-Present package was tested with following STM32CubeIDE on Linux:
-```
-STM32CubeIDE
-Version: 1.11.2
-Build: 14494_20230119_0724 (UTC)
-OS: Linux, v.5.15.0-97-generic, x86_64 / gtk 3.24.20
-Java vendor: Eclipse Adoptium
-Java runtime version: 11.0.16+8
-Java version: 11.0.16
-```
+Present package was tested with following STM32CubeIDE v1.10.1 on windows 10.
+Present package was tested with following STM32CubeIDE v1.18.0 on Linux
 
 Once STM32CubeIDE is properly installed:
 
@@ -357,7 +367,7 @@ Once STM32CubeIDE is properly installed:
 
 ### Build
 
-\attention You need to **clean the current build before any rebuild**
+\attention You always need to **clean the build before any rebuild**
 
 Right click on project and select `Clean Project` to clean all. In build console, you should see
 something like:
@@ -375,21 +385,26 @@ mkdir -p build
 arm-none-eabi-gcc ...
 ```
 
-Binary file `\*.elf` file should be present in `build` folder of the project and ready to be
+Binary file `krd_fw.elf` file should be present in `build` folder of the project and ready to be
 flashed in KRD_MP HW.
 
 ## From terminal
 
 This project was tested and validated with following toolchain
-* GNU Make 4.2.1_st_20200221-0903
-  Built for x86_64-pc-linux-gnu
-  Copyright (C) 1988-2016 Free Software Foundation, Inc.
-  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-  This is free software: you are free to change and redistribute it.
-  There is NO WARRANTY, to the extent permitted by law.
-* arm-none-eabi-gcc (GNU Tools for STM32 10.3-2021.10.20211105-1100) 10.3.1 20210824 (release)
-  Copyright (C) 2020 Free Software Foundation, Inc.
-  This is free software; see the source for copying conditions.  There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+```bash
+GNU Make 4.4.1_st_20231030-1220
+Built for x86_64-pc-linux-gnu
+Copyright (C) 1988-2023 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+```
+```bash
+arm-none-eabi-gcc (GNU Tools for STM32 12.3.rel1.20240926-1715) 12.3.1 20230626
+Copyright (C) 2022 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+```
 
 In a way to build same binary from STM32CubeIDE or console whenever you are in windows or linux, it
 is recommended to point on same toolchain coming-up with STM32CubeIDE installation. You may need to
@@ -397,8 +412,8 @@ update your PATH variable to point on this toolchain.
 
 * Linux: Depending on you IDE/toolchain version, add something like following in your ~/.bashrc
 ```bash
-export PATH=~/st/stm32cubeide_1.4.0/plugins/com.st.stm32cube.ide.mcu.externaltools.make.linux64_2.0.100.202202231230/tools/bin:$PATH
-export PATH=~/st/stm32cubeide_1.4.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.100.202210260954/tools/bin/:$PATH
+export PATH=/opt/st/stm32cubeide_1.17.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.1.0.202410170702/tools/bin/:$PATH
+export PATH=/opt/st/stm32cubeide_1.17.0/plugins/com.st.stm32cube.ide.mcu.externaltools.make.linux64_2.2.0.202409170845/tools/bin/:$PATH
 ```
 * Windows: Update System PATH variable as usual.
 
@@ -417,12 +432,14 @@ flashed in KRD_MP HW.
 
 ## Compilation flags (log level, LPM level, ...)
 
-The makefile contains several compilation flags which can be changed:
+The makefile contains several compilation flags which can be changed as per your convinience:
 
 ```makefile
 DEBUG = 1             # enable/disable log with debug level
 VERBOSE = 0           # enable/disable log with verbose level (impacts real-time)
 USE_BAREMETAL = 1     # compile with/without kineis baremetal OS
+APP = STDLN           # compile standalone or AT-cmd-like application
+MAC_PRFL = BASIC      # compile stabdalone application with BASIC/BLIND profile (Note this is useless in case of GUI application)
 LPM = SHUTDOWN        # deeepest low power mode allowed, can be: NONE, SLEEP, STOP, STANDBY, SHUTDOWN
 KRD_BOARD = KRD_FW_MP # KRD board HW type, choose between: KRD_FW_LP, KRD_FW_MP
 ```

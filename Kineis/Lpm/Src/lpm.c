@@ -360,22 +360,19 @@ void LPM_SystemClockConfig(void)
 
 void GPIO_DisableAllToAnalogInput(void)
 {
-#ifdef USE_TRACKER_APP
-#else
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
 
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = PA_PSU_EN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(PA_PSU_EN_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* Disable GPIOs clock */
-  __HAL_RCC_GPIOC_CLK_DISABLE();
-  #endif
+  __HAL_RCC_GPIOA_CLK_DISABLE();
 }
 
 void LPM_init(void)

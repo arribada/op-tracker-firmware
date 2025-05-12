@@ -4,7 +4,6 @@ var mgr__at__cmd__list__certif_8c =
     [ "\u202AFOR_LOOP_CYCLE_NB", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ga889fa837f7eb2fe456a76c2f08f3aa74", null ],
     [ "\u202ASUPPORT_MW_WITH_DELAYED_RETX", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gae2e64165cce54fbc2f77c95809820756", null ],
     [ "\u202AbMGR_AT_CMD_CW_cmd", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gafccf5cd6468be2c39af4c4c599d48ef8", null ],
-    [ "\u202AconvKnsStatusToAtErr", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ga3cafca118878601afaac95a1b3dc75af", null ],
     [ "\u202AeoAtMW_isr_cb", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gafccb1dfaf28ab371bebd814a3abaa57c", null ],
     [ "\u202AMGR_AT_CMD_sendRandomTxData", "d0/d0f/group___m_g_r___a_t___c_m_d.html#ga60486b23c6850d01bbb1e29875cd24f4", null ],
     [ "\u202AMGR_LOG_array", "d0/d0f/group___m_g_r___a_t___c_m_d.html#gafe57cb4db4c278d9f302a4d5b41e3025", null ],

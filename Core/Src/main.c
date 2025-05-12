@@ -479,7 +479,7 @@ int main(void)
       MGR_LOG_DEBUG("==== WAKEUP from RESET ====\r\n");
     else
       MGR_LOG_DEBUG("==== WAKEUP from POWER OFF ====\r\n");
-    MGR_LOG_VERBOSE("Running build, versions:\r\n");
+    MGR_LOG_DEBUG("Running build, versions:\r\n");
     MGR_LOG_DEBUG("- FW            %s\r\n", uc_fw_vers_commit_id);
     MGR_LOG_DEBUG("- libkineis.a   %s\r\n", libkineis_info);
     MGR_LOG_DEBUG("- libknsrf_wl.a %s\r\n", libknsrf_wl_info);
@@ -515,6 +515,7 @@ int main(void)
 #elif defined (USE_GUI_APP)
 
 #if defined(USE_SPI_DRIVER)
+  MGR_LOG_DEBUG("Running SPI version");
   KNS_APP_gui_init(&hspi1);
 #else
   KNS_APP_gui_init(&hlpuart1);

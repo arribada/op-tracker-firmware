@@ -1,0 +1,19 @@
+digraph "KNS_APP_gui_init"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="KNS_APP_gui_init",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Init function needed for the application SW running in front of the GUI."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="MGR_AT_CMD_start",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d0f/group___m_g_r___a_t___c_m_d.html#ga8edd80aa91125cf8b5f711cd822df02a",tooltip="main API used to start AT command Manager"];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="MCU_AT_CONSOLE_register",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d62/group___m_c_u___a_p_p___w_r_a_p_p_e_r_s.html#ga74be300679e0b76678c55d7c8b609e6a",tooltip="Start AT CMD console for AT cmd reception."];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="KINEIS_UART_StartRx_IT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d62/group___m_c_u___a_p_p___w_r_a_p_p_e_r_s.html#ga2fbcd5790071dab1b10a9196607692b8",tooltip="Enable and start RX interrupt from UART."];
+  Node4 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="KINEIS_RxISR_8BIT",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d62/group___m_c_u___a_p_p___w_r_a_p_p_e_r_s.html#gaeda0953e4ffe9aae0475009c1d221944",tooltip="RX interrupt handler for 7 or 8 bits data word length ."];
+  Node2 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="MGR_AT_CMD_parseStreamCb",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d0f/group___m_g_r___a_t___c_m_d.html#ga8a8d9cacd2053d0c96e923fc183ac4ad",tooltip="API used to extract the latest AT cmds from the incoming received data stream."];
+}

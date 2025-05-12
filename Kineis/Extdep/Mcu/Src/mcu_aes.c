@@ -51,14 +51,14 @@ enum KNS_status_t MCU_AES_128_init(uint8_t key[])
 		/* Set the AES key with the Device Secret Key */
 		uint8_t device_secret_key[DSK_BYTE_LENGTH]; 
 		if (MCU_AES_get_device_sec_key(device_secret_key) != KNS_STATUS_OK) {
-			return KNS_STATUS_ERROR;
+			return KNS_STATUS_MCU_AES_ERR;
         }
 		if (aes_set_key(device_secret_key, DSK_BYTE_LENGTH, &ctx) != 0)
-			return KNS_STATUS_ERROR;
+			return KNS_STATUS_MCU_AES_ERR;
 	} else
 		/* Set the AES key with the given key */
 		if (aes_set_key(key, DSK_BYTE_LENGTH, &ctx) != 0)
-			return KNS_STATUS_ERROR;
+			return KNS_STATUS_MCU_AES_ERR;
 
 	return KNS_STATUS_OK;
 }
@@ -67,7 +67,7 @@ enum KNS_status_t MCU_AES_128_cbc_encrypt(const uint8_t *in, uint8_t *out, int32
 {
 	/** Call the AES CBC encrypt */
 	if (aes_cbc_encrypt(in, out, nb_block, iv, &ctx) != EXIT_SUCCESS)
-		return KNS_STATUS_ERROR;
+		return KNS_STATUS_MCU_AES_ERR;
 
 	return KNS_STATUS_OK;
 }
@@ -76,7 +76,7 @@ enum KNS_status_t MCU_AES_128_cbc_decrypt(const uint8_t *in, uint8_t *out, int32
 {
 	/** Call the AES CBC decrypt */
 	if (aes_cbc_decrypt(in, out, nb_block, iv, &ctx) != EXIT_SUCCESS)
-		return KNS_STATUS_ERROR;
+		return KNS_STATUS_MCU_AES_ERR;
 
 	return KNS_STATUS_OK;
 }

@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['satdet_5fctxt_471',['satdet_ctxt',['../d1/d8a/struct_k_n_s___m_a_c__srvc_evt__t.html#adf63d404d51dc8d737b3fc189c139ffa',1,'KNS_MAC_srvcEvt_t']]],
-  ['satdettimeout_472',['satDetTimeout',['../dc/d32/union_k_n_s___m_a_c__rsrc_status__t.html#a9fb95a7250b2d5d08ae65bf90b0bf343',1,'KNS_MAC_rsrcStatus_t']]],
-  ['satpassend_473',['satPassEnd',['../dc/d32/union_k_n_s___m_a_c__rsrc_status__t.html#a6ae1e29c4979eaf92f8c5152424322fb',1,'KNS_MAC_rsrcStatus_t']]],
-  ['satpassstart_474',['satPassStart',['../dc/d32/union_k_n_s___m_a_c__rsrc_status__t.html#ad90af439b6a2ea150dd79967afd965f2',1,'KNS_MAC_rsrcStatus_t']]],
-  ['sdet_5fctxt_475',['sdet_ctxt',['../db/de1/struct_k_n_s___r_f__evt__t.html#a2a57c5bc825e80519fb8758c60dbb27a',1,'KNS_RF_evt_t']]],
-  ['sf_476',['sf',['../d0/de9/struct_k_n_s___m_a_c__send__data__ctxt__t.html#a1e7634bb486a16e714f4f05ca84feeb2',1,'KNS_MAC_send_data_ctxt_t::sf()'],['../d1/d73/struct_k_n_s___t_x__cfg__t.html#a1e7634bb486a16e714f4f05ca84feeb2',1,'KNS_TX_cfg_t::sf()']]],
-  ['status_477',['status',['../d1/d8a/struct_k_n_s___m_a_c__srvc_evt__t.html#af159c57e2d686b3976b89590615d6cd8',1,'KNS_MAC_srvcEvt_t']]]
+  ['satdet_5fctxt_473',['satdet_ctxt',['../d1/d8a/struct_k_n_s___m_a_c__srvc_evt__t.html#adf63d404d51dc8d737b3fc189c139ffa',1,'KNS_MAC_srvcEvt_t']]],
+  ['satdettimeout_474',['satDetTimeout',['../dc/d32/union_k_n_s___m_a_c__rsrc_status__t.html#a9fb95a7250b2d5d08ae65bf90b0bf343',1,'KNS_MAC_rsrcStatus_t']]],
+  ['satpassend_475',['satPassEnd',['../dc/d32/union_k_n_s___m_a_c__rsrc_status__t.html#a6ae1e29c4979eaf92f8c5152424322fb',1,'KNS_MAC_rsrcStatus_t']]],
+  ['satpassstart_476',['satPassStart',['../dc/d32/union_k_n_s___m_a_c__rsrc_status__t.html#ad90af439b6a2ea150dd79967afd965f2',1,'KNS_MAC_rsrcStatus_t']]],
+  ['sdet_5fctxt_477',['sdet_ctxt',['../db/de1/struct_k_n_s___r_f__evt__t.html#a2a57c5bc825e80519fb8758c60dbb27a',1,'KNS_RF_evt_t']]],
+  ['sf_478',['sf',['../d0/de9/struct_k_n_s___m_a_c__send__data__ctxt__t.html#a1e7634bb486a16e714f4f05ca84feeb2',1,'KNS_MAC_send_data_ctxt_t::sf()'],['../d1/d73/struct_k_n_s___t_x__cfg__t.html#a1e7634bb486a16e714f4f05ca84feeb2',1,'KNS_TX_cfg_t::sf()']]],
+  ['status_479',['status',['../d1/d8a/struct_k_n_s___m_a_c__srvc_evt__t.html#af159c57e2d686b3976b89590615d6cd8',1,'KNS_MAC_srvcEvt_t']]]
 ];

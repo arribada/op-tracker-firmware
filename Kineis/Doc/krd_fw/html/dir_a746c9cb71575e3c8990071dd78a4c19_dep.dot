@@ -1,0 +1,15 @@
+digraph "Kineis/App/Kineis_os/KNS_Q/Src" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_565abc7797190263a19144fc71b59106 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="KNS_Q" fontname="Helvetica", fontsize="10", URL="dir_565abc7797190263a19144fc71b59106.html"]
+  dir_1c062482ac091c7c78d0a1651ce2de7a [shape=box label="Inc" URL="dir_1c062482ac091c7c78d0a1651ce2de7a.html"];
+  dir_a746c9cb71575e3c8990071dd78a4c19 [shape=box, label="Src", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_a746c9cb71575e3c8990071dd78a4c19.html"];
+  }
+  dir_e4bcde167f88f305238965282a0ab06e [shape=box label="Extdep" fillcolor="white" style="filled" color="red" URL="dir_e4bcde167f88f305238965282a0ab06e.html"];
+  dir_a746c9cb71575e3c8990071dd78a4c19->dir_1c062482ac091c7c78d0a1651ce2de7a [headlabel="3", labeldistance=1.5 headhref="dir_000011_000010.html"];
+  dir_a746c9cb71575e3c8990071dd78a4c19->dir_e4bcde167f88f305238965282a0ab06e [headlabel="7", labeldistance=1.5 headhref="dir_000011_000027.html"];
+  dir_1c062482ac091c7c78d0a1651ce2de7a->dir_e4bcde167f88f305238965282a0ab06e [headlabel="1", labeldistance=1.5 headhref="dir_000010_000027.html"];
+  dir_e4bcde167f88f305238965282a0ab06e->dir_1c062482ac091c7c78d0a1651ce2de7a [headlabel="1", labeldistance=1.5 headhref="dir_000027_000010.html"];
+}

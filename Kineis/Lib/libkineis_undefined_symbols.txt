@@ -1,5 +1,3 @@
-__aeabi_uldivmod
-kns_assert_failed
 KNS_CS_enter
 KNS_CS_exit
 KNS_Q_pop
@@ -25,5 +23,8 @@ MCU_TIM_deinit
 MCU_TIM_init
 MCU_TIM_start
 MCU_TIM_stop
-memset
+__aeabi_uldivmod
 __popcountsi2
+kns_assert_failed
+memcpy
+memset

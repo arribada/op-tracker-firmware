@@ -1,0 +1,13 @@
+digraph "KSTK_lpmReq"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="KSTK_lpmReq",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Request deepest LPM allowed by the Kineis stack client."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="KSTK_lpmNotifEnter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga38c3a4fcd42e43c751b3f44e8cff9959",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="KSTK_lpmNotifExit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dca/group___m_g_r___l_p_m.html#ga558e3a1b7b3578d848ecd33b1b102b37",tooltip=" "];
+}

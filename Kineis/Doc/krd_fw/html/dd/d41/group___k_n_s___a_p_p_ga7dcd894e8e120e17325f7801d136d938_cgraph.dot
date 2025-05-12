@@ -1,0 +1,25 @@
+digraph "KNS_APP_stdln_loop"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="KNS_APP_stdln_loop",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="This fct is a very basic standalone application."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="__attribute__",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d41/group___k_n_s___a_p_p.html#ga36f229bbda63818246ec86181b1fdd42",tooltip=" "];
+  Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="KNS_APP_stdln_startMacPrfl",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d41/group___k_n_s___a_p_p.html#ga43590921208185253a9503500d5d70d1",tooltip="Start MAC profile for the standalone application."];
+  Node3 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="KNS_Q_push",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/ddb/group___k_n_s___q.html#gac9a2be7939be73c32fd7eefb0d3ab3b3",tooltip="This function is used to push an element into a queue."];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="KNS_APP_stdln_stopMacPrfl",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d41/group___k_n_s___a_p_p.html#ga4bb02cc43d1bdbd739a38f4ddea0e82b",tooltip="Stop MAC profile for the standalone application."];
+  Node5 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="KNS_CFG_getRadioInfo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d54/group___k_n_s___c_f_g.html#ga3538adccf668070211abc09f59a68bce",tooltip="Get the Kineis radio configuration."];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="KNS_Q_pop",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/ddb/group___k_n_s___q.html#ga200d86f8adcbe9365bcec0cc085c91c0",tooltip="This function is used to pop next element from a queue."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="MGR_LOG_array",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d0f/group___m_g_r___a_t___c_m_d.html#gafe57cb4db4c278d9f302a4d5b41e3025",tooltip="Log array of uint8_t."];
+}

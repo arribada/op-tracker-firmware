@@ -1,0 +1,35 @@
+digraph "bMGR_AT_CMD_handleNewTxData"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="bMGR_AT_CMD_handleNewTxData",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Handle new TX data, this is the core function of AT+TX cmd."];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="bMGR_AT_CMD_logFailedMsg",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d0f/group___m_g_r___a_t___c_m_d.html#ga3d564aff9653e8bdc572d189093f1acc",tooltip="Log in debug interface a failed message."];
+  Node2 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="MCU_AT_CONSOLE_send",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d62/group___m_c_u___a_p_p___w_r_a_p_p_e_r_s.html#gae14ee3e1d2a9b459c0d89c451a4bc470",tooltip="Send AT CMD response to console."];
+  Node1 -> Node4 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="KNS_Q_push",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/ddb/group___k_n_s___q.html#gac9a2be7939be73c32fd7eefb0d3ab3b3",tooltip="This function is used to push an element into a queue."];
+  Node1 -> Node5 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="u16MGR_AT_CMD_convertAscii\lBinary",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d0f/group___m_g_r___a_t___c_m_d.html#ga474b262632007c7cdccc1c36d53d3d00",tooltip=": convert the input form ASCII to binary."];
+  Node5 -> Node6 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="u8UTIL_convertCharToHex4bits",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/da3/group___s_t_r_u_t_i_l_s.html#ga84065a55b8ebeb12a5e2a8e8ce2833fb",tooltip="convert an hexadecimal ASCII digit to a 4bits integer"];
+  Node1 -> Node7 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="USERDATA_txFifoAddElt",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d4f/group___u_s_e_r___d_a_t_a.html#ga9dc3ef3b0eec939e8a61b25e0a107cbe",tooltip="Add element in TX fifo."];
+  Node7 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="USERDATA_txFifoIsEltInFifo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d4f/group___u_s_e_r___d_a_t_a.html#ga2c1ea014de9c2ba244dc6605a6edce59",tooltip="check element is part of the TX fifo or not"];
+  Node8 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="USERDATA_txFifoIsInBuf",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d4f/group___u_s_e_r___d_a_t_a.html#ga532418c0e3adad36946ba9d346a163f4",tooltip="check the element is pointing on a valid address, i.e. one from sUserDataTxFifoBuf buffer"];
+  Node7 -> Node9 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 -> Node10 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="USERDATA_txFifoLog",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d4f/group___u_s_e_r___d_a_t_a.html#gafba02bd8b2e6ebad0b2f38b72e40ec21",tooltip="Log content of the TX fifo."];
+  Node10 -> Node11 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="KNS_CS_enter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#ga858c122b744e5d185b5abac307aae807",tooltip="Enter critical section."];
+  Node10 -> Node12 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="KNS_CS_exit",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d9/d2f/group___k_i_n_e_i_s___s_w___c_o_n_f.html#ga58b477bfcd987dcd7b733b98ab692fdc",tooltip="Exit critical section."];
+  Node1 -> Node13 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="USERDATA_txFifoReserveElt",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/d4f/group___u_s_e_r___d_a_t_a.html#gacb676464a4de1543fa3e55314f740110",tooltip="Get an element from memory pool in a way to push it later."];
+  Node13 -> Node8 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

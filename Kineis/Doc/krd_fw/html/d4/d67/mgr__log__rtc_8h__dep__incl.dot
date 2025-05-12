@@ -1,0 +1,47 @@
+digraph "Kineis/Extdep/MGR_LOG/Inc/mgr_log_rtc.h"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="Kineis/Extdep/MGR_LOG\l/Inc/mgr_log_rtc.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=": Header for mgr_log_rtc.c file. This file contains log routine concerning RTC. Thus there is a depen..."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Kineis/Extdep/MGR_LOG\l/Inc/mgr_log.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d2e/mgr__log_8h.html",tooltip="logger main header file"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Core/Src/main.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d29/main_8c.html",tooltip=": Main program body"];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="Kineis/App/Kineis_os\l/KNS_Q/Src/kns_q_baremetal.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d08/kns__q__baremetal_8c.html",tooltip="Configuration of queues used in kineis_swr."];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="Kineis/App/Kineis_os\l/KNS_Q/Src/kns_q.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d7/d30/kns__q_8c.html",tooltip="Configuration of queues used in kineis_swr."];
+  Node2 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="Kineis/App/Kineis_os\l/KNS_Q/Src/kns_q_cmsis_os2.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/d11/kns__q__cmsis__os2_8c.html",tooltip=" "];
+  Node2 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="Kineis/App/Kineis_os\l/KNS_Q/Src/kns_q_freertos.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d9c/kns__q__freertos_8c.html",tooltip="Configuration of queues used in kineis_swr."];
+  Node2 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="Kineis/App/kns_app.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/d0d/kns__app_8c.html",tooltip=" "];
+  Node2 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="Kineis/App/Libs/USERDATA\l/Src/user_data.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d01/user__data_8c.html",tooltip="Library to handle user data to be be received or transmitted over the air."];
+  Node2 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$da/d77/mgr__at__cmd_8c.html",tooltip="APIs Implementation used to parse the UART ASCII data stream and extract AT commands."];
+  Node2 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_list_certif.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d2/d04/mgr__at__cmd__list__certif_8c.html",tooltip="subset of AT commands concerning specifics for certification"];
+  Node2 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_list_general.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/dfd/mgr__at__cmd__list__general_8c.html",tooltip="subset of AT commands concerning general purpose (get ID, FW version, ...)"];
+  Node2 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_list_mac.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d1/de0/mgr__at__cmd__list__mac_8c.html",tooltip="subset of AT commands concerning Kinéis Medium Acces Channel (MAC)."];
+  Node2 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_list_user_data.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d11/mgr__at__cmd__list__user__data_8c.html",tooltip="subset of AT commands concerning user data manipulation such as TX"];
+  Node2 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="Kineis/Extdep/Conf\l/kns_assert.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d4d/kns__assert_8c.html",tooltip="assert handling dependency regarding platform using the Kineis stack (handle reset)"];
+  Node2 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="Kineis/Extdep/Mcu/Src\l/mcu_misc.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/ddf/mcu__misc_8c.html",tooltip="File to implement miscellaneous features for a specific design."];
+  Node2 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="Kineis/Extdep/Mcu/Src\l/mcu_tim.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dd/d3f/mcu__tim_8c.html",tooltip="MCU wrappers for timer or non-blocking delays used by Kineis stack."];
+  Node2 -> Node18 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="Kineis/Extdep/MGR_LOG\l/Src/mgr_log.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/de3/mgr__log_8c.html",tooltip="logger main file"];
+  Node2 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="Kineis/Extdep/MGR_LOG\l/Src/mgr_log_rtc.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$dc/d4f/mgr__log__rtc_8c.html",tooltip="This file contains log routine concerning RTC. There is a dependency on HAL RTC."];
+  Node2 -> Node20 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="Kineis/Lpm/Src/lpm.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/db5/lpm_8c.html",tooltip="This file contains some utilities and functions needed for a correct handling of LPM on the STM32WL55..."];
+  Node1 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

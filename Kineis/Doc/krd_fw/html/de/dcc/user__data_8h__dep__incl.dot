@@ -1,0 +1,14 @@
+digraph "Kineis/App/Libs/USERDATA/Inc/user_data.h"
+{
+ // INTERACTIVE_SVG=YES
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="Kineis/App/Libs/USERDATA\l/Inc/user_data.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Library to handle user data to be be received or transmitted over the air through several networks (e..."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Kineis/App/Libs/USERDATA\l/Src/user_data.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/d01/user__data_8c.html",tooltip="Library to handle user data to be be received or transmitted over the air."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_common.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d5/dd7/mgr__at__cmd__common_8c.html",tooltip="common part of the AT cmd manager (logging, AT cmd response api)"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="Kineis/App/Managers\l/MGR_AT_CMD/Src/mgr\l_at_cmd_list_user_data.c",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d8/d11/mgr__at__cmd__list__user__data_8c.html",tooltip="subset of AT commands concerning user data manipulation such as TX"];
+}

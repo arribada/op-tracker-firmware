@@ -87,19 +87,9 @@ bool bMGR_AT_CMD_KMAC_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_t e_exec_
 	}
 
 	status = KNS_Q_push(KNS_Q_DL_APP2MAC, (void *)&appEvt);
-	switch (status) {
-	case KNS_STATUS_QFULL:
-		return bMGR_AT_CMD_logFailedMsg(ERROR_DATA_QUEUE_FULL);
-	break;
-	default:
-		return bMGR_AT_CMD_logFailedMsg(ERROR_UNKNOWN);
-	break;
-	case KNS_STATUS_OK:
-		return true;
-	break;
-	}
-
-	return bMGR_AT_CMD_logFailedMsg(ERROR_UNKNOWN);
+	if (status != KNS_STATUS_OK)
+		return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T)status);
+	return true;
 }
 
 /**
