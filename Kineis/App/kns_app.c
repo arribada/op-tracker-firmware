@@ -171,9 +171,9 @@ static void KNS_APP_tracker_startMacPrfl(void)
 		.init_prfl_ctxt = {
 			.id =  KNS_MAC_PRFL_BLIND,
 			.blindCfg = {
-					.retx_nb = 2,//app_vars.u8_msg_counter,
+					.retx_nb = app_vars.u8_msg_counter,
 					.nb_parrallel_msg = 1,
-					.retx_period_s = 60,//app_vars.u8_wait_msg_timer_s,
+					.retx_period_s = app_vars.u8_wait_msg_timer_s,
 			}
 		}
 	};

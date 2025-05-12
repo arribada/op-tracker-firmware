@@ -424,7 +424,7 @@ int main(void)
 #endif
 
   /** As we just woke up, most of GPIOs are useless so far. Limit their current drain */
-  GPIO_DisableAllToAnalogInput();
+  //GPIO_DisableAllToAnalogInput();
 
   /** Do specific Init sequence as per wake up mode. The low power mode was set before entering.
    * Some of them (typically standby, shutdown) makes the uC to reset
