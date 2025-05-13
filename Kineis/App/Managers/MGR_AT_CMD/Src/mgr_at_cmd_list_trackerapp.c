@@ -116,8 +116,8 @@ bool bMGR_AT_CMD_TRACKER_START_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_
 		if (startup_counter == 0) {
 			MCU_AT_CONSOLE_send("+TRACKER_START: Not started set value different from 0\r\n");
 		} else {
-			TRACKER_start();
-			MCU_AT_CONSOLE_send("+TRACKER_START: Starting ... Increment counter to 1\r\n");
+			MCU_AT_CONSOLE_send("+TRACKER_START: Starting ... Increment counter to 1 at next boot\r\n");
+			TRACKER_stop();
 		}
 
         return bMGR_AT_CMD_logSucceedMsg();

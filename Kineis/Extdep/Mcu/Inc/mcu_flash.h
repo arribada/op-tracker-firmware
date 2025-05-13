@@ -65,8 +65,9 @@
 
 // Counter variables aligned after APP_VARS
 #define FLASH_COUNTER_OFFSET                  (FLASH_APP_VARS_OFFSET + FLASH_APP_VARS_BYTE_SIZE)
-#define FLASH_COUNTER_SIZE                    8 // 64-bit counter
-#define FLASH_COUNTER_MAX_WRITES              ((FLASH_PAGE_SIZE - FLASH_COUNTER_OFFSET) / FLASH_COUNTER_SIZE)
+#define FLASH_COUNTER_BYTE_SIZE                   8 // 64-bit counter
+//#define FLASH_COUNTER_SIZE                    8 // 64-bit counter
+//#define FLASH_COUNTER_MAX_WRITES              ((FLASH_PAGE_SIZE - FLASH_COUNTER_OFFSET) / FLASH_COUNTER_SIZE)
 
 // TODO: Move it to another pertinent place? 
 
@@ -74,8 +75,9 @@ enum KNS_status_t MCU_FLASH_read(uint32_t address, void *buffer, size_t size);
 enum KNS_status_t MCU_FLASH_write(uint32_t address, const void *data, size_t size);
 
 enum KNS_status_t MCU_FLASH_increment_counter(void);
+enum KNS_status_t MCU_FLASH_set_counter(uint64_t *counter);
 enum KNS_status_t MCU_FLASH_get_latest_counter(uint64_t *counter);
-bool MCU_FLASH_is_counter_full(void);
+//bool MCU_FLASH_is_counter_full(void);
 enum KNS_status_t MCU_FLASH_reset_counter(void);
 
 #endif

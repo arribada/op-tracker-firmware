@@ -32,6 +32,7 @@
 #ifdef USE_TX_LED // Light on a GPIO when TX occurs
 #include "main.h"
 #endif
+#include "mcu_flash.h"
 
 /* Private macro -------------------------------------------------------------*/
 
@@ -171,7 +172,7 @@ static void KNS_APP_tracker_startMacPrfl(void)
 		.init_prfl_ctxt = {
 			.id =  KNS_MAC_PRFL_BLIND,
 			.blindCfg = {
-					.retx_nb = app_vars.u8_msg_counter,
+					.retx_nb = app_vars.u8_msg_counter + 1,
 					.nb_parrallel_msg = 1,
 					.retx_period_s = app_vars.u8_wait_msg_timer_s,
 			}
@@ -560,7 +561,7 @@ void KNS_APP_tracker_loop(void)
 					}
 					break;
 				case (KNS_MAC_TX_DONE):
-					MGR_LOG_DEBUG("[%s] TX done for 0x", __func__);
+					MGR_LOG_DEBUG("[%s] Sequence done for 0x", __func__);
 					MGR_LOG_array(srvcEvt.tx_ctxt.data,
 						(srvcEvt.tx_ctxt.data_bitlen+7)>>3);
 					TEST_PASS();
@@ -629,6 +630,11 @@ void KNS_APP_tracker_loop(void)
 		return;
 	}
 	case 5: { /** Wait for Kineis stack replying:*/
+		state++;
+		break;
+	}
+	case 6: { /** Stop tracker */
+		TRACKER_stop();
 		break;
 	}
 	default:

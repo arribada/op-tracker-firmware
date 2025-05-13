@@ -27,6 +27,7 @@
 #include <stdint.h>
 #include "kns_types.h"
 
+
 /* Defines ------------------------------------------------------------------------------------- */
 
 /* Enums --------------------------------------------------------------------------------------- */
@@ -42,8 +43,7 @@ typedef struct {
 /* Externs ------------------------------------------------------------------------------------- */
 
 /* Public functions ---------------------------------------------------------------------------- */
-enum KNS_status_t TRACKER_init(void);
-enum KNS_status_t TRACKER_start(void);
+enum KNS_status_t TRACKER_init(uint64_t *startup_counter);
 enum KNS_status_t TRACKER_stop(void);
 enum KNS_status_t TRACKER_get_conf(tracker_app_vars_t *app_vars);
 enum KNS_status_t TRACKER_set_conf(const tracker_app_vars_t *app_vars);

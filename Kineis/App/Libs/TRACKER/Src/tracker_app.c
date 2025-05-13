@@ -23,6 +23,7 @@
 #include "mcu_flash.h"
 #include "mcu_at_console.h"
 #include "mgr_log.h" /* @note This log is for debug, can be deleted */
+#include "kns_types.h"
 
 /* Struct -------------------------------------------------------------------------------------- */
 
@@ -31,8 +32,14 @@
 /* Local functions ----------------------------------------------------------------------------- */
 
 /* Public functions ---------------------------------------------------------------------------- */
-enum KNS_status_t TRACKER_init(void) {
+enum KNS_status_t TRACKER_init(uint64_t *startup_counter) {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+  (*startup_counter)++;
+  MGR_LOG_DEBUG("%s::Startup counter: %d \r\n", __func__, *startup_counter);
+  MCU_FLASH_set_counter(startup_counter); // Increment counter in flash memory
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOB_CLK_ENABLE();
   GPIO_InitStruct.Pin = MCU_DONE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -40,31 +47,33 @@ enum KNS_status_t TRACKER_init(void) {
   HAL_GPIO_Init(MCU_DONE_GPIO_Port, &GPIO_InitStruct);
   HAL_GPIO_WritePin(MCU_DONE_GPIO_Port, MCU_DONE_Pin, GPIO_PIN_RESET);
 
+  tracker_app_vars_t app_vars;
+  TRACKER_get_conf(&app_vars);
+
+  // Always used startup_counter -1 since it's incremented at the beginning of the function
+  if ((app_vars.u8_wait_sequence_nmb_startup != 0) && ((*startup_counter-1) != 0)) {
+	if ((*startup_counter-1) % app_vars.u8_wait_sequence_nmb_startup == 0)
+	{
+	  // STOP no sequence should be sent
+      MGR_LOG_DEBUG("%s::next boot after %d \r\n", __func__, (((*startup_counter-1) % app_vars.u8_wait_sequence_nmb_startup == 0)));
+	  TRACKER_stop();
+	}
+  }
   return KNS_STATUS_OK;
 }
-enum KNS_status_t TRACKER_start(void) 
-{
-    enum KNS_status_t status;
-	MGR_LOG_DEBUG("TRACKER_start\r\n");
-    // Increment startup counter, next reset GUI will not start
-    status = MCU_FLASH_increment_counter();
 
-    TRACKER_stop();
-    return status;
-}
 
 enum KNS_status_t TRACKER_stop(void)
 {
+    //enum KNS_status_t status;
     MGR_LOG_DEBUG("TRACKER_stop\r\n");
-
+    // Stop UART
     MCU_UART_DeInit();
-
-    __disable_irq();
-
-	HAL_Delay(100);                 // Short delay for hardware reset
+	HAL_Delay(10);                 // Short delay for hardware reset
+	HAL_RCC_DeInit();
     // stop tracker with MCU_DONE
     HAL_GPIO_WritePin(MCU_DONE_GPIO_Port, MCU_DONE_Pin, GPIO_PIN_SET);
-	HAL_Delay(1);                 // Short delay for hardware reset
+	HAL_Delay(10);                 // Short delay for hardware reset
     HAL_GPIO_WritePin(MCU_DONE_GPIO_Port, MCU_DONE_Pin, GPIO_PIN_RESET);
 
     return KNS_STATUS_OK;

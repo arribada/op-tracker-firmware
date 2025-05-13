@@ -424,7 +424,7 @@ int main(void)
 #endif
 
   /** As we just woke up, most of GPIOs are useless so far. Limit their current drain */
-  //GPIO_DisableAllToAnalogInput();
+  GPIO_DisableAllToAnalogInput();
 
   /** Do specific Init sequence as per wake up mode. The low power mode was set before entering.
    * Some of them (typically standby, shutdown) makes the uC to reset
@@ -526,7 +526,7 @@ int main(void)
 // Retrieve flash memory state
   uint64_t startup_counter = 0;
   MCU_FLASH_get_latest_counter(&startup_counter);
-  TRACKER_init();
+  TRACKER_init(&startup_counter);
 
   MGR_LOG_DEBUG("%s::Tracker start count: %d \r\n", startup_counter);
   if (startup_counter == 0)
