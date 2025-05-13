@@ -422,6 +422,7 @@ bool bMGR_SPI_CMD_WRITERCONFREQ_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 		return false;
 	}
 }
+
 bool bMGR_SPI_CMD_WRITERCONF_cmd(SPI_Buffer *rx, SPI_Buffer *tx)
 {
 	HAL_StatusTypeDef ret = HAL_OK;

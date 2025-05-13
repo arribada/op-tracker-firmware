@@ -35,7 +35,7 @@ USE_BAREMETAL = 1
 APP = TRACKER
 
 # Select output port
-COMM = UART
+COMM = SPI
 
 # Select Kineis stack MAC profile. Can be:
 # * BASIC: basic profile, sending message once immediately 
