@@ -61,6 +61,16 @@ void SystemClock_Config(void);
 #define JTMS_SWCLK_GPIO_Port GPIOA
 #define JTMS_SWDIO_Pin GPIO_PIN_13
 #define JTMS_SWDIO_GPIO_Port GPIOA
+
+//Tracker App pin definition
+#define VBAT_SENSE_Pin GPIO_PIN_13
+#define VBAT_SENSE_GPIO_Port GPIOB
+
+#define MCU_DONE_Pin GPIO_PIN_9
+#define MCU_DONE_GPIO_Port GPIOB
+
+#define STATE_COUNTER_RST_Pin GPIO_PIN_12
+#define STATE_COUNTER_RST_Port GPIOA
 // No external wakeup in sleep during message
 #ifdef USE_TRACKER_APP
 #define PA_PSU_SEL_Pin GPIO_PIN_0
@@ -69,12 +79,6 @@ void SystemClock_Config(void);
 #define PA_PSU_EN_Pin GPIO_PIN_1 // Different on OP TRACKER
 #define PA_PSU_EN_GPIO_Port GPIOC
 
-//Tracker App pin definition
-#define VBAT_SENSE_Pin GPIO_PIN_13
-#define VBAT_SENSE_GPIO_Port GPIOB
-
-#define MCU_DONE_Pin GPIO_PIN_9
-#define MCU_DONE_GPIO_Port GPIOB
 #else
 #define EXT_WKUP_BUTTON_Pin GPIO_PIN_13
 #define EXT_WKUP_BUTTON_GPIO_Port GPIOB

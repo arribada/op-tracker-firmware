@@ -51,6 +51,7 @@
 #include "tim.h"
 #include "gpio.h"
 #include "mcu_flash.h"
+#include "kns_types.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -414,17 +415,8 @@ int main(void)
   __HAL_DBGMCU_FREEZE_RTC();
 #endif
 
-#ifdef USE_TRACKER_APP
-
-  if (bIsWakeUpFromReset) {
-
-    /** Initialize retention RAM2 as not done by default in the Reset_Handler */
-    //MCU_FLASH_reset_counter();
-  }
-#endif
-
   /** As we just woke up, most of GPIOs are useless so far. Limit their current drain */
-  GPIO_DisableAllToAnalogInput();
+  //GPIO_DisableAllToAnalogInput();
 
   /** Do specific Init sequence as per wake up mode. The low power mode was set before entering.
    * Some of them (typically standby, shutdown) makes the uC to reset
@@ -479,6 +471,7 @@ int main(void)
       MGR_LOG_DEBUG("==== WAKEUP from RESET ====\r\n");
     else
       MGR_LOG_DEBUG("==== WAKEUP from POWER OFF ====\r\n");
+
     MGR_LOG_DEBUG("Running build, versions:\r\n");
     MGR_LOG_DEBUG("- FW            %s\r\n", uc_fw_vers_commit_id);
     MGR_LOG_DEBUG("- libkineis.a   %s\r\n", libkineis_info);
@@ -523,25 +516,28 @@ int main(void)
 
   assert_param(KNS_OS_registerTask(KNS_OS_TASK_APP, KNS_APP_gui_loop) == KNS_STATUS_OK);
 #elif defined (USE_TRACKER_APP)
-// Retrieve flash memory state
-  uint64_t startup_counter = 0;
-  MCU_FLASH_get_latest_counter(&startup_counter);
-  TRACKER_init(&startup_counter);
+  tracker_app_vars_t *app_vars;
+  //Warning called read_conf only once to avoid multiple flash read
+  enum KNS_status_t status = TRACKER_read_conf(&app_vars);
+  // SHould be removed
+  if (status != KNS_STATUS_OK) {
+    MGR_LOG_DEBUG("Tracker get conf failed\r\n");
+    assert_param(0);
+  } 
 
-  MGR_LOG_DEBUG("%s::Tracker start count: %d \r\n", startup_counter);
-  if (startup_counter == 0)
+  if (app_vars->u8_is_running == 0)
   {
 	  // Init GUI mode
+	  MGR_LOG_DEBUG("Tracker start GUI mode \r\n");
 	  KNS_APP_gui_init(&hlpuart1);
 	  assert_param(KNS_OS_registerTask(KNS_OS_TASK_APP, KNS_APP_gui_loop) == KNS_STATUS_OK);
   } else {
+    MGR_LOG_DEBUG("Tracker is running \r\n");
+    TRACKER_init();
     assert_param(KNS_OS_registerTask(KNS_OS_TASK_APP, KNS_APP_tracker_loop) == KNS_STATUS_OK);
   }
 
 #endif
-
-
-
 
   assert_param(KNS_OS_registerTask(KNS_OS_TASK_IDLE, IDLE_task) == KNS_STATUS_OK);
 
@@ -668,9 +664,10 @@ void Error_Handler(void)
   HAL_Delay(500);
 #endif
   __disable_irq();
-  while (1)
-  {
-  }
+  NVIC_SystemReset();
+//  while (1)
+//  {
+//  }
 #elif USE_TRACKER_APP // end of DEBUG
   MCU_AT_CONSOLE_send("+ASSERT=\r\n");
 #else

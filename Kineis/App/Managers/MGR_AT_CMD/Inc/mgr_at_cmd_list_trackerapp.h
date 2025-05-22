@@ -46,6 +46,15 @@ bool bMGR_AT_CMD_TRACKER_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_t e_ex
  * @return true if command is correctly received and processed, false if error
  */
 bool bMGR_AT_CMD_TRACKER_START_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_t e_exec_mode);
+
+/**
+ * @brief Process AT command "AT+WUC"
+ *
+ * Read/Update the wake up counter of the trakcer application
+ *
+ * @return true if command is correctly received and processed, false if error
+ */
+bool bMGR_AT_CMD_WUC_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_t e_exec_mode);
 #endif /* __MGR_AT_CMD_TRACKER_H */
 
 /**

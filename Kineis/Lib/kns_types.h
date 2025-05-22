@@ -74,6 +74,10 @@ enum KNS_status_t {
 
 	KNS_STATUS_MCU_TIM_ERR    = 650, /**< for timer wrapper if existing */
 
+	KNS_STATUS_FLASH_ERR      = 700, /**< Error with FLASH usage */
+
+	KNS_STATUS_TRACKER_ERR    = 750, /**< Error with TRACKER app usage */
+
 	KNS_STATUS_MAX            = 1000, /**< Max limit for kineis status enum, DO NOT EXCEED */
 };
 

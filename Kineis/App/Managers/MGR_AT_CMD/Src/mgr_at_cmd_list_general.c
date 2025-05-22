@@ -336,12 +336,26 @@ bool bMGR_AT_CMD_MC_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 
 	if (e_exec_mode == ATCMD_STATUS_MODE) {
 		status = KNS_CFG_getMC(&mc);
-		if (status != KNS_STATUS_OK)
+		if (status != KNS_STATUS_OK) {
 			return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T) status);
+		}
 		
 		MCU_AT_CONSOLE_send("+MC=%d\r\n", mc);
-
 		return bMGR_AT_CMD_logSucceedMsg();
+	} else if(e_exec_mode == ATCMD_ACTION_MODE) {
+		if (sscanf((char*)pu8_cmdParamString, "%*[^=]= %hu", &mc) != 1)
+		{
+			MGR_LOG_DEBUG("Missing parameter: AT+MC=VALUE\r\n");
+			return bMGR_AT_CMD_logFailedMsg(ERROR_PARAMETER_FORMAT);
+		} else {
+			if (KNS_CFG_setMC(mc) == KNS_STATUS_OK)
+			{
+				MGR_LOG_DEBUG("+MC=%u\r\n", mc);
+				return bMGR_AT_CMD_logSucceedMsg();
+			} else {
+				MGR_LOG_DEBUG("Failed to update MC=%u\r\n", mc);
+			}
+		}
 	}
 	return bMGR_AT_CMD_logFailedMsg(ERROR_UNKNOWN_AT_CMD);
 }

@@ -34,20 +34,26 @@
 
 /* Struct--------------------------------------------------------------------------------------- */
 typedef struct {
+    uint8_t u8_is_running;
     uint8_t u8_msg_counter;
     uint8_t u8_wait_msg_timer_s;
     uint8_t u8_wait_startup_restimer_min;
     uint8_t u8_wait_sequence_nmb_startup;
     uint8_t u8_bat_level_threshold;
+    uint8_t u8_reserved_1;
+    uint8_t u8_reserved_2;
 } tracker_app_vars_t;
 /* Externs ------------------------------------------------------------------------------------- */
 
 /* Public functions ---------------------------------------------------------------------------- */
-enum KNS_status_t TRACKER_init(uint64_t *startup_counter);
-enum KNS_status_t TRACKER_stop(void);
-enum KNS_status_t TRACKER_get_conf(tracker_app_vars_t *app_vars);
-enum KNS_status_t TRACKER_set_conf(const tracker_app_vars_t *app_vars);
-
+enum KNS_status_t TRACKER_init();
+enum KNS_status_t TRACKER_shutdown(bool increment_wku);
+enum KNS_status_t TRACKER_get_conf(tracker_app_vars_t **conf);
+enum KNS_status_t TRACKER_read_conf(tracker_app_vars_t **app_vars);
+enum KNS_status_t TRACKER_set_conf(tracker_app_vars_t *app_vars);
+enum KNS_status_t TRACKER_set_is_running(uint8_t is_running);
+enum KNS_status_t TRACKER_get_is_running(uint8_t *is_running);
+enum KNS_status_t TRACKER_update_local_conf(tracker_app_vars_t * app_vars);
 
 #endif /* __TRACKER_APP_H */
 

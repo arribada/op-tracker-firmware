@@ -84,13 +84,13 @@ enum KNS_status_t MCU_AES_128_cbc_decrypt(const uint8_t *in, uint8_t *out, int32
 enum KNS_status_t MCU_AES_set_device_sec_key(const uint8_t *key) {
     if (!key) return KNS_STATUS_ERROR;
 
-    return MCU_FLASH_write(FLASH_USER_DATA_ADDR + FLASH_SECKEY_OFFSET, key, FLASH_SECKEY_BYTE_SIZE);
+    return MCU_FLASH_write(FLASH_USER_START_ADDR + FLASH_SECKEY_OFFSET, key, FLASH_SECKEY_BYTE_SIZE);
 }
 
 enum KNS_status_t MCU_AES_get_device_sec_key(uint8_t *key) {
     if (!key) return KNS_STATUS_ERROR;
 
-    enum KNS_status_t status = MCU_FLASH_read(FLASH_USER_DATA_ADDR + FLASH_SECKEY_OFFSET, key, FLASH_SECKEY_BYTE_SIZE);
+    enum KNS_status_t status = MCU_FLASH_read(FLASH_USER_START_ADDR + FLASH_SECKEY_OFFSET, key, FLASH_SECKEY_BYTE_SIZE);
     if (status != KNS_STATUS_OK) return status;
 
     bool flash_empty = true;

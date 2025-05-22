@@ -75,18 +75,17 @@ void MX_GPIO_Init(void)
    * Options available with Argos SMD
    * PA9 / PA10  set to analog but can be used with I2C
    * PA11 = Set to analog but can be used to DBG_RF-NRST
-   * PA12 = Set to analog but can be used to DBG_RF-BUSY
+   * PA12 = Set to analog but can be used to DBG_RF-BUSY / USed to reset sequence counter with tracker
    */
 #if defined(USE_SPI_DRIVER)
   GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 |
-		  	  	  	  	  GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 |
-                        GPIO_PIN_12;
+		  	  	  	  	  GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 ;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 
 #elif defined(USE_UART_DRIVER)
   GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 |
 		  	  	  	  	  GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 |
-						  GPIO_PIN_12 | GPIO_PIN_15;
+						  GPIO_PIN_15;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 #endif
 
@@ -135,11 +134,11 @@ void MX_GPIO_Init(void)
 
 // Configured inside mcu_misc.c file.
   /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = PA_PSU_EN_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(PA_PSU_EN_GPIO_Port, &GPIO_InitStruct);
+//  GPIO_InitStruct.Pin = PA_PSU_EN_Pin;
+//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//  GPIO_InitStruct.Pull = GPIO_NOPULL;
+//  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//  HAL_GPIO_Init(PA_PSU_EN_GPIO_Port, &GPIO_InitStruct);
   /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = PA_PSU_SEL_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -147,6 +146,14 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(PA_PSU_SEL_GPIO_Port, &GPIO_InitStruct);
   HAL_GPIO_WritePin(PA_PSU_SEL_GPIO_Port, PA_PSU_SEL_Pin, GPIO_PIN_SET);
+
+#ifdef USE_TRACKER_APP
+  GPIO_InitStruct.Pin = STATE_COUNTER_RST_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(STATE_COUNTER_RST_Port, &GPIO_InitStruct);
+#endif
 
 
   /*Configure GPIO pin : PH3 */

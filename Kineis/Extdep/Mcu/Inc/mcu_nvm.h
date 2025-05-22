@@ -54,7 +54,7 @@ enum KNS_status_t MCU_NVM_getMC(uint16_t *mc_ptr);
  *
  * The value may be set for each new user message sent to the Kineis stack.
  *
- * @attention Depending the expected lifetime of your device, ensure your non-volatile memory
+ * @attention Depending the expected lifetime of your device, ensure your flash memory
  * can support enough write/erase cycles.
  *
  * @param[in] mcTmp : 16-bit value to store
@@ -62,6 +62,31 @@ enum KNS_status_t MCU_NVM_getMC(uint16_t *mc_ptr);
  * @return Status @ref KNS_status_t
  */
 enum KNS_status_t MCU_NVM_setMC(uint16_t mcTmp);
+
+/**
+ * @brief get a 16-bit-long non-volatile value
+ *
+ * This is a read-only operation.
+ *
+ * @param[out] wuc_ptr : 16-bit value to read
+ *
+ * @return Status @ref KNS_status_t
+ */
+enum KNS_status_t MCU_NVM_getWUC(uint16_t *wuc_ptr);
+
+/**
+ * @brief set a 16-bit-long non-volatile value
+ *
+ * The value may be set for tracker app at each wakeup.
+ *
+ * @attention Depending the expected lifetime of your device, ensure your flash memory
+ * can support enough write/erase cycles.
+ *
+ * @param[in] wucTmp : 16-bit value to store
+ *
+ * @return Status @ref KNS_status_t
+ */
+enum KNS_status_t MCU_NVM_setWUC(uint16_t wucTmp);
 
 /**
  * @brief get a pointer to the Kineis radio configuration

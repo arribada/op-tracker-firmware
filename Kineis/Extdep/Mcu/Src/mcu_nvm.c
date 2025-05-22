@@ -40,8 +40,9 @@
  * If you use a flash memory, be careful about the storage of this data. The message counter is
  * updated at each message transmission, so this implies a lot of erase/write cycles.
  */
-__attribute__((__section__(".msgCntSectionData")))
 static uint16_t message_counter = 0;
+
+static uint16_t wakeup_counter = 0;
 
 /** The device identifier may be stored in a secured way (encryption, etc.) */
 const uint32_t test_device_id = 123456; // stored in flash
@@ -97,19 +98,40 @@ static const uint8_t device_sn[DEVICE_SN_LENGTH] = { 'S', 'M', 'D', '_', '1', '0
 
 enum KNS_status_t MCU_NVM_getMC(uint16_t *mc_ptr)
 {
-	*mc_ptr = message_counter;
+	if (!mc_ptr) 
+		return KNS_STATUS_ERROR;
+  
+	uint64_t full_counter = MCU_FLASH_read_msg_counter();
+    *mc_ptr = (uint16_t)(full_counter & 0xFFFF);
+    return KNS_STATUS_OK;
 
-	return KNS_STATUS_OK;
 }
 
 enum KNS_status_t MCU_NVM_setMC(uint16_t mcTmp)
 {
 	message_counter = mcTmp;
 
-	return KNS_STATUS_OK;
+	return MCU_FLASH_set_msg_counter((uint64_t)mcTmp);
 
 }
 
+enum KNS_status_t MCU_NVM_getWUC(uint16_t *wuc_ptr)
+{
+	if (!wuc_ptr) 
+		return KNS_STATUS_ERROR;
+
+	uint64_t full_counter = MCU_FLASH_read_wku_counter();
+    *wuc_ptr = (uint16_t)(full_counter & 0xFFFF);
+    return KNS_STATUS_OK;
+
+}
+
+enum KNS_status_t MCU_NVM_setWUC(uint16_t wucTmp)
+{
+	wakeup_counter = wucTmp;
+	return MCU_FLASH_set_wku_counter((uint64_t)wucTmp);
+
+}
 enum KNS_status_t MCU_NVM_getRadioConfZonePtr(void **ConfZonePtr)
 {
 	if (ConfZonePtr == NULL) {
@@ -117,7 +139,7 @@ enum KNS_status_t MCU_NVM_getRadioConfZonePtr(void **ConfZonePtr)
 	}
 
 	uint8_t flash_radio_conf[FLASH_RADIOCONF_BYTE_SIZE];
-	enum KNS_status_t status = MCU_FLASH_read(FLASH_USER_DATA_ADDR + FLASH_RADIOCONF_OFFSET, flash_radio_conf, FLASH_RADIOCONF_BYTE_SIZE);
+	enum KNS_status_t status = MCU_FLASH_read(FLASH_USER_START_ADDR + FLASH_RADIOCONF_OFFSET, flash_radio_conf, FLASH_RADIOCONF_BYTE_SIZE);
 
 	if (status != KNS_STATUS_OK) {
 		return status;
@@ -146,7 +168,7 @@ enum KNS_status_t MCU_NVM_setRadioConfZone(void *ConfZonePtr, uint16_t ConfZoneS
 	}
 
 	// Write to flash
-	enum KNS_status_t status = MCU_FLASH_write(FLASH_USER_DATA_ADDR + FLASH_RADIOCONF_OFFSET, ConfZonePtr, FLASH_RADIOCONF_BYTE_SIZE);
+	enum KNS_status_t status = MCU_FLASH_write(FLASH_USER_START_ADDR + FLASH_RADIOCONF_OFFSET, ConfZonePtr, FLASH_RADIOCONF_BYTE_SIZE);
 
 	if (status != KNS_STATUS_OK) {
 		return status;
@@ -168,7 +190,7 @@ enum KNS_status_t MCU_NVM_getID(uint32_t *id)
     }
     enum KNS_status_t status = KNS_STATUS_OK;
 
-    status = MCU_FLASH_read(FLASH_USER_DATA_ADDR + FLASH_ID_OFFSET, id, FLASH_ID_BYTE_SIZE);
+    status = MCU_FLASH_read(FLASH_USER_START_ADDR + FLASH_ID_OFFSET, id, FLASH_ID_BYTE_SIZE);
 
     if (*id == 0xFFFFFFFF) {
 		*id = test_device_id;
@@ -183,7 +205,7 @@ enum KNS_status_t MCU_NVM_setID(uint32_t *id)
         return KNS_STATUS_MCU_NVM_ERR;
     }
 
-	return(MCU_FLASH_write(FLASH_USER_DATA_ADDR + FLASH_ID_OFFSET, id, FLASH_ID_BYTE_SIZE));
+	return(MCU_FLASH_write(FLASH_USER_START_ADDR + FLASH_ID_OFFSET, id, FLASH_ID_BYTE_SIZE));
 }
 
 
@@ -200,7 +222,7 @@ enum KNS_status_t MCU_NVM_getAddr(uint8_t addr[])
     if (!addr) return KNS_STATUS_ERROR; // Vérification des pointeurs
 
     enum KNS_status_t status = KNS_STATUS_OK;
-    status = MCU_FLASH_read(FLASH_USER_DATA_ADDR + FLASH_ADDR_OFFSET, addr, FLASH_ADDR_BYTE_SIZE);
+    status = MCU_FLASH_read(FLASH_USER_START_ADDR + FLASH_ADDR_OFFSET, addr, FLASH_ADDR_BYTE_SIZE);
 
     if (addr[0] == 0xFF && addr[1] == 0xFF && addr[2] == 0xFF && addr[3] == 0xFF) {
 		memcpy(addr, test_device_addr, 4);
@@ -211,7 +233,7 @@ enum KNS_status_t MCU_NVM_getAddr(uint8_t addr[])
 
 enum KNS_status_t MCU_NVM_setAddr(uint8_t addr[])
 {
-    return MCU_FLASH_write(FLASH_USER_DATA_ADDR + FLASH_ADDR_OFFSET, addr, FLASH_ADDR_BYTE_SIZE);
+    return MCU_FLASH_write(FLASH_USER_START_ADDR + FLASH_ADDR_OFFSET, addr, FLASH_ADDR_BYTE_SIZE);
 }
 enum KNS_status_t MCU_NVM_getSN(uint8_t sn[])
 {

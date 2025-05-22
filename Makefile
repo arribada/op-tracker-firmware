@@ -35,7 +35,7 @@ USE_BAREMETAL = 1
 APP = TRACKER
 
 # Select output port
-COMM = SPI
+COMM = UART
 
 # Select Kineis stack MAC profile. Can be:
 # * BASIC: basic profile, sending message once immediately 
@@ -44,7 +44,7 @@ MAC_PRFL = BLIND
 
 # LPM: depest low power mode supported can be:
 # NONE, SLEEP, STOP, STANDBY, SHUTDOWN
-LPM = NONE
+LPM = SLEEP
 
 # * KRD board: choose between: KRD_FW_LP, KRD_FW_MP
 KRD_BOARD = KRD_FW_MP
@@ -135,6 +135,7 @@ $(KINEIS_DIR)/Extdep/Mcu/Src/aes.c \
 $(KINEIS_DIR)/Extdep/Mcu/Src/mcu_nvm.c \
 $(KINEIS_DIR)/Extdep/Mcu/Src/mcu_tim.c \
 $(KINEIS_DIR)/App/Mcu/Src/mcu_at_console.c \
+$(KINEIS_DIR)/App/Libs/TRACKER/Src/tracker_app.c \
 $(KINEIS_DIR)/App/Managers/MGR_AT_CMD/Src/mgr_at_cmd.c \
 $(KINEIS_DIR)/App/Managers/MGR_AT_CMD/Src/mgr_at_cmd_common.c \
 $(KINEIS_DIR)/App/Managers/MGR_AT_CMD/Src/mgr_at_cmd_list.c \
@@ -143,6 +144,7 @@ $(KINEIS_DIR)/App/Managers/MGR_AT_CMD/Src/mgr_at_cmd_list_general.c \
 $(KINEIS_DIR)/App/Managers/MGR_AT_CMD/Src/mgr_at_cmd_list_mac.c \
 $(KINEIS_DIR)/App/Managers/MGR_AT_CMD/Src/mgr_at_cmd_list_certif.c \
 $(KINEIS_DIR)/App/Managers/MGR_AT_CMD/Src/mgr_at_cmd_list_previpass.c \
+$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_at_cmd_list_trackerapp.c \
 $(KINEIS_DIR)/App/Kineis_os/KNS_Q/Src/kns_q.c \
 $(KINEIS_DIR)/App/Kineis_os/KNS_OS/Src/kns_os.c \
 $(KINEIS_DIR)/App/kns_app.c \
@@ -246,8 +248,6 @@ C_DEFS +=  \
 endif
 
 ifeq ($(APP),TRACKER)
-C_SOURCES += $(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Src/mgr_at_cmd_list_trackerapp.c 
-C_SOURCES += $(KINEIS_DIR)/App/Libs/TRACKER/Src/tracker_app.c 
 C_DEFS +=  \
 -DUSE_TRACKER_APP
 ifeq ($(MAC_PRFL), BASIC)
@@ -356,6 +356,7 @@ C_INCLUDES =  \
 -I$(KINEIS_DIR)/App/Managers/MGR_AT_CMD/Inc \
 -I$(KINEIS_DIR)/App/Managers/MGR_SPI_CMD/Inc \
 -I$(KINEIS_DIR)/Appconf \
+-I$(KINEIS_DIR)/App/Libs/TRACKER/Inc \
 -I$(KINEIS_DIR)/App/Kineis_os/KNS_Q/Inc \
 -I$(KINEIS_DIR)/App/Kineis_os/KNS_OS/Inc \
 -I$(KINEIS_DIR)/App/. \
@@ -366,9 +367,6 @@ C_INCLUDES =  \
 
 C_INCLUDES += #$(libknsrf_wl_INCLUDES)
 
-ifeq ($(APP),TRACKER)
-C_INCLUDES += -I$(KINEIS_DIR)/App/Libs/TRACKER/Inc
-endif
 
 ifeq ($(COMM),UART)
 C_DEFS +=  \

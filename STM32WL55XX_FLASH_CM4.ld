@@ -16,8 +16,8 @@ _Min_Stack_Size = 0x2000; /* required amount of stack */
 /* Memories definition */
 MEMORY
 {
-  ROM    (rx)      : ORIGIN = 0x08000000, LENGTH = 254K
-  FLASH_USER (rw) : ORIGIN = 0x0803F800, LENGTH = 2K
+  ROM         (rx)  : ORIGIN = 0x08000000, LENGTH = 224K       /* 256K - 32K */
+  FLASH_USER  (rw)  : ORIGIN = 0x08038000, LENGTH = 32K        /* 0x8000 bytes */
   RAM1   (xrw)     : ORIGIN = 0x20000000, LENGTH = 32K    /* Non-backup SRAM1 */
   RAM2   (xrw)     : ORIGIN = 0x20008000, LENGTH = 32K    /* Backup SRAM2 */
   RTC_BKPR (xrw)   : ORIGIN = 0x4000B100, LENGTH = 128     /* TAMP_BKPR register used to backup over LPM */
@@ -104,11 +104,7 @@ SECTIONS
     . = ALIGN(8);
   } >ROM
 
-  .user_data :
-  {
-    *(.user_data)           /* .deviceIdSection section */
-    *(.user_data*)           /* .deviceIdSection section */
-  } > FLASH_USER
+
   /* ------------------------------------------------------------------------------ 
    * ---- Initialized data sections goes into RAM1, load LMA copy after code   ---- 
    * ---- so far, put all into RAM1 section                                    ---- 
@@ -244,4 +240,14 @@ SECTIONS
   }
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
+  /* Flash user-defined data section (placed at the end of flash) */
+	.flash_user_data :
+	{
+		. = ALIGN(8);
+		KEEP(*(.flash_user_data))
+		KEEP(*(.flash_user_data*))
+		. = ALIGN(8);
+		_sflash_user_data = .;
+	} >FLASH_USER
+  
 }
