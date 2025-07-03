@@ -32,7 +32,7 @@
 
 // Definition of constant for flash user memory
 //#define FLASH_USER_START_ADDR     0x0803F800
-#define FLASH_USER_START_ADDR     0x08038000UL
+#define FLASH_USER_START_ADDR     0x0803B000UL
 #define FLASH_USER_END_ADDR       FLASH_END_ADDR // End address of user flash area is same at end flash address
 #define FLASH_USER_SIZE           (FLASH_USER_END_ADDR - FLASH_USER_START_ADDR)
 #define FLASH_USER_NMB_PAGE       (FLASH_USER_SIZE / FLASH_PAGE_SIZE)
@@ -87,7 +87,7 @@
 
 // Define on specific page section
 #define FLASH_MSG_COUNTER_WL_OFFSET     (FLASH_PAGE_SIZE)
-#define FLASH_MSG_COUNTER_WL_SIZE       2048 // Wealeveling can count to 2048 before to increment Overflow
+#define FLASH_MSG_COUNTER_WL_SIZE       1024 // Wealeveling can count to 2048 before to increment Overflow
 #define FLASH_MSG_COUNTER_WL_BYTE_SIZE  (FLASH_MSG_COUNTER_WL_SIZE * 8)
 #define FLASH_MSG_COUNTER_WL_START_ADDR       (FLASH_USER_START_ADDR + FLASH_MSG_COUNTER_WL_OFFSET)
 
@@ -98,12 +98,7 @@
 #define FLASH_WKU_COUNTER_WL_START_ADDR       (FLASH_USER_START_ADDR + FLASH_WKU_COUNTER_WL_OFFSET)
 extern uint32_t _sflash_user_data;  // optional use
 
-//#define FLASH_WKU_OCUNTER                  (FLASH_APP_VARS_OFFSET + FLASH_APP_VARS_BYTE_SIZE)
-//#define FLASH_COUNTER_BYTE_SIZE                   8 // 64-bit counter
-//#define FLASH_COUNTER_SIZE                    8 // 64-bit counter
-//#define FLASH_COUNTER_MAX_WRITES              ((FLASH_PAGE_SIZE - FLASH_WKU_OCUNTER) / FLASH_COUNTER_SIZE)
-
-// TODO: Move it to another pertinent place? 
+// TODO: Move it to another pertinent place?
 
 enum KNS_status_t MCU_FLASH_read(uint32_t address, void *buffer, size_t size);
 enum KNS_status_t MCU_FLASH_write(uint32_t address, const void *data, size_t size);

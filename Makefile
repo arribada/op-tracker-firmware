@@ -44,7 +44,7 @@ MAC_PRFL = BLIND
 
 # LPM: depest low power mode supported can be:
 # NONE, SLEEP, STOP, STANDBY, SHUTDOWN
-LPM = SLEEP
+LPM = NONE
 
 # * KRD board: choose between: KRD_FW_LP, KRD_FW_MP
 KRD_BOARD = KRD_FW_MP

@@ -163,44 +163,30 @@ static void KNS_APP_stdln_stopMacPrfl(void)
  */
 static void KNS_APP_tracker_startMacPrfl(void)
 {
+
 	enum KNS_status_t status;
-		struct KNS_MAC_appEvt_t appEvt;
-
-		/** Initialize Kineis MAC profile */
-		MGR_LOG_DEBUG("[%s %d]\r\n", __func__, __LINE__);
-		appEvt.id =  KNS_MAC_INIT;
-		appEvt.init_prfl_ctxt.id = KNS_MAC_PRFL_BLIND;
-		appEvt.init_prfl_ctxt.blindCfg = prflBlindUserCfg;
-
-		status = KNS_Q_push(KNS_Q_DL_APP2MAC, (void *)&appEvt);
-		if (status != KNS_STATUS_OK) {
-			MGR_LOG_DEBUG("[ERROR] Cannot initialize MAC protocol: Error code 0x%x\r\n", status);
-			MGR_LOG_DEBUG("[ERROR] Check protocol capabilities of the build and/or config.\r\n");
-			kns_assert(0);
+	/** Initialize Kineis MAC profile */
+	MGR_LOG_DEBUG("[%s %d]\r\n", __func__, __LINE__);
+	tracker_app_vars_t *app_vars;
+	TRACKER_get_conf(&app_vars);
+	struct KNS_MAC_appEvt_t appEvt = {
+		.id = KNS_MAC_INIT,
+		.init_prfl_ctxt = {
+			.id =  KNS_MAC_PRFL_BLIND,
+			.blindCfg = {
+					.retx_nb = 2,// app_vars->u8_msg_counter,
+					.nb_parrallel_msg = 1,
+					.retx_period_s = 60//app_vars->u8_wait_msg_timer_s,
+			}
 		}
-//	enum KNS_status_t status;
-//	/** Initialize Kineis MAC profile */
-//	MGR_LOG_DEBUG("[%s %d]\r\n", __func__, __LINE__);
-//	tracker_app_vars_t *app_vars;
-//	TRACKER_get_conf(&app_vars);
-//	struct KNS_MAC_appEvt_t appEvt = {
-//		.id = KNS_MAC_INIT,
-//		.init_prfl_ctxt = {
-//			.id =  KNS_MAC_PRFL_BLIND,
-//			.blindCfg = {
-//					.retx_nb = 2,// app_vars->u8_msg_counter,
-//					.nb_parrallel_msg = 1,
-//					.retx_period_s = 60//app_vars->u8_wait_msg_timer_s,
-//			}
-//		}
-//	};
-//
-//	status = KNS_Q_push(KNS_Q_DL_APP2MAC, (void *)&appEvt);
-//	if (status != KNS_STATUS_OK) {
-//		MGR_LOG_DEBUG("[ERROR] Cannot initialize MAC protocol: Error code 0x%x\r\n", status);
-//		MGR_LOG_DEBUG("[ERROR] Check protocol capabilities of the build and/or config.\r\n");
-//		kns_assert(0);
-//	}
+	};
+
+	status = KNS_Q_push(KNS_Q_DL_APP2MAC, (void *)&appEvt);
+	if (status != KNS_STATUS_OK) {
+		MGR_LOG_DEBUG("[ERROR] Cannot initialize MAC protocol: Error code 0x%x\r\n", status);
+		MGR_LOG_DEBUG("[ERROR] Check protocol capabilities of the build and/or config.\r\n");
+		kns_assert(0);
+	}
 }
 #endif
 /* Public functions ----------------------------------------------------------*/
@@ -248,7 +234,6 @@ void KNS_APP_stdln_loop(void)
 				switch (srvcEvt.id) {
 				case (KNS_MAC_OK):
 					MGR_LOG_DEBUG("[%s] MAC profile init OK, reset MC\r\n", __func__);
-					MCU_NVM_setMC(0);
 					state++;
 					break;
 				case (KNS_MAC_ERROR):
@@ -623,7 +608,6 @@ void KNS_APP_tracker_loop(void)
 					}
 					TEST_FAIL();
 					state++;
-					state=21;
 					break;
 				default:
 					TEST_FAIL();
@@ -669,11 +653,6 @@ void KNS_APP_tracker_loop(void)
 	}
 	case 6: { /** Stop tracker */
 		TRACKER_shutdown(true);
-		return;
-	}
-	case 21: {
-		HAL_Delay(5000);
-		state=1;
 		return;
 	}
 	default:

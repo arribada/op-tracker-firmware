@@ -664,10 +664,10 @@ void Error_Handler(void)
   HAL_Delay(500);
 #endif
   __disable_irq();
-  NVIC_SystemReset();
-//  while (1)
-//  {
-//  }
+  //NVIC_SystemReset();
+  while (1)
+  {
+  }
 #elif USE_TRACKER_APP // end of DEBUG
   MCU_AT_CONSOLE_send("+ASSERT=\r\n");
 #else
