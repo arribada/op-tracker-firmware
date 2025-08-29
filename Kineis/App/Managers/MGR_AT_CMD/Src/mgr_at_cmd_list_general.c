@@ -333,6 +333,7 @@ bool bMGR_AT_CMD_MC_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 {
 	enum KNS_status_t status;
 	uint16_t mc;
+	uint16_t mc_flash;
 
 	if (e_exec_mode == ATCMD_STATUS_MODE) {
 		status = KNS_CFG_getMC(&mc);
@@ -340,7 +341,12 @@ bool bMGR_AT_CMD_MC_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 			return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T) status);
 		}
 		
+		status = MCU_NVM_getFlashMC(&mc_flash);
+		if (status != KNS_STATUS_OK) {
+			return bMGR_AT_CMD_logFailedMsg((enum ERROR_RETURN_T) status);
+		}
 		MCU_AT_CONSOLE_send("+MC=%d\r\n", mc);
+		MCU_AT_CONSOLE_send("+MC_FLASH=%d\r\n", mc_flash);
 		return bMGR_AT_CMD_logSucceedMsg();
 	} else if(e_exec_mode == ATCMD_ACTION_MODE) {
 		if (sscanf((char*)pu8_cmdParamString, "%*[^=]= %hu", &mc) != 1)
@@ -351,6 +357,12 @@ bool bMGR_AT_CMD_MC_cmd(uint8_t *pu8_cmdParamString __attribute__((unused)),
 			if (KNS_CFG_setMC(mc) == KNS_STATUS_OK)
 			{
 				MGR_LOG_DEBUG("+MC=%u\r\n", mc);
+			} else {
+				MGR_LOG_DEBUG("Failed to update MC=%u\r\n", mc);
+			}
+			if (MCU_NVM_setFlashMC(mc) == KNS_STATUS_OK)
+			{
+				MGR_LOG_DEBUG("+MC_FLASH=%u\r\n", mc);
 				return bMGR_AT_CMD_logSucceedMsg();
 			} else {
 				MGR_LOG_DEBUG("Failed to update MC=%u\r\n", mc);

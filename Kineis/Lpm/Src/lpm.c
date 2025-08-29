@@ -229,7 +229,7 @@ static void LPM_configWakeUpRtc(void)
 
 /** @brief System callback invoked by MGR_LPM at SLEEP mode entering */
 static void LPM_sleep_enter() {
-//	MGR_LOG_DEBUG("==== SLEEP enter ====\r\n");
+	MGR_LOG_DEBUG("==== SLEEP enter ====\r\n");
 	HAL_SuspendTick();
 	/** force renabling interrupt as wakeup from UART is needed */
 	__enable_fault_irq();
@@ -239,7 +239,7 @@ static void LPM_sleep_enter() {
 /** @brief System callback invoked by MGR_LPM at SLEEP mode exit */
 static void LPM_sleep_exit() {
 	HAL_ResumeTick();
-//	MGR_LOG_DEBUG("==== SLEEP exit ====\r\n");
+	MGR_LOG_DEBUG("==== SLEEP exit ====\r\n");
 }
 
 /** @brief System callback invoked by MGR_LPM at STOP mode entering */
@@ -312,6 +312,9 @@ static void LPM_shutdown_enter() {
 	HAL_PWREx_EnablePullUpPullDownConfig();
 	/** Force pull down on wakeup pin: PB3, or PC13 or PA0 */
 	HAL_PWREx_EnableGPIOPullDown(PWR_GPIO_B, PWR_GPIO_BIT_3);
+		// 2) Program the desired pulls for Standby via PWR (per port/bit)
+	HAL_PWREx_EnableGPIOPullDown(PWR_GPIO_C, PA_PSU_EN_Pin);      // example: PA0 pull-up
+	HAL_PWREx_EnableGPIOPullUp(PWR_GPIO_C, PA_PSU_SEL_Pin);      // example: PB3 pull-down
 
 	LPM_configWakeUpRtc();
 	LPM_configWakeUpPins();
@@ -360,19 +363,15 @@ void LPM_SystemClockConfig(void)
 
 void GPIO_DisableAllToAnalogInput(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
+	/* GPIO Ports Clock Enable */
+  	__HAL_RCC_GPIOA_CLK_ENABLE();
+  	__HAL_RCC_GPIOB_CLK_ENABLE();
+  	__HAL_RCC_GPIOC_CLK_ENABLE();
 
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-
-  /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = PA_PSU_EN_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /* Disable GPIOs clock */
-  __HAL_RCC_GPIOA_CLK_DISABLE();
+  	/* Disable GPIOs clock */
+  	__HAL_RCC_GPIOA_CLK_DISABLE();
+  	__HAL_RCC_GPIOB_CLK_DISABLE();
+  	__HAL_RCC_GPIOC_CLK_DISABLE();
 }
 
 void LPM_init(void)

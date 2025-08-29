@@ -37,9 +37,28 @@
 #define DEVICE_SN_LENGTH          14
 
 /* Function declaration -------------------------------------------------------------*/
+/**
+ * @brief get from flash the message counter a 16-bit-long non-volatile value
+ *
+ * This is a read-only operation.
+ *
+ * @param[out] mc_ptr : 16-bit value to read
+ *
+ * @return Status @ref KNS_status_t
+ */
+enum KNS_status_t MCU_NVM_getFlashMC(uint16_t *mc_ptr);
 
 /**
- * @brief get a 16-bit-long non-volatile value
+ * @brief set Message counter into flash memory a 16-bit-long non-volatile value
+ *
+ * @param[in] mcTmp : 16-bit value to store
+ *
+ * @return Status @ref KNS_status_t
+ */
+enum KNS_status_t MCU_NVM_setFlashMC(uint16_t mcTmp);
+
+/**
+ * @brief get message counter a 16-bit-long non-volatile value
  *
  * This is a read-only operation.
  *
@@ -50,7 +69,7 @@
 enum KNS_status_t MCU_NVM_getMC(uint16_t *mc_ptr);
 
 /**
- * @brief set a 16-bit-long non-volatile value
+ * @brief set message counter a 16-bit-long non-volatile value
  *
  * The value may be set for each new user message sent to the Kineis stack.
  *
@@ -64,7 +83,7 @@ enum KNS_status_t MCU_NVM_getMC(uint16_t *mc_ptr);
 enum KNS_status_t MCU_NVM_setMC(uint16_t mcTmp);
 
 /**
- * @brief get a 16-bit-long non-volatile value
+ * @brief get wake up counter a 16-bit-long non-volatile value
  *
  * This is a read-only operation.
  *
@@ -75,7 +94,7 @@ enum KNS_status_t MCU_NVM_setMC(uint16_t mcTmp);
 enum KNS_status_t MCU_NVM_getWUC(uint16_t *wuc_ptr);
 
 /**
- * @brief set a 16-bit-long non-volatile value
+ * @brief set wakeup counter a 16-bit-long non-volatile value
  *
  * The value may be set for tracker app at each wakeup.
  *

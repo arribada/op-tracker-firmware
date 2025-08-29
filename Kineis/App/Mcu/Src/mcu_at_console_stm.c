@@ -278,6 +278,16 @@ void MCU_UART_DeInit() {
 		huart_handle = NULL;
 	}
 }
+
+bool MCU_UART_FlushTx(uint32_t timeout_ms) {
+    uint32_t start = HAL_GetTick();
+    // Wait for TXE then TC to go high
+    while ((__HAL_UART_GET_FLAG(huart_handle, UART_FLAG_TC) == RESET))
+	{
+        if ((HAL_GetTick() - start) > timeout_ms) return false;
+	}
+	return true;
+}
 /**
   * @brief  UART error callback. Can raise in case of UART OVERFLOW, DMA RX ERROR, ...
  *

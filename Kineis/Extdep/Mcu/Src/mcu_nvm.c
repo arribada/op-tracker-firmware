@@ -40,16 +40,17 @@
  * If you use a flash memory, be careful about the storage of this data. The message counter is
  * updated at each message transmission, so this implies a lot of erase/write cycles.
  */
+__attribute__((__section__(".msgCntSectionData")))
 static uint16_t message_counter = 0;
 
 static uint16_t wakeup_counter = 0;
 
 /** The device identifier may be stored in a secured way (encryption, etc.) */
-const uint32_t test_device_id = 123456; // stored in flash
+const uint32_t test_device_id = 291877; //l stored in flash
 
 
 /** The device address may be stored in a secured way (encryption, etc.) */
-const uint8_t test_device_addr[4] = { 0x11, 0x22, 0x33, 0x44 };
+const uint8_t test_device_addr[4] = { 0x00, 0x5A, 0x9A, 0xFE };
 
 /** Radio configuration : Ensure radio configuration is valid when Kineis stack is called.
  
@@ -77,8 +78,10 @@ static uint8_t radioConfZone[16] = {
 	0x8e, 0x4d, 0xa6, 0x77, 0x25, 0x8e, 0x54, 0xc4,
 #else
 	/** ----ESS4 401620000,401680000,27,LDA2 ---- */
-	0x3d, 0x67, 0x8a, 0xf1, 0x6b, 0x5a, 0x57, 0x20,
-	0x78, 0xf3, 0xdb, 0xc9, 0x5a, 0x11, 0x04, 0xe7,
+//	0x3d, 0x67, 0x8a, 0xf1, 0x6b, 0x5a, 0x57, 0x20,
+//	0x78, 0xf3, 0xdb, 0xc9, 0x5a, 0x11, 0x04, 0xe7,
+//	0x2c, 0x93, 0x60, 0x0d, 0x6b, 0xe3, 0xba, 0xc0,
+	//0xcc, 0xfe, 0x90, 0x47, 0xc0, 0x2c, 0x05, 0x8e,
 
 	/** ---- 401625000,401635000,27,LDA2L ---- */
 //	0xbd, 0x17, 0x65, 0x35, 0xb3, 0x94, 0xa6, 0x65,
@@ -89,8 +92,8 @@ static uint8_t radioConfZone[16] = {
 //	0x20, 0x9b, 0x18, 0xab, 0xd0, 0x09, 0xde, 0x96,
 	
 	/** ---- 401625000,401635000,27,VLDA4 ---- */
-//	0x82, 0xd0, 0x7f, 0x9d, 0x9c, 0xe0, 0x81, 0xee,
-//	0x44, 0x92, 0x98, 0x36, 0x72, 0xd7, 0x54, 0x93
+	0x82, 0xd0, 0x7f, 0x9d, 0x9c, 0xe0, 0x81, 0xee,
+	0x44, 0x92, 0x98, 0x36, 0x72, 0xd7, 0x54, 0x93
 
 	/** ----MSS 402890000,402990000,22,VLDA4 ---- */
 //	0x55, 0x0b, 0x4b, 0xec, 0x21, 0x00, 0x9c, 0x7a,
@@ -104,24 +107,24 @@ static const uint8_t device_sn[DEVICE_SN_LENGTH] = { 'S', 'M', 'D', '_', '1', '0
 					      '_', 'T', 'E', 'S', 'T', '0', '2' };
 /* Functions -------------------------------------------------------------*/
 //
-//enum KNS_status_t MCU_NVM_getMC(uint16_t *mc_ptr)
-//{
-//	if (!mc_ptr)
-//		return KNS_STATUS_ERROR;
-//
-//	uint64_t full_counter = MCU_FLASH_read_msg_counter();
-//    *mc_ptr = (uint16_t)(full_counter & 0xFFFF);
-//    return KNS_STATUS_OK;
-//
-//}
-//
-//enum KNS_status_t MCU_NVM_setMC(uint16_t mcTmp)
-//{
-//	message_counter = mcTmp;
-//
-//	return MCU_FLASH_set_msg_counter((uint64_t)mcTmp);
-//
-//}
+enum KNS_status_t MCU_NVM_getFlashMC(uint16_t *mc_ptr)
+{
+	if (!mc_ptr)
+		return KNS_STATUS_ERROR;
+
+	uint64_t full_counter = MCU_FLASH_read_msg_counter();
+   *mc_ptr = (uint16_t)(full_counter & 0xFFFF);
+   return KNS_STATUS_OK;
+
+}
+
+enum KNS_status_t MCU_NVM_setFlashMC(uint16_t mcTmp)
+{
+	message_counter = mcTmp;
+
+	return MCU_FLASH_set_msg_counter((uint64_t)mcTmp);
+
+}
 enum KNS_status_t MCU_NVM_getMC(uint16_t *mc_ptr)
 {
 	*mc_ptr = message_counter;

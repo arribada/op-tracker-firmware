@@ -89,6 +89,8 @@ void MCU_AT_CONSOLE_send(const char *format, ...);
 void MCU_AT_CONSOLE_send_dataBuf(uint8_t *pu8_inDataBuff, uint16_t u16_dataLenBit);
 
 void MCU_UART_DeInit();
+
+bool MCU_UART_FlushTx(uint32_t timeout_ms);
 #endif /* __MCU_AT_CONSOLE_H */
 
 /**

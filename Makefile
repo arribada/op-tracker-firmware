@@ -40,7 +40,7 @@ COMM = UART
 # Select Kineis stack MAC profile. Can be:
 # * BASIC: basic profile, sending message once immediately 
 # * BLIND: blind profile, sending message sevral times periodically 
-MAC_PRFL = BLIND
+MAC_PRFL = BASIC
 
 # LPM: depest low power mode supported can be:
 # NONE, SLEEP, STOP, STANDBY, SHUTDOWN

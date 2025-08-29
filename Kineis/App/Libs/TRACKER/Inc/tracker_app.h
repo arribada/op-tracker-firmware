@@ -34,7 +34,7 @@
 
 /* Struct--------------------------------------------------------------------------------------- */
 typedef struct {
-    uint8_t u8_is_running;
+    uint8_t u8_with_gui;
     uint8_t u8_msg_counter;
     uint8_t u8_wait_msg_timer_s;
     uint8_t u8_wait_startup_restimer_min;
@@ -51,8 +51,8 @@ enum KNS_status_t TRACKER_shutdown(bool increment_wku);
 enum KNS_status_t TRACKER_get_conf(tracker_app_vars_t **conf);
 enum KNS_status_t TRACKER_read_conf(tracker_app_vars_t **app_vars);
 enum KNS_status_t TRACKER_set_conf(tracker_app_vars_t *app_vars);
-enum KNS_status_t TRACKER_set_is_running(uint8_t is_running);
-enum KNS_status_t TRACKER_get_is_running(uint8_t *is_running);
+enum KNS_status_t TRACKER_set_with_gui(uint8_t is_gui);
+enum KNS_status_t TRACKER_get_with_gui(uint8_t *is_gui);
 enum KNS_status_t TRACKER_update_local_conf(tracker_app_vars_t * app_vars);
 
 #endif /* __TRACKER_APP_H */

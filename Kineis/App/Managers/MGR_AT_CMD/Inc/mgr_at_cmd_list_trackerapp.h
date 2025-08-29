@@ -39,15 +39,6 @@
 bool bMGR_AT_CMD_TRACKER_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_t e_exec_mode);
 
 /**
- * @brief Process AT command "AT+TRACKER_START"
- *
- * Update the tracker counter to 1 and reset device to start in Standalone mode
- *
- * @return true if command is correctly received and processed, false if error
- */
-bool bMGR_AT_CMD_TRACKER_START_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_t e_exec_mode);
-
-/**
  * @brief Process AT command "AT+WUC"
  *
  * Read/Update the wake up counter of the trakcer application

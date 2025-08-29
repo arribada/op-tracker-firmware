@@ -375,8 +375,10 @@ int main(void)
    */
   __HAL_RCC_RTCAPB_CLK_ENABLE();
 
-//  if (bIsWakeUpFromReset)
-//    LPM_forceMode(LOW_POWER_MODE_NONE);
+ if (bIsWakeUpFromReset) 
+ {
+   LPM_forceMode(LOW_POWER_MODE_NONE);
+ }
 
 #ifndef LPM_SHUTDOWN_ENABLED
   if (LPM_getMode() > LOW_POWER_MODE_STANDBY) {
@@ -416,7 +418,7 @@ int main(void)
 #endif
 
   /** As we just woke up, most of GPIOs are useless so far. Limit their current drain */
-  //GPIO_DisableAllToAnalogInput();
+  GPIO_DisableAllToAnalogInput();
 
   /** Do specific Init sequence as per wake up mode. The low power mode was set before entering.
    * Some of them (typically standby, shutdown) makes the uC to reset
@@ -519,23 +521,20 @@ int main(void)
   tracker_app_vars_t *app_vars;
   //Warning called read_conf only once to avoid multiple flash read
   enum KNS_status_t status = TRACKER_read_conf(&app_vars);
-  // SHould be removed
   if (status != KNS_STATUS_OK) {
     MGR_LOG_DEBUG("Tracker get conf failed\r\n");
     assert_param(0);
   } 
 
-  if (app_vars->u8_is_running == 0)
+  if (app_vars->u8_with_gui)
   {
 	  // Init GUI mode
 	  MGR_LOG_DEBUG("Tracker start GUI mode \r\n");
 	  KNS_APP_gui_init(&hlpuart1);
-	  assert_param(KNS_OS_registerTask(KNS_OS_TASK_APP, KNS_APP_gui_loop) == KNS_STATUS_OK);
-  } else {
-    MGR_LOG_DEBUG("Tracker is running \r\n");
-    TRACKER_init();
-    assert_param(KNS_OS_registerTask(KNS_OS_TASK_APP, KNS_APP_tracker_loop) == KNS_STATUS_OK);
   }
+  MGR_LOG_DEBUG("Tracker is running \r\n");
+  TRACKER_init();
+  assert_param(KNS_OS_registerTask(KNS_OS_TASK_APP, KNS_APP_tracker_loop) == KNS_STATUS_OK);
 
 #endif
 

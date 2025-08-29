@@ -72,24 +72,24 @@ void SystemClock_Config(void);
 #define STATE_COUNTER_RST_Pin GPIO_PIN_12
 #define STATE_COUNTER_RST_Port GPIOA
 // No external wakeup in sleep during message
-#ifdef USE_TRACKER_APP
+//#ifdef USE_TRACKER_APP
 #define PA_PSU_SEL_Pin GPIO_PIN_0
 #define PA_PSU_SEL_GPIO_Port GPIOC
 
 #define PA_PSU_EN_Pin GPIO_PIN_1 // Different on OP TRACKER
 #define PA_PSU_EN_GPIO_Port GPIOC
 
-#else
+//#else
+//#define PA_PSU_EN_Pin GPIO_PIN_1 // Different on OP TRACKER
+//#define PA_PSU_EN_GPIO_Port GPIOC
+//
+//#define PA_PSU_SEL_Pin GPIO_PIN_0 // PSEL => High = 3V3 / Low = 1.8V
+//#define PA_PSU_SEL_GPIO_Port GPIOC
+//
+//#endif
+
 #define EXT_WKUP_BUTTON_Pin GPIO_PIN_13
 #define EXT_WKUP_BUTTON_GPIO_Port GPIOB
-#define PA_PSU_EN_Pin GPIO_PIN_1 // Different on OP TRACKER
-#define PA_PSU_EN_GPIO_Port GPIOC
-
-#define PA_PSU_SEL_Pin GPIO_PIN_0 // PSEL => High = 3V3 / Low = 1.8V
-#define PA_PSU_SEL_GPIO_Port GPIOC
-
-#endif
-
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

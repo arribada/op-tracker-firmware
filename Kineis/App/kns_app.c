@@ -161,22 +161,19 @@ static void KNS_APP_stdln_stopMacPrfl(void)
 #ifdef USE_TRACKER_APP
 /** @brief Start MAC profile for the standalone application
  */
-static void KNS_APP_tracker_startMacPrfl(void)
+static void KNS_APP_tracker_startMacPrfl(tracker_app_vars_t *app_vars)
 {
-
 	enum KNS_status_t status;
 	/** Initialize Kineis MAC profile */
 	MGR_LOG_DEBUG("[%s %d]\r\n", __func__, __LINE__);
-	tracker_app_vars_t *app_vars;
-	TRACKER_get_conf(&app_vars);
 	struct KNS_MAC_appEvt_t appEvt = {
 		.id = KNS_MAC_INIT,
 		.init_prfl_ctxt = {
 			.id =  KNS_MAC_PRFL_BLIND,
 			.blindCfg = {
-					.retx_nb = 2,// app_vars->u8_msg_counter,
+					.retx_nb = app_vars->u8_msg_counter,
 					.nb_parrallel_msg = 1,
-					.retx_period_s = 60//app_vars->u8_wait_msg_timer_s,
+					.retx_period_s = app_vars->u8_wait_msg_timer_s,
 			}
 		}
 	};
@@ -465,6 +462,17 @@ void KNS_APP_tracker_loop(void)
 //	__attribute__((__section__(".retentionRamData")))
 //	uint32_t failed_counter;
 
+	tracker_app_vars_t *app_vars;
+	TRACKER_get_conf(&app_vars);
+
+
+	if (app_vars->u8_with_gui)
+	{
+		uint8_t *pu8_atcmd = NULL;
+		pu8_atcmd = MGR_AT_CMD_popNextAt();
+		if (pu8_atcmd != NULL)
+			MGR_AT_CMD_decodeAt(pu8_atcmd);  // @todo: return code is not used ?
+	}
 	uint16_t idx;
 
 	struct KNS_MAC_appEvt_t appEvt;
@@ -477,11 +485,7 @@ void KNS_APP_tracker_loop(void)
 	switch (state) {
 	case 0: { /** Init MAC profile */
 //		MGR_LOG_DEBUG("%s::Upload KMAC and reset MC : %u\r\n",__func__, mc);
-		KNS_APP_tracker_startMacPrfl();
-		KNS_CFG_setMC(0);
-		uint16_t mc = 0;
-		KNS_CFG_getMC(&mc);
-		//MGR_LOG_DEBUG("%s::Upload KMAC and reset MC : %u\r\n",__func__, mc);
+		KNS_APP_tracker_startMacPrfl(app_vars);
 		state++;
 		return;
 	}

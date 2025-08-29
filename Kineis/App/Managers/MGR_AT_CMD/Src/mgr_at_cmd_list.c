@@ -55,7 +55,6 @@ const struct atcmd_desc_t cas_atcmd_list_array[ATCMD_MAX_COUNT] = {
 	
 	/**< TRACKER commands forward tracker application variables */
 	{ "AT+TRACKER",       10, bMGR_AT_CMD_TRACKER_cmd},
-	{ "AT+RUN_TRACKER",   14, bMGR_AT_CMD_TRACKER_START_cmd},
 	{ "AT+WUC",            6, bMGR_AT_CMD_WUC_cmd},
 };
 
