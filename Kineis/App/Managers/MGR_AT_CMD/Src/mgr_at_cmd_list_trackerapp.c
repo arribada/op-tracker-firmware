@@ -110,11 +110,12 @@ bool bMGR_AT_CMD_TRACKER_START_cmd(uint8_t *pu8_cmdParamString, enum atcmd_type_
 	} else if (e_exec_mode == ATCMD_ACTION_MODE) {
 		unsigned int startup_counter;
 		if (sscanf((char*)pu8_cmdParamString, "%*[^=]= %u",
-				&startup_counter) != 1) {
+				&startup_counter) > 1) {
 			return bMGR_AT_CMD_logFailedMsg(ERROR_PARAMETER_FORMAT);
 		}
 		if (startup_counter == 0) {
 			MCU_AT_CONSOLE_send("+TRACKER_START: Not started set value different from 0\r\n");
+			TRACKER_reset();
 		} else {
 			TRACKER_start();
 			MCU_AT_CONSOLE_send("+TRACKER_START: Starting ... Increment counter to 1\r\n");

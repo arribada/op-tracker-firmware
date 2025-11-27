@@ -24,8 +24,8 @@ TARGET = op-tracker-firmware
 # building variables
 ######################################
 # debug build?
-DEBUG = 1
-VERBOSE = 1
+DEBUG = 0
+VERBOSE = 0
 USE_BAREMETAL = 1
 
 # Select APPlication. Can be:

@@ -44,6 +44,7 @@ typedef struct {
 /* Public functions ---------------------------------------------------------------------------- */
 enum KNS_status_t TRACKER_init(void);
 enum KNS_status_t TRACKER_start(void);
+enum KNS_status_t TRACKER_reset(void);
 enum KNS_status_t TRACKER_stop(void);
 enum KNS_status_t TRACKER_get_conf(tracker_app_vars_t *app_vars);
 enum KNS_status_t TRACKER_set_conf(const tracker_app_vars_t *app_vars);

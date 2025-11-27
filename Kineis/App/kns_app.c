@@ -14,6 +14,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "kns_q.h"
+#include "main.h"
 #include "kns_mac.h"
 #include "kns_cfg.h"
 #ifdef USE_TRACKER_APP
@@ -236,9 +237,11 @@ void KNS_APP_stdln_loop(void)
 				case (KNS_MAC_ERROR):
 					MGR_LOG_DEBUG("[%s] MAC profile error: %d\r\n", __func__, srvcEvt.status);
 					TEST_FAIL();
+					Error_Handler();
 					break;
 				default:
 					TEST_FAIL();
+					Error_Handler();
 					break;
 				}
 			}
@@ -324,7 +327,7 @@ void KNS_APP_stdln_loop(void)
 					MGR_LOG_array(srvcEvt.tx_ctxt.data,
 						(srvcEvt.tx_ctxt.data_bitlen+7)>>3);
 					TEST_FAIL();
-					state++;
+					state+=2; // bypass next step we will not receive KNS task
 					break;
 				case (KNS_MAC_ERROR):
 					/** MAC ERROR can occure when FIFO is full, as expected per
@@ -339,10 +342,10 @@ void KNS_APP_stdln_loop(void)
 						MGR_LOG_DEBUG("[%s] MAC error: %d\r\n", __func__, srvcEvt.status);
 					}
 					TEST_FAIL();
-					state++;
+					Error_Handler();
 					break;
 				default:
-					TEST_FAIL();
+					Error_Handler();
 					break;
 				}
 			}
@@ -367,10 +370,11 @@ void KNS_APP_stdln_loop(void)
 				case (KNS_MAC_ERROR):
 					MGR_LOG_DEBUG("[%s] MAC ERROR: %d\r\n", __func__, srvcEvt.status);
 					TEST_FAIL();
-					state++;
+					Error_Handler();
 					break;
 				default:
 					TEST_FAIL();
+					Error_Handler();
 					break;
 				}
 			}

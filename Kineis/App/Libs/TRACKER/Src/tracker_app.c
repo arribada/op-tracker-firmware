@@ -52,6 +52,15 @@ enum KNS_status_t TRACKER_start(void)
     TRACKER_stop();
     return status;
 }
+enum KNS_status_t TRACKER_reset(void)
+{
+    enum KNS_status_t status;
+	MGR_LOG_DEBUG("TRACKER_start\r\n");
+    // Increment startup counter, next reset GUI will not start
+    status = MCU_FLASH_reset_counter();
+
+    return status;
+}
 
 enum KNS_status_t TRACKER_stop(void)
 {

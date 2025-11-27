@@ -419,7 +419,7 @@ int main(void)
   if (bIsWakeUpFromReset) {
 
     /** Initialize retention RAM2 as not done by default in the Reset_Handler */
-    //MCU_FLASH_reset_counter();
+   //MCU_FLASH_reset_counter();
   }
 #endif
 

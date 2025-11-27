@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: no SPDX license
+
 /**
  * @file mgr_at_cmd_list_user_data.c
  * @author Kineis
